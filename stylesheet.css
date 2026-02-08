@@ -1,0 +1,47 @@
+
+@font-face {
+  font-family: "AnonymousPro";
+  src: url("fonts/AnonymousPro.woff2") format("woff2"),
+       url("fonts/AnonymousPro.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  min-height: 50vh;
+  padding: 6rem;
+
+  background: url("background.png") center / cover no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  font-family: "AnonymousPro", monospace;
+  color: black;
+}
+
+.page {
+  aspect-ratio: 4 / 3;
+  width: 70vw;
+  max-width: 900px;
+
+  background: rgba(0, 0, 0, 0);
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ffabe7;
+  text-shadow:#ffabe7;
+}
+
+.centered {
+  text-align: center;
+}
+<!-- Why are you reading this, is that you kuba? Hey Kuba! I love you gorgeous. -->
