@@ -8,17 +8,12 @@
 }
 
 body {
-  min-height: 50vh;
   padding: 6rem;
 
-  background: url("background.png") center / cover no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+ background: url("background.png") center / cover no-repeat fixed;
 
-  font-family: "AnonymousPro", monospace;
-  color: black;
+ font-family: "AnonymousPro", monospace;
+ color: #000;
 }
 
 .page {
@@ -26,22 +21,37 @@ body {
   width: 70vw;
   max-width: 900px;
 
-  background: rgba(0, 0, 0, 0);
   padding: 40px;
   box-sizing: border-box;
 }
 
-a {
-  color: black;
-  text-decoration: none;
-}
 
-a:hover {
-  color: #ffabe7;
-  text-shadow:#ffabe7;
+.subtitle {
+  margin-bottom: 2rem;
+  opacity: 0.85;
 }
 
 .centered {
   text-align: center;
 }
-<!-- Why are you reading this, is that you kuba? Hey Kuba! I love you gorgeous. -->
+
+ul.links {
+  list-style: none;
+  padding: 0;
+}
+
+
+ul.links span {
+  display: block;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ffabe7;
+}
