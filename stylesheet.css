@@ -71,6 +71,9 @@ a:hover {
   transition: transform 0.2s ease;
 }
 
+.glow {
+  filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
+}
 
 #pluv-bubble {
   position: absolute;
