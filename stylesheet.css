@@ -58,9 +58,9 @@ a:hover {
 }
 
 #pluv-container { /* uhh pluv moving box if px is changed he will move with text */
-  position: fixed;
+  position: relative;
   bottom: 170x;
-  right: 70px;
+  right: 90px;
   z-index: 999;
 }
 
@@ -75,7 +75,7 @@ a:hover {
   position: absolute;
   bottom: 140px;
   right: 70;
-  padding: 70px 70px;
+  padding: 90px 90px;
   background: rgba(10,10,15,0.9);
   color: #ffffff;
   font-family: Bahnschrift, Arial, sans-serif;
