@@ -59,8 +59,8 @@ a:hover {
 
 #pluv-container { /* uhh pluv moving box if px is changed he will move with text */
   position: fixed;
-  bottom: 100x;
-  right: 20px;
+  bottom: 130x;
+  right: 40px;
   z-index: 999;
 }
 
