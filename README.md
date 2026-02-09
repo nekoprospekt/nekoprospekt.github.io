@@ -20,4 +20,5 @@ I know, I know, it's kinda crap.. but isn't that the fun in all of this!?
 
 ---
 
+This all started in notepad because I was sure I could do better than my straw.page, and YES.. IM definetly the reason that farten made his website.. you guys wouldn't know but I had a repository before his, I promise ALSO..
 Sorry it's not so decked out over here. Thanks again to anyone who was and is dealing with me during the process of this. Especially you! You know who you are.. I love you guys. I love everyone actually, I hope your all doing amazing!
