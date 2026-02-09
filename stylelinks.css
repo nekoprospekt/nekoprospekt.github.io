@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "AnonymousPro";
+  src: url("fonts/AnonymousPro.woff2") format("woff2"),
+       url("fonts/AnonymousPro.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 4;
+}
+
+body {
+  font-family: "Anonymous Pro", monospace;
+  background: white;
+  color: black;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.text-box {
+  max-width: 600px;
+  aspect-ratio: 4 / 3;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.text-box p {
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+a {
+  color: #000;
+  transition: filter 0.3s ease;
+}
+
+a:hover {
+  color: #000000;
+  filter: blur(2px);
+}

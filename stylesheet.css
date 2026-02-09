@@ -54,7 +54,7 @@ a {
 
 a:hover {
   color: #000000;
-  filter: blur(7px);
+  filter: blur(2px);
 }
 
 #pluv-container {
