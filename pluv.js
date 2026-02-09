@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
     "Catch me if you can", "I like pixel art", "Keep calm and game on", "I am 1337", "Hello from the other side",
     "Click me again!", "Boo!", "Follow the light", "I eat bugs (virtual ones)", "I am a CSS wizard",
     "I come in peace", "Pssst... wanna secret?", "I like potatoes", "Ssshhh...", "Beware the code",
-    "High five!", "You shall not pass!", "Im not a cat"
+    "High five!", "You shall not pass!", "Im not a cat" 
   ];
-
+                                                
   var flipping = true;
 
   pluv.addEventListener("click", function () {
@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var msg = messages[Math.floor(Math.random() * messages.length)];
     bubble.textContent = msg;
     bubble.style.opacity = "1";
-
+    // uhh he like does the flip around
     pluv.style.transition = "transform 0.2s";
     bubble.style.transition = "transform 0.2s";
 
-    // Move Pluv
+    // Bounce Bounce pluv
     pluv.style.transform = "translateY(-15px)";
     bubble.style.transform = "translateY(-15px)";
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
       bubble.style.transform = "translateY(0)";
       flipping = true;
     }, 200);
-
+    // you wont under stand this but its for if clicked he wont flip around just bounce
     clearTimeout(window._pluvTimer);
     window._pluvTimer = setTimeout(function () {
       bubble.style.opacity = "0";
@@ -60,3 +60,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
   setInterval(randomFlip, 2500);
 });
+
