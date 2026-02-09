@@ -56,3 +56,35 @@ a {
 a:hover {
   color: #ffabe7;
 }
+
+#pluv-container {
+  position: fixed;
+  bottom: 130px;
+  left: 20px;
+  z-index: 999;
+}
+
+#pluv {
+  width: 100px;
+  cursor: pointer;
+  image-rendering: pixelated;
+  transition: transform 0.2s ease;
+}
+
+#pluv-bubble {
+  position: absolute;
+  bottom: 110px;
+  left: 0;
+  padding: 20px 20px;
+  background: rgba(10,10,15,0.9);
+  color: #ff4c4c;
+  font-family: Bahnschrift, Arial, sans-serif;
+  font-size: 20px;
+  border: 1px solid rgba(255,0,0,0.3);
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
