@@ -49,13 +49,12 @@ ul.links span {
 
 a {
   color: #000;
-  text-decoration: none;
   transition: filter 0.3s ease;
 }
 
 a:hover {
   color: #000000;
-  transition: filter 0.3s ease;
+  filter: blur(7px);
 }
 
 #pluv-container {
