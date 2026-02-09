@@ -57,21 +57,21 @@ a:hover {
   color: #ffabe7;
 }
 
-#pluv-container {
+#pluv-container { /* uhh pluv moving box if px is changed he will move with text */
   position: fixed;
   bottom: 130px;
   left: 20px;
   z-index: 999;
 }
 
-#pluv {
+#pluv {              /* the guy himself pluv.png */
   width: 100px;
   cursor: pointer;
   image-rendering: pixelated;
   transition: transform 0.2s ease;
 }
 
-#pluv-bubble {
+#pluv-bubble {           /* he talks */
   position: absolute;
   bottom: 110px;
   left: 0;
