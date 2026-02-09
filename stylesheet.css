@@ -8,6 +8,7 @@
 }
 
 body {
+  min-height: 50vh;
   padding: 6rem;
 
  background: url("background.png") center / cover no-repeat fixed;
@@ -18,7 +19,7 @@ body {
 
 .page {
   aspect-ratio: 4 / 3;
-  width: 80vw;
+  width: 70vw;
   max-width: 900px;
 
   padding: 40px;
