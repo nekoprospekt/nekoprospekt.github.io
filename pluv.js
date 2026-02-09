@@ -5,20 +5,21 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!pluv || !bubble) return;
 
   var messages = [
-    "Hi", "Under maintenance", "Nice site", "Hello", "Dont click me", "Meow",
-    "Hello there", "Pls fix bugs", "My name is Pluv!", "Sadsalat hello?", "Z-Cici", "Z-Shitty",
-    "Go sub to @farten1", "Im ginger", "Im made with CSS and JS!", "Im your friend", "Watch out!",
-    "Click me if you dare", "I see you", "I like cookies", "Have you tried HL2?", "Follow the crow",
-    "Bork bork", "Im thinking...", "Insert witty comment here", "Press buttons", "Is it snack time?",
-    "Purr...", "404 fun not found", "I like 4:3 screens", "Beep boop", "I love friends!", "Dont forget to blink",
-    "I see a bug", "Wanna play a game?", "Stay hydrated", "Keep scrolling", "Hello, human",
-    "Not all heroes wear capes", "I am watching you...", "Pluv loves you", "Im invisible sometimes",
-    "Do you like memes?", "Time for tea", "I sing in my free time", "Oops, wrong button", "Im sleepy",
-    "Yay! You clicked me", "Be careful!", "I have secrets", "You found me!", "Do a barrel roll",
-    "Catch me if you can", "I like pixel art", "Keep calm and game on", "I am 1337", "Hello from the other side",
-    "Click me again!", "Boo!", "Follow the light", "I eat bugs (virtual ones)", "I am a CSS wizard",
-    "I come in peace", "Pssst... wanna secret?", "I like potatoes", "Ssshhh...", "Beware the code",
-    "High five!", "You shall not pass!", "Im not a cat" 
+    "Hello", "A face poser move?", "You wouldn't..", "Hi!", "Stop Touching me!", "Go! Go! Go!", "Need Something?", "No need!", "get that cursor away from me!", "I wouldn't normally tell anyone this..",
+    "Plant B.", "Plant A.", "HL3 Will realease!", "It's Cold!", "Z-cici", "Do you touch yo' mama with that cursor?", "Did I hear 3?", "on a scale of up-to-down?", "That never happened BTW.", "Misscount detected in sector.",
+    "Go sub to @farten1", "Ouch~!", "The mask stays on, Thanks.", "T spawn.", "Freeman!", "Rebel Rush!", "You think the server is down?", "Stop staring at me.", "Cyka Blyat!", "Your steam profile sucks!",
+    "Ah, Keep clicking!", "Click. Please.", "Freeman, Do NOT enter the light!", "Have you tried HL2?", "HL2 it, dude.", "Now that we're alone, can I get your number?", "Move your webcam down a little.",
+    "Dirma.", "Im thinking...", "Okay, now it's getting awkward.", "You look like the girl from Sub Rosa.", "That's like a CSS reference.",  "A cs t-shirt.", "The library!?", "Bring Voltality back!",
+    "Purr...", "Walk on the sun with me, User.", "I REALLY like 4:3 screens", "Your pretty cute, I guess.", "Touchy, hm?", "Woah, how frisky!", "Stop tapping me.", "Crap, Gmod stopped responding.", "Let's save this for the bedroom, yeah?",
+    "Are you DTF?", "Trust me, I don't like the fanart, either.", "I'll shoot you!", "I want a chinese takeaway.", "CT or.. T", "<:: I will order that OTA squad to fire squad you. ::>", "Sector Clear.",
+    "Pesky CTs, hm.", "I am watching you...", "I love you.", "I don't know what to do!", "Beefy Computer", "Hopium levels depleted.", "Now, I'm no expert, buuut..", "Do you know what ASCII stands for?",
+    "Now do the harlem shake.", "Be quiet, they'll hear us!", "Why's she got a molotov!?", "Women aren't real.", "Now I'm getting flustered.", "Get me out of here!", "And fuck you too!", "You ever tried HL2RP?",
+    "Team Kill!", "You spotted a friend.", "M4A1. Always.", "You found me!", "That tickles!", "You can't stop now!", "Watch me flip!", "Where is your little gay ass at?", "6, really..?", "Do you like coding?",
+    "I can flip.. on the horizontal axis..", "I'd like a break.", "AH, theres so many of them!", "What, zombies or wednesdays?", "Only a screen apart, gorgeous.", "Don't tease me like that, User.", "We're not even on the first date!",
+    "Click me again!", "Boo!", "Good Times.", "Affirmative!", "4played.de gungame only", "Yeah Yeah", "That feels good.", "Utterly shit-faced.", "That's kinda like PZ!", "I don't really want you to leave, User.",
+    "Bringus Sticker Pack 3!", "Come closer.", "What if I crashed the page.", "Just Phoenix", "Ahah, no you don't!", "It says gullible on the ceiling.", "Hes so hot.", "I sing sometimes.", "That's kinda like a.. zombine..",
+    "Spray and Pray.", "Lights are on but no-ones home.", "helix balls.", "Tactical over Pump, anyday.", "You look.. Average", "I'm not even a Terrorist!", "That feels good."
+
   ];
                                                 
   var flipping = true;
@@ -34,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
     bubble.style.transition = "transform 0.2s";
 
     // Bounce Bounce pluv
-    pluv.style.transform = "translateY(-15px)";
-    bubble.style.transform = "translateY(-15px)";
+    pluv.style.transform = "translateY(-18px)";
+    bubble.style.transform = "translateY(-16px)";
 
     setTimeout(function () {
       pluv.style.transform = "translateY(0)";
