@@ -1,5 +1,5 @@
 I don't think I need a readme for such a shitty site, either way..
-###  I made a site!!! [Right Here ⏴ ⏴ ]!https://nekoprospekt.github.io ⏴ ⏴ 
+###  I made a site!!!  https://nekoprospekt.github.io ⏴ ⏴ 
 I know, I know, it's kinda crap.. but isn't that the *fun in all of this!?*
 
 ---
