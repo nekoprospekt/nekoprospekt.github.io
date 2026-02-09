@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "AnonymousPro";
   src: url("fonts/AnonymousPro.woff2") format("woff2"),
@@ -59,9 +58,8 @@ a:hover {
 
 #pluv-container { /* uhh pluv moving box if px is changed he will move with text */
   position: fixed;
-  top: 18px;
-  bottom: 170x;
-  right: 90px;
+  bottom: 130px;
+  left: 20px;
   z-index: 999;
 }
 
@@ -74,18 +72,18 @@ a:hover {
 
 #pluv-bubble {           /* he talks */
   position: absolute;
-  bottom: 140px;
-  right: 70;
-  padding: 90px 90px;
+  bottom: 110px;
+  left: 0;
+  padding: 20px 20px;
   background: rgba(10,10,15,0.9);
-  color: #ffffff;
+  color: #ff4c4c;
   font-family: Bahnschrift, Arial, sans-serif;
   font-size: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.466);
+  border: 1px solid rgba(255,0,0,0.3);
   border-radius: 6px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.25s ease;
   pointer-events: none;
 }
-
+~
