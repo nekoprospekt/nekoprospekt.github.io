@@ -59,7 +59,7 @@ a:hover {
 
 #pluv-container { /* uhh pluv moving box if px is changed he will move with text */
   position: fixed;
-  bottom: 100px;
+  bottom: 00x;
   right: 20px;
   z-index: 999;
 }
@@ -73,7 +73,7 @@ a:hover {
 
 #pluv-bubble {           /* he talks */
   position: absolute;
-  bottom: 50px;
+  bottom: 00px;
   right: 0;
   padding: 20px 20px;
   background: rgba(10,10,15,0.9);
