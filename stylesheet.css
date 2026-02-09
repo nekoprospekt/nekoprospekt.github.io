@@ -60,7 +60,7 @@ a:hover {
 #pluv-container { /* uhh pluv moving box if px is changed he will move with text */
   position: fixed;
   bottom: 130px;
-  left: 20px;
+  right: 20px;
   z-index: 999;
 }
 
@@ -74,13 +74,13 @@ a:hover {
 #pluv-bubble {           /* he talks */
   position: absolute;
   bottom: 110px;
-  left: 0;
+  right: 0;
   padding: 20px 20px;
   background: rgba(10,10,15,0.9);
-  color: #ff4c4c;
+  color: #ffffff;
   font-family: Bahnschrift, Arial, sans-serif;
   font-size: 20px;
-  border: 1px solid rgba(255,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.466);
   border-radius: 6px;
   white-space: nowrap;
   opacity: 0;
