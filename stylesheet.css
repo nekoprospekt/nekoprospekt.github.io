@@ -53,7 +53,7 @@ a {
 }
 
 a:hover {
-  color: #ffabe7;
+  color: #747474b2;
 }
 
 #pluv-container {
@@ -74,14 +74,14 @@ a:hover {
 
 #pluv-bubble {
   position: absolute;
-  bottom: 120px;       /* hey lilly this moves it up*/
-  right: -1px;        /* this moves it to the right*/
+  bottom: 130px;       /* hey lilly this moves it up*/
+  right: -4px;        /* this moves it to the right*/
   padding: 20px 20px;
   background: rgba(10,10,15,0.9);
-  color: #ff4c4c;
+  color: #ffffff;
   font-family: Bahnschrift, Arial, sans-serif;
   font-size: 16px;
-  border: 1px solid rgba(255,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.534);
   border-radius: 6px;
   white-space: nowrap;
   opacity: 0;
@@ -90,3 +90,5 @@ a:hover {
 }
 
 /* love you btw very impressive stuff lilly */
+
+/* Yeah, I'm pretty cool.. Don't mention it. */
