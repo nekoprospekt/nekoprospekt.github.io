@@ -56,29 +56,31 @@ a:hover {
   color: #ffabe7;
 }
 
-#pluv-container { /* uhh pluv moving box if px is changed he will move with text */
+#pluv-container {
   position: fixed;
-  bottom: 130px;
-  left: 20px;
+  bottom: 50px;
+  right: 20px;
   z-index: 999;
 }
 
-#pluv {              /* the guy himself pluv.png */
-  width: 100px;
+/* pluv image */
+#pluv {
+  width: 110px;
   cursor: pointer;
   image-rendering: pixelated;
   transition: transform 0.2s ease;
 }
 
-#pluv-bubble {           /* he talks */
+
+#pluv-bubble {
   position: absolute;
-  bottom: 110px;
-  left: 0;
+  bottom: 120px;       /* hey lilly this moves it up*/
+  right: -1px;        /* this moves it to the right*/
   padding: 20px 20px;
   background: rgba(10,10,15,0.9);
   color: #ff4c4c;
   font-family: Bahnschrift, Arial, sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   border: 1px solid rgba(255,0,0,0.3);
   border-radius: 6px;
   white-space: nowrap;
@@ -86,4 +88,3 @@ a:hover {
   transition: opacity 0.25s ease;
   pointer-events: none;
 }
-~
