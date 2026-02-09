@@ -50,10 +50,12 @@ ul.links span {
 a {
   color: #000;
   text-decoration: none;
+  transition: filter 0.3s ease;
 }
 
 a:hover {
-  color: #747474b2;
+  color: #000000;
+  transition: filter 0.3s ease;
 }
 
 #pluv-container {
@@ -77,8 +79,8 @@ a:hover {
 
 #pluv-bubble {
   position: absolute;
-  bottom: 110px;       /* hey lilly this moves it up*/
-  right: -4px;        /* this moves it to the right*/
+  bottom: 140px;       /* hey lilly this moves it up*/
+  right: -8px;        /* this moves it to the right*/
   padding: 20px 20px;
   background: rgba(10,10,15,0.9);
   color: #ffffff;
