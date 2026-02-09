@@ -73,7 +73,7 @@ a:hover {
 
 #pluv-bubble {           /* he talks */
   position: absolute;
-  bottom: 110px;
+  bottom: 50px;
   right: 0;
   padding: 20px 20px;
   background: rgba(10,10,15,0.9);
