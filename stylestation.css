@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "AnonymousPro";
+  src: url("fonts/AnonymousPro.woff2") format("woff2"),
+       url("fonts/AnonymousPro.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HL2MP";
+  src: url("fonts/HL2MP.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "csd";
+  src: url("fonts/csd.ttf") format("truetype");
+}
+
+#kill-feed {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  width: 320px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.kill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 6px;
+
+  font-size: 19px;
+  white-space: nowrap;
+
+  opacity: 0.9;
+  transition: opacity 0.45s ease, transform 0.35s ease;
+}
+
+.kill.fade {
+  opacity: 0;
+  transform: translateX(14px);
+}
+
+.killer,
+.victim {
+  font-family: Bahnschrift, Helvetica, sans-serif;
+  color: rgb(0, 0, 0);
+}
+
+.weapon {
+  font-family: "HL2MP";
+  font-size: 32px;
+  line-height: 0;
+}
+
+.headshot {
+  font-family: "csd";
+  font-size: 32px;
+  line-height: 0;
+  margin-left: -4px;
+}
+

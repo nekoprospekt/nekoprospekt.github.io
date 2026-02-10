@@ -18,3 +18,27 @@ need to add
 
 ---
 # NOW add the steps nessacary for each one below, like wiki citations type thing!!! 
+
+### Number 1
+
+### Number 2
+
+ <canvas id="cursor-trail"></canvas>
+ top of body
+
+#cursor-trail {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+ in the css
+
+ the js already here
+
+### Number 3
+
+<div id="kill-feed"></div>
+into body
+
+### Number 4
