@@ -101,7 +101,7 @@ function scheduleNextKill() {
   // Fast bursts + slower gaps
   const delay = Math.random() < 0.3
     ? randBetween(300, 700)   // burst kills
-    : randBetween(1200, 2600); // normal pacing
+    : randBetween(1700, 2600); // normal pacing
 
   setTimeout(scheduleNextKill, delay);
 }
