@@ -17,19 +17,14 @@
 }
 
 #kill-feed {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  width: 320px;
-  pointer-events: none;
-  z-index: 9999;
+  text-align: right;
 }
 
 .kill {
   display: flex;
+  justify-content: flex-end; 
   align-items: center;
-  gap: 9px;
-  margin-bottom: 6px;
+  gap: 6px;
 
   font-size: 19px;
   white-space: nowrap;
@@ -50,12 +45,16 @@
 }
 
 .weapon {
+  position: relative;
+  top: -1px;
   font-family: "HL2MP";
   font-size: 32px;
   line-height: 0;
 }
 
 .headshot {
+  position: relative;
+  top: -3px;
   font-family: "csd";
   font-size: 32px;
   line-height: 0;
