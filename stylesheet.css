@@ -1,7 +1,7 @@
 @font-face {
   font-family: "AnonymousPro";
-  src: url("Fonts/AnonymousPro.woff2") format("woff2"),
-       url("Fonts/AnonymousPro.woff") format("woff");
+  src: url("fonts/AnonymousPro.woff2") format("woff2"),
+       url("fonts/AnonymousPro.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

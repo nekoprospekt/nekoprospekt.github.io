@@ -1,19 +1,19 @@
 @font-face {
   font-family: "AnonymousPro";
-  src: url("Fonts/AnonymousPro.woff2") format("woff2"),
-       url("Fonts/AnonymousPro.woff") format("woff");
+  src: url("fonts/AnonymousPro.woff2") format("woff2"),
+       url("fonts/AnonymousPro.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "HL2MP";
-  src: url("Fonts/HL2MP.ttf") format("truetype");
+  src: url("fonts/HL2MP.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "csd";
-  src: url("Fonts/csd.ttf") format("truetype");
+  src: url("fonts/csd.ttf") format("truetype");
 }
 
 #kill-feed {
