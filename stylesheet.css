@@ -1,7 +1,7 @@
 @font-face {
   font-family: "AnonymousPro";
-  src: url("fonts/AnonymousPro.woff2") format("woff2"),
-       url("fonts/AnonymousPro.woff") format("woff");
+  src: url("Fonts/AnonymousPro.woff2") format("woff2"),
+       url("Fonts/AnonymousPro.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -92,7 +92,7 @@ a:hover {
   border-radius: 6px;
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.3s ease;
   pointer-events: none;
 }
 

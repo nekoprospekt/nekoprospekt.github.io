@@ -1,7 +1,7 @@
 @font-face {
   font-family: "AnonymousPro";
-  src: url("fonts/AnonymousPro.woff2") format("woff2"),
-       url("fonts/AnonymousPro.woff") format("woff");
+  src: url("Fonts/AnonymousPro.woff2") format("woff2"),
+       url("Fonts/AnonymousPro.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 
 body {
   font-family: "Anonymous Pro", monospace;
-  background: url("images/background.png") center / cover no-repeat;
+  background: url("images/background2.png") center / cover no-repeat;
   color: rgb(0, 0, 0);
   min-height: 100vh;
   transition: background-image 0.05s ease;
