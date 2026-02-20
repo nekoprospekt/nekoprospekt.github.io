@@ -14,7 +14,7 @@ need to add
 > I might have to use java to make spinny girl layout.. have to see, though.
 
 ### Numer 5
-> I need.. MORE!!!
+> Scripts for links and some fun text
 
 ---
 # NOW add the steps nessacary for each one below, like wiki citations type thing!!! 
@@ -42,3 +42,5 @@ need to add
 into body
 
 ### Number 4
+
+### Number 5
