@@ -58,7 +58,7 @@ function createKill() {
     // csd kill
     const base = rand(csdGlyphs);
 
-    // Headshot logic ONLY applies to csd
+    // headshot ONLY applies to csd
     const isHeadshot = Math.random() < killer.headshotBias;
     const csdChar = isHeadshot ? base + "D" : base;
 
@@ -80,12 +80,12 @@ function createKill() {
 
   feed.prepend(kill);
 
-  // Enforce max 3 kills (HL2DM behavior)
+  // enforce max 3 k
   while (feed.children.length > MAX_KILLS) {
     feed.removeChild(feed.lastChild);
   }
 
-  // Fade out like Source
+  // fade out
   setTimeout(() => {
     kill.classList.add("fade");
     setTimeout(() => kill.remove(), 450);
@@ -93,12 +93,12 @@ function createKill() {
 }
 
 
-// ---- LOOP ----
+// loop
 function scheduleNextKill() {
   createKill();
 
-  // Random delay between kills (Source-like)
-  // Fast bursts + slower gaps
+  // rd between kills
+  // burst
   const delay = Math.random() < 0.3
     ? randBetween(300, 700)   // burst kills
     : randBetween(1700, 2600); // normal pacing
@@ -110,7 +110,6 @@ function randBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Start it
 scheduleNextKill();
 
 
