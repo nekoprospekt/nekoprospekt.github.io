@@ -11,7 +11,7 @@ I know, I know, it's kinda crap.. but isn't that the *fun in all of this!?*
 ❱ Edit Pluv so hes suits my sites theme, Thanks for the code, https://github.com/DJfarent! 
 
 ❱ I'll remake my cs_office page from my straw.page (is it obvious these sites have a naming pattern?), and resume my Valve Archive Index thing.. thanks to everyone who puts up with me going on-and-on about it, haha! You think theres something specific I should add to it. DM me on my Discord!
-https://discordid.netlify.app/?id=956267969741217813
+[Here!](https://discordid.netlify.app/?id=956267969741217813)
 
 ❱ Make my links area just generally look better and add more! maybe little buttons would be cool..
 
@@ -21,7 +21,7 @@ https://discordid.netlify.app/?id=956267969741217813
 
 ### ❱ Throw some suggestions at me on my discord! nekoprospekt ⏴ ⏴ 
 Are you suprised its the exact same username that I have on.. absolutely everything else?
-https://discordid.netlify.app/?id=956267969741217813
+[here!](https://discordid.netlify.app/?id=956267969741217813)
 
 ---
 
