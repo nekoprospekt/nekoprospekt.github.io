@@ -21,6 +21,36 @@
     <p>It won't work, I'm not putting the work in to make it work.</p>
     <p>If your on computer, it should all work very nicely!</p>
     <p>(excluding 4k)</p>
+  <style>
+    #text {
+    color: #000000;
+    animation: blinkingText 1.2s infinite;
+  }
+
+  @keyframes blinkingText {
+    0% {
+      color: #000000;
+    }
+
+    49% {
+      color: #000000;
+    }
+
+    60% {
+      color: white;
+    }
+
+    99% {
+      color: white;
+    }
+
+    100% {
+      color: #000000;
+    }
+  }
+</style>
+
+<h3><p id="text">Double Click!</p></h3>
   </div>
 
 <script src="assets/kill-feed.js"></script>
