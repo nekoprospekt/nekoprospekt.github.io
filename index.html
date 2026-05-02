@@ -1,92 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-<meta charset="UTF-0">
-<title>d3_c17_07</title>
-
+<head>
+<meta charset="UTF-8">
+<title>d1_trainstation_01</title>
 <link rel="icon" href="images/censor.gif" type="image/gif">
-<link rel="stylesheet" href="stylesheet.css">
 
+<style>
+
+body{
+    margin:0;
+    font-family: Bahnschrift, sans-serif;
+    background:#111;
+    color:white;
+    isolation:isolate;
+}
+
+.negative-text{
+    font-size:80px;
+    font-weight:bold;
+    color:white;
+    mix-blend-mode:difference;
+}
+
+.header{
+    height:100vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+.header-bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:120%;
+    background:url(images/banner/banner.png) center/cover;
+    z-index:-1;
+}
+
+.header-content{
+    font-size:3rem;
+    transition:opacity 0.2s, filter 0.2s;
+    mix-blend-mode:difference;
+}
+
+.container{
+    width:100%;
+}
+
+.section{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:700px;
+    padding:50px 10%;
+    gap:100px;
+}
+
+.section + .section{
+    margin-top:-150px;
+}
+
+.section:nth-child(even){
+    flex-direction:row-reverse;
+}
+
+.content{
+    max-width:550px;
+    font-size:1.2rem;
+    padding:70px;
+    background:rgba(255, 255, 255, 0.034);
+    backdrop-filter:blur(15px);
+    border-radius:0px;
+
+    position:relative;
+    top:-20px;
+
+    transform: rotateZ(var(--initial-tilt,0deg)) translateY(40px);
+    opacity:0;
+    filter:blur(8px);
+    transition: transform 1s cubic-bezier(.2,.7,.2,1), filter 1s ease, opacity 1s ease;
+}
+
+.content::before,
+.content::after{
+    position:absolute;
+    font-size:26px;
+    color:rgb(255, 255, 255);
+    pointer-events:none;
+}
+
+.content::before{
+    content:"┏";
+    top:14px;
+    left:18px;
+}
+
+.content::after{
+    content:"▝";
+    top:14px;
+    right:18px;
+}
+
+.content h2::before{
+    content:"┕";
+    position:absolute;
+    bottom:14px;
+    left:18px;
+    font-size:26px;
+    color:rgb(255, 255, 255);
+}
+
+.content h2::after{
+    content:"┛";
+    position:absolute;
+    bottom:14px;
+    right:18px;
+    font-size:26px;
+    color:rgb(255, 255, 255);
+}
+
+.image{
+    width:800px;
+    perspective:1000px;
+    position:relative;
+    overflow:visible; 
+}
+
+.note{
+    position:absolute;
+    width:160px;
+    z-index:3;
+    pointer-events:none;
+    filter:none !important;
+
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5));
+}
+
+.note.top-left{
+    top:-50px;
+    left:-50px;
+    transform: rotate(-8deg);
+}
+
+.note.bottom-right{
+    bottom:-65px;
+    right:-56px;
+    transform: rotate(10deg);
+}
+
+.note.bottom-bottom-right{
+    bottom: -60px;
+    right:-50px;
+    transform: rotate(10deg);
+}
+
+.image{
+    position: relative;
+}
+
+.image-link{
+    display: block;
+    position: relative;
+}
+
+.image img{
+    width:100%;
+    border-radius:2px;
+
+    transform:rotateY(0deg) translateY(40px) rotateZ(var(--initial-tilt,0deg));
+    opacity:0;
+    filter:blur(6px) grayscale(100%);
+    transition:
+        transform 1s cubic-bezier(.2,.7,.2,1),
+        filter 0.5s ease,
+        opacity 1s ease;
+}
+
+a {
+  color: #ffffff;
+  transition: filter 0.3s ease;
+}
+
+.content a{
+    color: white;
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+}
+
+.content a:hover{
+    opacity: 0.6;
+}
+
+.image-link:hover .base-img{
+    filter: blur(2px);
+}
+
+.section:nth-child(even) .image.visible img{
+    transform:rotateY(-5deg) translateY(0) rotateZ(0deg);
+}
+
+.section.visible .content,
+.section.visible .image img{
+    transform:rotateZ(0deg) translateY(0);
+    opacity:1;
+    filter:blur(0) grayscale(100%);
+}
+
+.section .image .base-img:hover{
+    filter:blur(0) grayscale(0%);
+}
+
+.unicode-bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:300vh;
+
+    z-index:0;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fill, 95px);
+    grid-auto-rows:95px;
+
+    font-size:35px;
+    color:#363636;
+    pointer-events:none;
+    user-select:none;
+
+    animation:drift 180s linear infinite;
+}
+
+.unicode-bg span{
+    opacity:0.25;
+    transition:opacity 0.15s;
+}
+
+@keyframes drift{
+    from{ transform:translateY(0); }
+    to{ transform:translateY(-90px); }
+}
+
+.container,
+.header{
+    position:relative;
+    z-index:2;
+}
+
+</style>
 </head>
+
 <body>
-<div class="page">
-  <h1 class="title">&gt; Neko*Prospekt ␦␦␦</h1>
-
-  <div class="subtitle">
-      So, I really couldn't be bothered with CSS, and if my HTML is this bad,
-      you don't wanna see my (attempts at) CSS.
-      Anyways.. let's make this the same as my straw.page !
-      <i>edit</i>, thanks for the help kuba.. helped make the code more legible.
+<div class="unicode-bg"></div>
+<header class="header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <h1 class="negative-text"> Welcome</h1>
+        <p>Scroll down!</p>
+        <h2><b>⌵</b></h2>
     </div>
+</header>
 
-  <div class="content">
-      <p>
-        Hello! I'm a big VALVe fan among other things, of course my all time
-        favourite is HL2 (I am completely UU / combine sided, Tap-4.) and I avidly collect media from the franchise! I
-        obviously don't JUST play HL2, or games within the Source engine,
-        but that would be most of them. (Gmod, HL2, CS:S, Portal.. ) I also play rhythm games and that's
-        where I get most of my music taste from.(If im anywhere it'll be 4played.de, z-city or gm_construct.) fuuuck, I love z-city.
-      </p>
+<div class="container">
 
-      <p>
-        Besides gaming though.. I make art and gmod renders sometimes, please
-        go check them out on my TikTok or (and especially) Lambda Generation
-        if you're interested! I like Tech and would like to say I'm a big fan
-        of 4:3 displays! More than anything (Excluding HL2, sorry guys.) I love my friends! 
-        <b><a href="https://rentry.co/jesuswalks" target="_blank">A</a>, A, N, G, V, N, L, <a href="https://abtfai.straw.page" target="_blank">F</a>, and <i>of course</i> <a href="https://djfarent.github.io" target="_blank">K</a></b> My amazing boyfriend!
-      </p>
+<div class="section">
+    <div class="content">
+        <h1>neko*prospekt</h1>
+        <p>Hello, I'm Lilly! Refer to me as Lilith or Lilly, I don't care.
+        I'm 16 and from Northern Ireland.
+        I more than anything, love Valve games! Half-lIfe 2
+        Being my personal favourite, I am a Combine Loyalist at heart. (tap-4)
+        </p>
 
-    <p class="centered">
-      <b>
-                  ❝ When you took my hand, I couldn't hide it  
-          Way too delighted  
-          Tried to ride it cool but obliged to write it. ❞
-        </b>
-        <br>
-        (U+24DA) ⏴ (U+2661) ⏴ (U+24DB)
-      </p>
+        <p>I dont just play valve games, though! I love Kobaryo and t+pz, I listen to lots of speedcore!
+        I adore drawing and painting, spending time with friends, writing, researching on my interests,
+        attempting web design and making gmod renders.
+        </p>
 
-    <ul class="links">
-      <li>
-        <a href="https://steamcommunity.com/id/universal-union/" target="_blank">Steam</a>
-          <span><i>Look.. Steam.. Wow..</i></span>
-        </li>
-
-     <li>
-          <a href="links.html" target="_blank">Links Page!</a>
-          <span>
-            Any and all links you might need are over here, as well as the information
-            you'll need if you want to contact me! I don't accept friend requests on Discord,
-            so make sure to actually DM me rather than wait for an acceptance on a friend request, which will not come.
-          </span>
-        </li>
-
-        <li>
-          <a href="cs_office.html" target="_blank">cs_office</a>
-          <span>
-          If you had seen it, which theres an extremely high chance you hadn't, I had an Archive of some of my favourite,
-          and what I thought was some of the most relevant pieces of VALVe archival media. I had worked on it a little 
-          before inevitably finding out theres a limit to links on straw.page, which was really crap.
-        </span>
-        </li>
-
-     <li>
-          <a href="index.html" target="_blank">TEST</a>
-          <span>
-          TEST HERE, TEST HERE, TEST HERE., EST HERE.
-        </span>
-        </li>
-
-      </ul>
+        <p>More than anything (Excluding HL2, sorry guys.) I love my friends! 
+        <b><a href="https://rentry.co/jesuswalks" target="_blank">A</a>, A, N, N, G, <a href="https://candykingdomss.straw.page" target="_blank">V</a>, L, <a href="https://abtfai.straw.page" target="_blank">F</a>,
+        and <i>of course</i> <a href="https://djfarent.github.io" target="_blank">K</a></b> My amazing boyfriend! (¬////¬)</p>
     </div>
-  </div>
+    <div class="image">
+        <img src= "images/manor.gif">
+        <img src="images/note1.png" class="note bottom-right">
+    </div>
+</div>
 
-<div id="pluv-container">
-  <img src="images/pluv.png" id="pluv" alt="pluv" class="glow">
-  <div id="pluv-bubble"></div>
-</div>        
+<div class="section">
+    <div class="content">
+        <h2>Links</h2>
+        <p>Well, here's my links, pretty simple, right?</p>
 
-  <script src="assets/pluv.js"></script>
+        <p>"Lilly, why would you need a separate page for
+        your links? This isn't just an excuse to make another page, right? .."</p>
+
+        <p>Stop reading into me, Σ(°ロ°) im allowed as many pages as I want, thank you!
+        Anyways, anything you'd ever need is right over here.
+        </p>
+    </div>
+    <div class="image">
+        <a href="links.html" class="image-link">
+        <img src="images/molotov.gif">
+        <img src="images/note2.png" class="note top-left">
+        </a>
+    </div>
+</div>
+
+<div class="section">
+    <div class="content">
+        <h2>cs_office</h2>
+        <p> Theres lot's of people who have done much better jobs of archiving than me, none the less
+        I have dedicated some patience to my favourite pieces of media and time.. all split up into their
+        respective games. I hope you enjoy reading and viewing this as much as I did in the creation process.</p>
+
+        <p>I'm aware that Valve Archive exists, I'm aware that there are better places to go,
+        but this was my own personal favourites amalgamated! ꉂ (≧ヮ≦)
+        </p>
+    </div>
+    <div class="image">
+        <a href="https://nekoprospekt.github.io/cs_office" class="image-link">
+        <img src="images/bomb.png">
+        <img src="images/noteoffice.png" class="note bottom-bottom-right">
+        </a>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+const header = document.querySelector(".header-content")
+const bg = document.querySelector(".header-bg")
+
+window.addEventListener("scroll", () => {
+    let scroll = window.scrollY
+    let fade = 1 - scroll / 400
+    if (fade < 0) fade = 0
+    header.style.opacity = fade
+    let textBlur = scroll / 40
+    header.style.filter = "blur(" + textBlur + "px)"
+    bg.style.transform = "translateY(" + scroll * 0.4 + "px)"
+    let bgBlur = scroll / 120
+    bg.style.filter = "blur(" + bgBlur + "px)"
+})
+
+const sections = document.querySelectorAll(".section")
+
+const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("visible")
+            sectionObserver.unobserve(entry.target)
+        }
+    })
+},{threshold:0.35})
+
+sections.forEach((sec, i)=>{
+    const tiltAngle = (i % 2 === 0 ? 4 : -4)
+    sec.style.setProperty("--initial-tilt", tiltAngle + "deg")
+    sectionObserver.observe(sec)
+})
+
+</script>
+<script>
+
+const chars = [
+"╳","╲","╱","␦","?"
+];
+
+const grid = document.querySelector(".unicode-bg");
+
+function buildGrid(){
+
+    const size = 100;
+    const cols = Math.ceil(window.innerWidth / size);
+    const rows = Math.ceil((window.innerHeight * 3) / size);
+
+    grid.innerHTML = "";
+
+    for(let i=0;i<cols*rows;i++){
+
+        const span = document.createElement("span");
+
+        span.textContent =
+        chars[Math.floor(Math.random()*chars.length)];
+
+        grid.appendChild(span);
+    }
+}
+
+buildGrid();
+window.addEventListener("resize", buildGrid);
+
+setInterval(()=>{
+
+    const cells = grid.children;
+
+    for(let i=0;i<2;i++){
+
+        const c = cells[Math.floor(Math.random()*cells.length)];
+        if(!c) return;
+
+        c.style.opacity = 1;
+
+        setTimeout(()=>{
+            c.style.opacity = 0.25;
+        },120);
+
+    }
+
+},20);
+
+function isMobile(){
+    return window.matchMedia("(max-width: 768px)").matches;
+}
+
+function removeImagesOnMobile(){
+
+    if(!isMobile()) return;
+
+    // remove all section images
+    const images = document.querySelectorAll(".section .image");
+
+    images.forEach(img => {
+        img.remove();
+    });
+
+}
+
+document.addEventListener("DOMContentLoaded", removeImagesOnMobile);
+
+</script>
 
 </body>
 </html>

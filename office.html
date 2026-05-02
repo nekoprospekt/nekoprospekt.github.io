@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>cs_office</title>
+<link rel="icon" href="images/censor.gif" type="image/gif">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Bahnschrift, sans-serif;
+    background:white;
+    color:black;
+}
+
+.header{
+    height:100vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+.header-bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:120%;
+    background:url(images/background3.png) center/cover;
+    z-index:-1;
+}
+
+.container-top{
+    width:100%;
+    max-width:1200px;
+    min-width:700px;
+    margin:auto;
+    padding:120px 60px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+}
+
+.container-bottom{
+    width:100%;
+    max-width:1200px;
+    min-width:700px;
+    margin:auto;
+    padding:120px 60px;
+
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:60px;
+}
+
+.box{
+    padding:70px;
+    min-height:150px;
+    max-height:800px;
+    background:rgba(0, 0, 0, 0.116);
+    backdrop-filter:blur(15px);
+
+    transition:all .35s ease;
+
+    position:relative;
+}
+
+.box:hover{
+    background:white;
+}
+
+.box::before,
+.box::after{
+    position:absolute;
+    font-size:26px;
+    color:black;
+}
+
+.box::before{
+    content:"┏";
+    top:14px;
+    left:18px;
+}
+
+.box::after{
+    content:"▝";
+    top:14px;
+    right:18px;
+}
+
+.box h2::before{
+    content:"┕";
+    position:absolute;
+    bottom:14px;
+    left:18px;
+}
+
+.box h2::after{
+    content:"┛";
+    position:absolute;
+    bottom:14px;
+    right:18px;
+}
+
+.box h2{
+    margin-top:0;
+    font-size:28px;
+}
+
+.box p{
+    margin-top:10px;
+    line-height:1.5;
+}
+
+.xml-item:hover{
+    filter: blur(3px);
+    color: white;
+}
+
+a {
+  color: #000000;
+  transition: filter 0.3s ease;
+}
+
+a:hover {
+  color: #000000;
+  filter: blur(2px);
+}
+
+.ul {
+    list-style-type: square;
+  }
+
+.xml-block{
+    margin:20px 0;
+}
+
+.xml-item{
+    display:block;
+    margin:10px 0;
+    padding:15px;
+    text-decoration:none;
+    color:rgb(255, 255, 255);
+
+    background: rgba(0, 0, 0, 0.171);
+    backdrop-filter: blur(8px);
+
+    border-radius:10px;
+    transition:0.2s;
+}
+
+.xml-title{
+    font-size:16px;
+}
+
+.xml-desc{
+    font-size:12px;
+    opacity:0.7;
+}
+
+</style>
+</head>
+
+<body>
+<div class="container-top">
+
+<div class="box">
+<h2>Content Creators</h2>
+<p>Tasteful ones.</p>
+<div class="xml-block" data-xml="xml/1top/contentcreators.xml"></div>
+</div>
+
+<div class="box">
+<h2>Wikis</h2>
+<p>For Accurate, 'citated', Information.</p>
+<div class="xml-block" data-xml="xml/1top/wikis.xml"></div>
+</div>
+
+<div class="box">
+<h2>Related Free Downloads</h2>
+<p>Free stuff, always fun, right?</p>
+<div class="xml-block" data-xml="xml/1top/relatedfreedownloads.xml"></div>
+</div>
+
+<div class="box">
+<h2>Fan Spaces</h2>
+<p>I'll only try include places I know are friendly!</p>
+<div class="xml-block" data-xml="xml/1top/fanspaces.xml"></div>
+</div>
+
+<div class="box">
+<h2>Fan Archives</h2>
+<p>And I can tell you now, they are alot better than this.</p>
+<div class="xml-block" data-xml="xml/1top/fanarchives.xml"></div>
+</div>
+
+<div class="box">
+<h2>Fan Sites</h2>
+<p>Discussions, perhaps?</p>
+<div class="xml-block" data-xml="xml/1top/fansites.xml"></div>
+</div>
+
+</div>
+    <header class="header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <h1>Welcome</h1>
+        <p>Scroll down</p>
+    </div>
+</header>
+
+<div class="container-bottom">
+
+<div class="box">
+<h2>Half-Life</h2>
+<p>Welcome to the Black Mesa Transit System.</p>
+<div class="xml-block" data-xml="xml/halflife/halflife.xml"></div>
+</div>
+
+<div class="box">
+<h2>Extras</h2>
+<p>Good morning, Freeman!</p>
+<div class="xml-block" data-xml="xml/halflife/halflifeextras.xml"></div>
+</div>
+
+ <div class="box">
+ <h2>Half-Life 2</h2>
+ <p>So your sayin' when your out on the field your gonna be punching hunters?</p>
+ <div class="xml-block" data-xml="xml/halflife2/halflife2.xml"></div>
+ </div>
+
+ <div class="box">
+ <h2>Extras</h2>
+ <p>I ain't going out on the field, I'm a Radio Operator!</p>
+ <div class="xml-block" data-xml="xml/halflife2/halflife2extras.xml"></div>
+ </div>
+
+<div class="box">
+<h2>Portal</h2>
+<p>Fifteen Hundred Megawatt Aperature Science Heavy Duty Super Coliding Super Button</p>
+<div class="xml-block" data-xml="xml/portal/portal.xml"></div>
+</div>
+
+<div class="box">
+<h2>Extras</h2>
+<p>You did it! the Companion Cube certainly brought you good luck.</p>
+<div class="xml-block" data-xml="xml/portal/portalextras.xml"></div>
+</div>
+
+ <div class="box">
+ <h2>Team Fortress</h2>
+ <p>Spy.. I ain't gonna..</p>
+ <div class="xml-block" data-xml="xml/teamfortress/teamfortress.xml"></div>
+ </div>
+ 
+ <div class="box">
+ <h2>Extra</h2>
+ <p>Seduce Me!!!</p>
+ <div class="xml-block" data-xml="xml/teamfortress/teamfortressextras.xml"></div>
+ </div>
+
+<div class="box">
+<h2>Left 4 Dead</h2>
+<p>Placeholder text.</p>
+<div class="xml-block" data-xml="xml/l4d/l4d.xml"></div>
+</div>
+
+<div class="box">
+<h2>Extra</h2>
+<p>Placeholder text.</p>
+<div class="xml-block" data-xml="xml/l4d/l4dextras.xml"></div>
+</div>
+
+ <div class="box">
+ <h2>Valve</h2>
+ <p>Placeholder text.</p>
+ <div class="xml-block" data-xml="xml/valve/valve.xml"></div>
+ </div>
+
+ <div class="box">
+ <h2>Extra</h2>
+ <p>Placeholder text.</p>
+ <div class="xml-block" data-xml="xml/valve/valveextras.xml"></div>
+ </div>
+
+</div>
+
+<script>
+window.onload = function () {
+    const header = document.querySelector(".header");
+    window.scrollTo({
+        top: header.offsetTop,
+        behavior: "instant"
+    });
+};
+
+document.querySelectorAll(".xml-block").forEach(block => {
+
+    const file = block.getAttribute("data-xml");
+
+    fetch(file)
+    .then(res => res.text())
+    .then(str => (new DOMParser()).parseFromString(str, "text/xml"))
+    .then(data => {
+
+        const items = data.getElementsByTagName("item");
+
+        for (let i = 0; i < items.length; i++) {
+
+            const title = items[i].getElementsByTagName("title")[0]?.textContent || "";
+            const url = items[i].getElementsByTagName("url")[0]?.textContent || "#";
+            const desc = items[i].getElementsByTagName("description")[0]?.textContent || "";
+
+            const el = document.createElement("a");
+            el.href = url;
+            el.className = "xml-item";
+
+            el.innerHTML = `
+                <div class="xml-title">${title}</div>
+                <div class="xml-desc">${desc}</div>
+            `;
+
+            block.appendChild(el);
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

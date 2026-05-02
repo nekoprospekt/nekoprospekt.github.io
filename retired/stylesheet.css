@@ -1,0 +1,100 @@
+@font-face {
+  font-family: "AnonymousPro";
+  src: url("Fonts/AnonymousPro.woff2") format("woff2"),
+       url("Fonts/AnonymousPro.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  overflow: hidden;
+  height: 100%;
+
+  min-height: 50vh;
+  padding: 6rem;
+
+ background: url("images/background.png") center / cover no-repeat fixed;
+
+ font-family: "AnonymousPro", monospace;
+ color: #000;
+}
+
+.page {
+  aspect-ratio: 4 / 3;
+  width: 50vw;
+  max-width: 900px;
+
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+
+.subtitle {
+  margin-bottom: 2rem;
+  opacity: 0.85;
+}
+
+.centered {
+  text-align: center;
+}
+
+ul.links {
+  list-style: none;
+  padding: 0;
+}
+
+
+ul.links span {
+  display: block;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+a {
+  color: #000;
+  transition: filter 0.3s ease;
+}
+
+a:hover {
+  color: #000000;
+  filter: blur(2px);
+}
+
+#pluv-container {
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  z-index: 999;
+}
+
+/* pluv image */
+#pluv {
+  width: 110px;
+  cursor: pointer;
+  image-rendering: pixelated;
+  transition: transform 0.2s ease;
+}
+
+.glow {
+  filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
+}
+
+#pluv-bubble {
+  position: absolute;
+  bottom: 140px;       /* hey lilly this moves it up*/
+  right: -8px;        /* this moves it to the right*/
+  padding: 20px 20px;
+  background: rgba(10,10,15,0.9);
+  color: #ffffff;
+  font-family: AnonymousPro, Arial, sans-serif;
+  font-size: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.534);
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* love you btw very impressive stuff lilly */
+/* Yeah, I'm pretty cool.. Don't mention it.*/

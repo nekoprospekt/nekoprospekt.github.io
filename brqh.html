@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>cs_office</title>
+<link rel="icon" href="images/censor.gif" type="image/gif">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Bahnschrift, sans-serif;
+
+    background:#111;
+    color:rgb(255, 255, 255);
+}
+
+.header{
+transform: rotate(90deg);
+
+}
+
+.container-bottom{
+    width:100%;
+    max-width:1200px;
+    min-width:500px;
+    margin:auto;
+    padding:120px 60px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
+
+.box{
+    padding:40px;
+    min-height:300px;
+    max-height:800px;
+    background:rgba(255, 255, 255, 0.034);
+    backdrop-filter:blur(15px);
+
+    transition:all .35s ease;
+
+    position:relative;
+}
+
+.box p{
+    margin-top:10px;
+    line-height:1.5;
+}
+
+a {
+  color: #000000;
+  transition: filter 0.3s ease;
+}
+
+a:hover {
+  color: #000000;
+  filter: blur(2px);
+}
+
+.ul {
+    list-style-type: square;
+  }
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container-bottom">
+
+<div class="box">
+<h2>discord</h2>
+</div>
+
+<div class="box">
+<img src="images/humantest.png" alt="">
+</div>
+
+ <div class="box">
+ <h2>Half-Life 2</h2>
+ </div>
+
+ <div class="box">
+ <h2>Extras</h2>
+ </div>
+
+</div>
+
+</body>
+</html>

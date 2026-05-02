@@ -48,9 +48,8 @@ function pickPlayers() {
 function createKill() {
   const { killer, victim } = pickPlayers();
 
-  // Decide which icon font this kill uses
   // Most kills are HL2MP, some are csd
-  const useCsd = Math.random() < 0.25; // ~25% csd kills
+  const useCsd = Math.random() < 0.25; // 25% csd k
 
   let iconHTML = "";
 
@@ -58,7 +57,7 @@ function createKill() {
     // csd kill
     const base = rand(csdGlyphs);
 
-    // headshot ONLY applies to csd
+    // headshot ONLY apply to csd
     const isHeadshot = Math.random() < killer.headshotBias;
     const csdChar = isHeadshot ? base + "D" : base;
 
