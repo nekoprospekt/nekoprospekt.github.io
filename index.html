@@ -7,6 +7,11 @@
 
 <style>
 
+@font-face {
+  font-family: DIN;
+  src: url(Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf);
+}
+
 body{
     margin:0;
     font-family: Bahnschrift, sans-serif;
@@ -16,8 +21,18 @@ body{
 }
 
 .negative-text{
-    font-size:80px;
+    font-size:90px;
     font-weight:bold;
+    letter-spacing: 8px;
+    color:white;
+    mix-blend-mode:difference;
+}
+
+.welcome-scroll{
+    font-family: Bahnschrift, sans-serif;
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing: 8px;
     color:white;
     mix-blend-mode:difference;
 }
@@ -229,7 +244,7 @@ a {
     grid-auto-rows:95px;
 
     font-size:35px;
-    color:#363636;
+    color:#3d3d3d;
     pointer-events:none;
     user-select:none;
 
@@ -237,8 +252,8 @@ a {
 }
 
 .unicode-bg span{
-    opacity:0.25;
-    transition:opacity 0.15s;
+    opacity:0.09;
+    transition:opacity 0.09s;
 }
 
 @keyframes drift{
@@ -260,8 +275,9 @@ a {
 <header class="header">
     <div class="header-bg"></div>
     <div class="header-content">
-        <h1 class="negative-text"> Welcome</h1>
-        <p>Scroll down!</p>
+        <br>
+        <h1 class="negative-text"> welcome.</h1>
+        <p class="welcome-scroll">Scroll down!</p>
         <h2><b>⌵</b></h2>
     </div>
 </header>
@@ -289,6 +305,27 @@ a {
     <div class="image">
         <img src= "images/manor.gif">
         <img src="images/note1.png" class="note bottom-right">
+    </div>
+</div>
+
+<div class="section">
+    <div class="content">
+        <h2>Projects</h2>
+        <p>I work on stuff sometimes, you can find some of it over here!</p>
+
+        <p>I'll keep art, coding, writing and other such things easily accesible here,
+            right now though, this page isn't out, shouldn't be long though!
+        </p>
+
+        <p>I'd love to speak with like minded people, please reach out if you have
+            something fun or you'd even like to collaborate.. like, gman.. haha.. get it?
+        </p>
+    </div>
+    <div class="image">
+        <a href="project.html" class="image-link">
+        <img src="images/computer.png">
+        <img src="images/noteproject.png" class="note top-left">
+        </a>
     </div>
 </div>
 
@@ -380,16 +417,18 @@ function buildGrid(){
 
     const size = 100;
     const cols = Math.ceil(window.innerWidth / size);
-    const rows = Math.ceil((window.innerHeight * 3) / size);
+
+    const pageHeight = document.documentElement.scrollHeight;
+    const rows = Math.ceil(pageHeight / size);
 
     grid.innerHTML = "";
 
-    for(let i=0;i<cols*rows;i++){
+    for(let i = 0; i < cols * rows; i++){
 
         const span = document.createElement("span");
 
         span.textContent =
-        chars[Math.floor(Math.random()*chars.length)];
+        chars[Math.floor(Math.random() * chars.length)];
 
         grid.appendChild(span);
     }
