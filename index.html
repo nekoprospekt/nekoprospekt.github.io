@@ -140,7 +140,7 @@ body{
 }
 
 .image{
-    width:800px;
+    width: clamp(500px, 45vw, 900px); /*When I was looking for help with scaling, I found myself at this with AI, ORG 800px*/
     perspective:1000px;
     position:relative;
     overflow:visible; 
@@ -151,9 +151,8 @@ body{
     width:160px;
     z-index:3;
     pointer-events:none;
-    filter:none !important;
 
-    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5)) !important;
 }
 
 .note.top-left{
@@ -208,10 +207,6 @@ a {
 }
 
 .content a:hover{
-    opacity: 0.6;
-}
-
-.image-link:hover .base-img{
     filter: blur(2px);
 }
 
@@ -226,8 +221,8 @@ a {
     filter:blur(0) grayscale(100%);
 }
 
-.section .image .base-img:hover{
-    filter:blur(0) grayscale(0%);
+.image-link:hover .base-img{
+    filter: blur(2px) grayscale(0%);
 }
 
 .unicode-bg{
@@ -267,6 +262,41 @@ a {
     z-index:2;
 }
 
+/*I didnt write this, I used AI. I have no understanding of how media queries work!*/
+
+@media (max-width: 1400px){
+
+    
+    .section .image{
+        display: none;
+    }
+
+    
+    .section{
+        flex-direction: column;
+        text-align: center;
+        padding: 80px 8%;
+        gap: 40px;
+    }
+
+    .content{
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+}
+
+@media (max-width: 1600px){
+
+    .section{
+        padding: 80px 6%;
+        gap: 60px;
+    }
+
+}
+
+/*This here is for 1440p as well, I BELIEVE!!*/
+
 </style>
 </head>
 
@@ -303,14 +333,14 @@ a {
         and <i>of course</i> <a href="https://djfarent.github.io" target="_blank">K</a></b> My amazing boyfriend! (¬////¬)</p>
     </div>
     <div class="image">
-        <img src= "images/manor.gif">
+        <img src= "images/manor.gif" class="base-img">
         <img src="images/note1.png" class="note bottom-right">
     </div>
 </div>
 
 <div class="section">
     <div class="content">
-        <h2>Projects</h2>
+        <h2><a href="projects.html" target="_blank">Projects</a></h2>
         <p>I work on stuff sometimes, you can find some of it over here!</p>
 
         <p>I'll keep art, coding, writing and other such things easily accesible here,
@@ -322,8 +352,8 @@ a {
         </p>
     </div>
     <div class="image">
-        <a href="project.html" class="image-link">
-        <img src="images/computer.png">
+        <a href="projects.html" class="image-link">
+        <img src="images/computer.png" class="base-img">
         <img src="images/noteproject.png" class="note top-left">
         </a>
     </div>
@@ -331,7 +361,7 @@ a {
 
 <div class="section">
     <div class="content">
-        <h2>Links</h2>
+        <h2><a href="links.html" target="_blank">Links</a></h2>
         <p>Well, here's my links, pretty simple, right?</p>
 
         <p>"Lilly, why would you need a separate page for
@@ -343,7 +373,7 @@ a {
     </div>
     <div class="image">
         <a href="links.html" class="image-link">
-        <img src="images/molotov.gif">
+        <img src="images/molotov.gif" class="base-img">
         <img src="images/note2.png" class="note top-left">
         </a>
     </div>
@@ -351,7 +381,7 @@ a {
 
 <div class="section">
     <div class="content">
-        <h2>cs_office</h2>
+        <h2><a href="https://nekoprospekt.github.io/cs_office" target="_blank">cs_office</a></h2>
         <p> Theres lot's of people who have done much better jobs of archiving than me, none the less
         I have dedicated some patience to my favourite pieces of media and time.. all split up into their
         respective games. I hope you enjoy reading and viewing this as much as I did in the creation process.</p>
@@ -362,7 +392,7 @@ a {
     </div>
     <div class="image">
         <a href="https://nekoprospekt.github.io/cs_office" class="image-link">
-        <img src="images/bomb.png">
+        <img src="images/bomb.png" class="base-img">
         <img src="images/noteoffice.png" class="note bottom-bottom-right">
         </a>
     </div>
