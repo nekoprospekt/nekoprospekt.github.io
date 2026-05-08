@@ -16,6 +16,11 @@
 }
 
 @font-face {
+  font-family: "DIN";
+  src: url("Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf") format("truetype");
+}
+
+@font-face {
   font-family: "csd";
   src: url("Fonts/csd.ttf") format("truetype");
 }
@@ -25,8 +30,8 @@ body {
  justify-content: center;
  align-items: center;
  font-family: Bahnschrift, sans-serif;
- background: url("images/backgroundstation3.png") center / cover no-repeat fixed;
- color: rgb(0, 0, 0);
+ background: url("images/station\ it\ brother!.png") center / cover no-repeat fixed;
+ color: rgb(255, 255, 255);
 }
 
 .center {
@@ -37,19 +42,35 @@ text-align: center;
   position: fixed;
   top: 18px;
   right: 18px;
-  width: 320px;
+
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
   pointer-events: none;
   z-index: 9999;
 }
 
+.title {
+  font-family: DIN;
+  font-size: 48px;
+  letter-spacing: 2px;
+
+  align-items: center;
+}
+
 .kill {
   display: flex;
-  align-items: right;
-  gap: 9px;
-  margin-bottom: 6px;
+  align-items: center;
+  justify-content: flex-end;
 
-  font-size: 19px;
+  gap: 10px;
+  margin: 0;
+
+  font-size: 21px;
   white-space: nowrap;
+  text-align: right;
 
   opacity: 0.9;
   transition: opacity 0.45s ease, transform 0.35s ease;
@@ -63,36 +84,42 @@ text-align: center;
 .killer,
 .victim {
   font-family: Bahnschrift, Helvetica, sans-serif;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 .weapon {
   font-family: "HL2MP";
-  font-size: 32px;
-  line-height: -2;
+  font-size: 30px;
+
+  margin: 0px;
+  transform: translateY(5px);
+  line-height: 1.5;
 }
 
 .headshot {
   font-family: "csd";
-  font-size: 32px;
-  line-height: -2;
+  font-size: 30px;
+
   margin-left: -0px;
+  margin: 0px;
+  transform: translateY(5px);
+  line-height: 1.5;
 }
 
     html, body {
       width: 100%;
       height: 100%;
       margin: 0;
-    }
-  </style>
+}
 
+</style>
 </head>
 
 <body>
 
 
   <div class="center">
-    <h1>Don't tell me your on Mobile?</h1>
+    <p class="title">Don't tell me your on Mobile?</p>
     <p>If you are, I hope you can even read this, but..</p>
     <p>It won't work, I'm not putting the work in to make it work.</p>
     <p>If your on computer, it should all work very nicely!</p>
@@ -105,11 +132,11 @@ text-align: center;
 
   @keyframes blinkingText {
     0% {
-      color: #000000;
+      color: #00000000;
     }
 
     49% {
-      color: #000000;
+      color: #ffffff42;
     }
 
     60% {
@@ -121,12 +148,12 @@ text-align: center;
     }
 
     100% {
-      color: #000000;
+      color: #ffffff2d;
     }
   }
 </style>
 
-<h3><p id="text">Double Click!</p></h3>
+<h2><p id="text">Double click the screen</p></h2>
   </div>
 
 <script src="assets/kill-feed.js"></script>

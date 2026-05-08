@@ -1,22 +1,25 @@
 const feed = document.getElementById("kill-feed");
 
-const MAX_KILLS = 3;
-const KILL_LIFETIME = 4200;
+const MAX_KILLS = 6;
+const KILL_LIFETIME = 6000;
 
 // ---- PLAYERS (edit names + bias here) ----
 const players = [
   { name: "nekoprospekt", headshotBias: 0.14 },
-  { name: "alxverqq", headshotBias: 0.09 },
   { name: "FartenYT", headshotBias: 0.43 },
-  { name: "flwrlena", headshotBias: 0.08 },
+  { name: "flwrlena", headshotBias: 0.0 },
   { name: "[UNSC]incode7", headshotBias: 0.10 },
-  { name: "candyheartache", headshotBias: 0.27 },
+  { name: "candyheartache", headshotBias: 0.37 },
   { name: "probablyahewker", headshotBias: 0.10 },
   { name: "EggyAverage", headshotBias: 0.10 },
   { name: "Mă drogez | romania", headshotBias: 0.10 },
   { name: "faifai", headshotBias: 0.09 },
-  { name: "MeQuot", headshotBias: 0.12 },
-  { name: "Maple <3 Light", headshotBias: 0.20 }
+  { name: "MeQuot", headshotBias: 0.22 },
+  { name: "lesbian isreali labubu porn", headshotBias: 0.30 },
+  { name: "void", headshotBias: 0.20 },
+  { name: "chips92", headshotBias: 0.19 },
+  { name: "RobertGamerCool1998", headshotBias: 0.18 },
+  { name: "jusjoe", headshotBias: 0.18 },
 ];
 
 // ---- HL2MP weapon glyphs (VALID ONLY) ----
@@ -87,7 +90,7 @@ function createKill() {
   // fade out
   setTimeout(() => {
     kill.classList.add("fade");
-    setTimeout(() => kill.remove(), 450);
+    setTimeout(() => kill.remove(), 340);
   }, KILL_LIFETIME);
 }
 
@@ -99,8 +102,8 @@ function scheduleNextKill() {
   // rd between kills
   // burst
   const delay = Math.random() < 0.3
-    ? randBetween(300, 700)   // burst kills
-    : randBetween(1700, 2600); // normal pacing
+    ? randBetween(200, 4000)   // burst kills
+    : randBetween(1200, 5000); // normal pacing
 
   setTimeout(scheduleNextKill, delay);
 }
