@@ -15,9 +15,49 @@
 body{
     margin:0;
     font-family: Bahnschrift, sans-serif;
-    background:#111;
+    background:#0a0a0a;
     color:white;
     isolation:isolate;
+}
+
+
+body.loading * {
+    animation: none !important;
+    transition: none !important;
+}
+
+#global-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    transition: opacity 0.6s ease;
+}
+
+#global-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#global-loader img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+@keyframes signalPulse {
+    0%, 100% { opacity: 1; }
+    96% { opacity: 1; }
+    97% { opacity: 0.85; }
+    90% { opacity: 1; }
 }
 
 .negative-text{
@@ -26,6 +66,8 @@ body{
     letter-spacing: 8px;
     color:white;
     mix-blend-mode:difference;
+
+    animation: signalPulse 8s infinite;
 }
 
 .welcome-scroll{
@@ -63,6 +105,24 @@ body{
     mix-blend-mode:difference;
 }
 
+.header-blur {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(15, 15, 15, 0.055) 0%,
+        rgba(14, 14, 14, 0.644) 60%,
+        rgb(10, 10, 10) 100%
+    );
+
+    pointer-events: none;
+    z-index: 3;
+}
+
 .container{
     width:100%;
 }
@@ -95,10 +155,14 @@ body{
     position:relative;
     top:-20px;
 
-    transform: rotateZ(var(--initial-tilt,0deg)) translateY(40px);
-    opacity:0;
-    filter:blur(8px);
-    transition: transform 1s cubic-bezier(.2,.7,.2,1), filter 1s ease, opacity 1s ease;
+    transform: translateX(-40px) skewX(-2deg);
+    opacity:0.6;
+    filter: contrast(80%) grayscale(100%);
+
+    transition:
+        transform 0.8s cubic-bezier(.16,.84,.44,1),
+        filter 0.6s ease,
+        opacity 0.6s ease;
 }
 
 .content::before,
@@ -152,7 +216,7 @@ body{
     z-index:3;
     pointer-events:none;
 
-    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5)) !important;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5));
 }
 
 .note.top-left{
@@ -186,13 +250,20 @@ body{
     width:100%;
     border-radius:2px;
 
-    transform:rotateY(0deg) translateY(40px) rotateZ(var(--initial-tilt,0deg));
-    opacity:0;
-    filter:blur(6px) grayscale(100%);
+    transform: translateX(60px) scale(0.96);
+    opacity:0.6;
+    filter: grayscale(100%) contrast(80%);
+
     transition:
-        transform 1s cubic-bezier(.2,.7,.2,1),
-        filter 0.5s ease,
-        opacity 1s ease;
+        transform 0.8s cubic-bezier(.16,.84,.44,1),
+        filter 0.6s ease,
+        opacity 0.6s ease;
+}
+
+.section.visible .image img{
+    transform: translateX(0) scale(1);
+    opacity:1;
+    filter: grayscale(100%) contrast(100%);
 }
 
 a {
@@ -214,11 +285,10 @@ a {
     transform:rotateY(-5deg) translateY(0) rotateZ(0deg);
 }
 
-.section.visible .content,
-.section.visible .image img{
-    transform:rotateZ(0deg) translateY(0);
+.section.visible .content{
+    transform: translateX(0) skewX(0deg);
     opacity:1;
-    filter:blur(0) grayscale(100%);
+    filter: contrast(100%) grayscale(100%);
 }
 
 .image-link:hover .base-img{
@@ -239,7 +309,7 @@ a {
     grid-auto-rows:95px;
 
     font-size:35px;
-    color:#3d3d3d;
+    color:#5e5e5e;
     pointer-events:none;
     user-select:none;
 
@@ -301,15 +371,19 @@ a {
 </head>
 
 <body>
+<div id="global-loader">
+<img src="images/gifs-icos/loading.gif" alt="Loading...">
+</div>
 <div class="unicode-bg"></div>
 <header class="header">
     <div class="header-bg"></div>
     <div class="header-content">
         <br>
-        <h1 class="negative-text"> welcome.</h1>
+        <h1 class="negative-text" id="type"></h1>
         <p class="welcome-scroll">Scroll down!</p>
         <h2><b>⌵</b></h2>
     </div>
+    <div class="header-blur"></div>
 </header>
 
 <div class="container">
@@ -401,21 +475,96 @@ a {
 </div>
 
 <script>
+(function(){
 
-const header = document.querySelector(".header-content")
-const bg = document.querySelector(".header-bg")
+    const loader = document.getElementById("global-loader");
+    const MIN_VISIBLE_TIME = 2000;
+    const startTime = Date.now();
+
+    function finishLoading(){
+
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, MIN_VISIBLE_TIME - elapsed);
+         
+        
+        setTimeout(() => {
+
+            loader.classList.add("hidden");
+
+            setTimeout(() => {
+                loader.remove();
+
+                // 🔥 NOW allow animations
+                document.body.classList.remove("loading");
+                pageReady = true;
+
+                // Re-trigger header animation if needed
+                window.dispatchEvent(new Event("scroll"));
+
+            }, 600);
+
+        }, remaining);
+    }
+
+    function waitForImages(){
+
+        const images = document.images;
+        let loaded = 0;
+        const total = images.length;
+
+        if(total === 0){
+            finishLoading();
+            return;
+        }
+
+        function imageLoaded(){
+            loaded++;
+            if(loaded >= total){
+                finishLoading();
+            }
+        }
+
+        for(let img of images){
+            if(img.complete){
+                imageLoaded();
+            } else {
+                img.addEventListener("load", imageLoaded);
+                img.addEventListener("error", imageLoaded);
+            }
+        }
+    }
+
+    if(document.fonts){
+        document.fonts.ready.then(waitForImages);
+    } else {
+        waitForImages();
+    }
+
+})();
+</script>
+
+<script>
+let pageReady = false;
+
+const header = document.querySelector(".header-content");
+const bg = document.querySelector(".header-bg");
 
 window.addEventListener("scroll", () => {
-    let scroll = window.scrollY
-    let fade = 1 - scroll / 400
-    if (fade < 0) fade = 0
-    header.style.opacity = fade
-    let textBlur = scroll / 40
-    header.style.filter = "blur(" + textBlur + "px)"
-    bg.style.transform = "translateY(" + scroll * 0.4 + "px)"
-    let bgBlur = scroll / 120
-    bg.style.filter = "blur(" + bgBlur + "px)"
-})
+
+    if(!pageReady) return; // block animation until ready
+    const scroll = window.scrollY;
+
+    // text moves slightly faster than scroll (parallax)
+    header.style.transform = "translateY(" + scroll * 0.7 + "px)";
+
+    // smooth fade out
+    let fade = 1 - scroll / 400;
+    if (fade < 0) fade = 0;
+    header.style.opacity = fade;
+
+    // KEEP your original background movement
+    bg.style.transform = "translateY(" + scroll * 0.4 + "px)";
+});
 
 const sections = document.querySelectorAll(".section")
 
@@ -463,6 +612,20 @@ function buildGrid(){
         grid.appendChild(span);
     }
 }
+
+const text = "welcome."
+const el = document.getElementById("type")
+let i = 0
+
+function type() {
+    if (i < text.length) {
+        el.textContent += text[i]
+        i++
+        setTimeout(type, 80)
+    }
+}
+
+type()
 
 buildGrid();
 window.addEventListener("resize", buildGrid);
