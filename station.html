@@ -46,10 +46,25 @@ body {
   background-blend-mode: difference;
     background: rgba(0, 0, 0, 0.342);
   border-radius: 0px;
-  padding: 10px;
+  padding: 20px;
   padding-right: 30px;
-  padding-left: 20px;
+  padding-left: 40px;
 }
+
+.center {
+  position: relative;
+}
+
+.corner {
+  position: absolute;
+  font-size: 26px;
+  pointer-events: none;
+}
+
+.tl { top: 14px; left: 18px; }
+.tr { top: 14px; right: 18px; }
+.bl { bottom: 14px; left: 18px; }
+.br { bottom: 14px; right: 18px; }
 
 #kill-feed {
   position: fixed;
@@ -154,14 +169,6 @@ a {
   line-height: 1.5;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: -1;
-}
-
 #bg-video {
   position: fixed;
   top: 0;
@@ -172,6 +179,18 @@ body::before {
   object-fit: cover;
 
   z-index: -2;
+}
+
+#corner-icon {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+
+  width: 60px;
+  height: auto;
+
+  z-index: 9999;
+  pointer-events: none;
 }
 
 /*I do not understand Media queries, again, AI wrote this, I wanted more functionality for mobile devices.*/
@@ -227,8 +246,11 @@ body::before {
   <source src="images/banner/blurredmeltytest.mp4" type="video/mp4">
 </video>
   <div id="kill-feed"></div>
-  <div class="vertical-line">_________________ </div>
   <div class="center">
+        <div class="corner tl">┏</div>
+        <div class="corner tr">▝</div>
+        <div class="corner bl">┕</div>
+        <div class="corner br">┛</div>
       <p class="title">Don't tell me your on Mobile?</p>
       <p>If you are, I hope you can even read this, but..
     It won't work too good, I'm not putting the work in to make it work excellent.
@@ -249,11 +271,11 @@ body::before {
   /*I don't understand keyframes, This was pulled from scripted.neocities*/
   @keyframes blinkingText {
     0% {
-      color: #000000;
+      color: #00000000;
     }
 
     49% {
-      color: #000000;
+      color: #00000000;
     }
 
     60% {
@@ -265,7 +287,7 @@ body::before {
     }
 
     100% {
-      color: #000000;
+      color: #00000000;
     }
   }
 </style>
@@ -278,6 +300,7 @@ body::before {
   Alternatively, if your on mobile, click here.</a></p>
 </div>
 
+<img src="images/gifs-icos/loading.gif" id="corner-icon" alt="icon">
 <script src="assets/kill-feed.js"></script>
 <script src="assets/stationscreen.js"></script>
 
