@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>d1_trainstation_03</title>
+    <link rel="icon" href="images/gifs-icos/censor.gif" type="image/gif">
+
+    <style>
+        @font-face {
+            font-family: DIN;
+            src: url(Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf);
+        }
+
+        body {
+            margin: 0;
+            background: #0a0a0a;
+            color: white;
+            font-family: Bahnschrift light, sans-serif;
+            overflow: hidden;
+        }
+
+        .panel-container {
+            position: relative;
+            margin-right: -110px;
+            /* better solution*/
+        }
+
+        .side-links {
+            position: absolute;
+            left: -90px;
+            /*I need to find a better solution*/
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border: 2px;
+            border-color: rgba(255, 255, 255, 0.021);
+        }
+
+        .side-links a {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.041);
+            backdrop-filter: blur(10px);
+            display: block;
+            overflow: visible;
+            transition: transform 0.2s ease, background 0.2s ease;
+            border: 2px;
+            border-color: rgb(255, 255, 255);
+        }
+
+        .side-links img {
+            width: 100%;
+            height: 100%;
+            object-fit: center;
+            pointer-events: none;
+        }
+
+        .side-links a:hover {
+            background: rgba(255, 255, 255, 0.233);
+            border: 2px;
+            border-color: rgb(255, 255, 255);
+        }
+
+        .unicode-bg {
+            /*practically a copy from index, links etc.*/
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 95px);
+            grid-auto-rows: 95px;
+
+            font-size: 35px;
+            color: #272727;
+            pointer-events: none;
+            user-select: none;
+
+            animation: drift 180s linear infinite;
+        }
+
+        .unicode-bg span {
+            opacity: 0.06;
+            transition: opacity 0.1s;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-90px);
+            }
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8%;
+            /*testing percentage, don't know if I'll be bothered to push this across my whole site, honestly.*/
+            box-sizing: border-box;
+        }
+
+        .panel {
+            width: 700px;
+            height: 70vh;
+            /*AI said to use viewport height so here we are.*/
+            padding: 50px;
+            box-sizing: border-box;
+
+            background: rgba(255, 255, 255, 0.021);
+            backdrop-filter: blur(10px);
+
+            overflow-y: auto;
+            position: relative;
+
+            opacity: 0.95;
+        }
+
+        .panel::before,
+        .panel::after {
+            position: absolute;
+            font-size: 26px;
+            pointer-events: none;
+        }
+
+        /* Firefox base */
+        .panel {
+            scrollbar-width: thin;
+            scrollbar-color: transparent transparent;
+        }
+
+        /* actually have no idea what this is for, besides scrollbar.*/
+        .panel::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .panel::-webkit-scrollbar-thumb {
+            background: white;
+            /* Always exists */
+            opacity: 0;
+            /* Hidden via opacity */
+            transition: opacity 0.3s ease;
+        }
+
+        /* Visible while scrolling */
+        .panel.scrolling::-webkit-scrollbar-thumb {
+            opacity: 0.9;
+        }
+
+        /* Firefox visible state */
+        .panel.scrolling {
+            scrollbar-color: white transparent;
+        }
+
+        .panel-title {
+            font-family: DIN;
+            margin: 0 0 15px 0;
+            font-size: 38px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            opacity: 0.9;
+        }
+
+        .top-bar {
+            width: 700px;
+            height: 60px;
+            margin-bottom: 12px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 20px;
+            box-sizing: border-box;
+
+            background: rgba(255, 255, 255, 0.021);
+            backdrop-filter: blur(10px);
+
+            opacity: 0.95;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            flex-shrink: 0;
+        }
+
+        .top-center {
+            margin-left: 28px;
+
+            font-family: DIN;
+            font-size: 14px;
+            letter-spacing: 2px;
+
+            opacity: 0.7;
+
+            white-space: nowrap;
+        }
+
+        .top-status {
+            margin-left: auto;
+
+            width: 200px;
+            max-width: 240px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            text-align: right;
+
+            font-family: DIN;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+
+            opacity: 0.55;
+
+            transition: opacity 0.2s ease;
+        }
+
+        .top-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .top-icon img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+
+            filter: grayscale(100%) brightness(0.8);
+            opacity: 0.7;
+
+            border: 1px solid transparent;
+            padding: 4px;
+            box-sizing: border-box;
+
+            transition:
+                filter 0.25s ease,
+                opacity 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .top-icon img:hover {
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+
+            border-color: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .top-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -26px;
+
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+
+            padding: 4px 8px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transform: translateY(4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .top-icon:hover::after {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .top-text {
+            font-family: DIN;
+            font-size: 14px;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        .scroll-indicator {
+            font-family: DIN;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            opacity: 0.6;
+            transition: opacity 0.6s ease;
+            transform: translateY(8px);
+            line-height: 5px;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+            transition-duration: 0.2s;
+        }
+
+        .bottom-image {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 1100px;
+            max-width: 46vw;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .tooltip {
+            display: block;
+            position: relative;
+            overflow: visible;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+
+            position: absolute;
+
+            left: -174px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+
+            color: white;
+
+            padding: 5px 10px;
+
+            font-family: DIN;
+            font-size: 11px;
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transition: opacity 0.2s ease;
+
+            z-index: 999999;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+
+        .side-links {
+            overflow: visible;
+        }
+
+        /*Alot more AI than usual on this page cause I, admittedly kept breaking it*/
+    </style>
+</head>
+
+<body>
+
+    <div class="unicode-bg"></div>
+
+    <img src="images/humantestbio.png" class="bottom-image">
+
+    <div class="wrapper">
+        <div class="wrapper">
+            <div class="panel-container">
+                <div class="side-links">
+
+                    <a href="lovemail.html" class="tooltip" data-tooltip="Lovemail to my boyfriend.">
+                        <img src="images/gifs-icos/whiteheart.png">
+                    </a> <!--hey, isn't that cute.-->
+                    <a href="#"><img src="images/gifs-icos/whiteX.png"></a>
+                    <a href="#"><img src="images/gifs-icos/whiteX.png"></a>
+                </div>
+
+                <h1 class="panel-title" id="type"></h1>
+
+                <div class="top-bar">
+                    <div class="top-icons">
+                        <div class="top-icon" data-tooltip="Northern Irish, really. But sure.">
+                            <img src="images/gifs-icos/irish.png">
+                        </div>
+
+                        <div class="top-icon" data-tooltip="I'm still on the asexual spectrum.">
+                            <img src="images/gifs-icos/acespec.png">
+                        </div>
+
+                        <div class="top-icon" data-tooltip="Use She/He pronouns on me, I don't mind.">
+                            <img src="images/gifs-icos/sheher.png">
+                        </div>
+
+                        <div class="top-icon" data-tooltip="Despite that, I am still a cis woman!">
+                            <img src="images/gifs-icos/female.png">
+                        </div>
+                    </div>
+                    <div class="top-center">
+                        17.0 // favourite Unicode Characters:
+                    </div>
+
+                    <div class="top-status" id="statusText">
+                        awaiting input...
+                    </div>
+                </div>
+
+                <div class="panel" id="scrollPanel">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                </div>
+
+                <div class="scroll-indicator" id="scrollIndicator">
+                    scroll down
+                    <p>⌵</p>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+
+            const chars = ["╳", "╲", "╱", "␦", "?"];
+            const grid = document.querySelector(".unicode-bg");
+
+            function buildGrid() {
+                const size = 100;
+                const cols = Math.ceil(window.innerWidth / size); // works well enough here, should push to index a better fix.
+                const rows = Math.ceil(window.innerHeight / size);
+
+                grid.innerHTML = "";
+
+                for (let i = 0; i < cols * rows; i++) {
+                    const span = document.createElement("span");
+                    span.textContent = chars[Math.floor(Math.random() * chars.length)];
+                    grid.appendChild(span);
+                }
+            }
+
+            buildGrid();
+            window.addEventListener("resize", buildGrid);
+
+            setInterval(() => {
+
+                const cells = grid.children;
+
+                for (let i = 0; i < 2; i++) {
+
+                    const c = cells[Math.floor(Math.random() * cells.length)];
+                    if (!c) return;
+
+                    c.style.opacity = 1;
+
+                    setTimeout(() => {
+                        c.style.opacity = 0.25;
+                    }, 120);
+
+                }
+
+            }, 20);
+
+            const text = "about entry."
+            const el = document.getElementById("type")
+            let i = 0
+
+            function type() {
+                if (i < text.length) {
+                    el.textContent += text[i]
+                    i++
+                    setTimeout(type, 80)
+                }
+            }
+
+            type()
+
+            const panel = document.getElementById("scrollPanel");
+            const indicator = document.getElementById("scrollIndicator");
+
+            let scrollTimeout;
+
+            panel.addEventListener("scroll", () => {
+
+
+                panel.classList.add("scrolling");
+
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    panel.classList.remove("scrolling");
+                }, 500);
+
+                const atBottom =
+                    panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2;
+
+                if (atBottom) {
+                    indicator.classList.add("hidden");
+                } else {
+                    indicator.classList.remove("hidden");
+                }
+
+            });
+
+
+
+        </script>
+
+        <script id="9g3k2s">
+            const statusText = document.getElementById("statusText");
+
+            const statuses = [
+                "(U+2661)",
+                "(U+2665)",
+                "(U+269E)",
+                "(U+269F)",
+                "(U+26D1)",
+                "(U+271A)",
+                "(U+2765)",
+                "(U+259E)",
+                "(U+2426)",
+                "(U+2049)",
+                "(U+204E)",
+                "(U+203D)",
+                "(U+2051)",
+                "(U+2217)",
+                "(U+2425)",
+                "(U+24DA)",
+                "(U+24DB)",
+                "(U+25AA)",
+                "(U+2316)",
+                "(U+23FB)",
+                "SfLCs: (U+1CC70)",
+                "SfLCs: (U+1CC4C)",
+                "SfLCs: (U+1CDF6)",
+                "SfLCs: (U+1CDF7)",
+                "SfLCs: (U+1CC63)",
+                "SfLCs: (U+1CC93)",
+                "SfLCs: (U+1CC92)",
+                "SfLCs: (U+1CEBD)",
+                "SfLCs: (U+1CEBB)",
+                "SfLCs: (U+1CEBA)",
+                "SfLCs: (U+1CDF8)",
+                "SfLCs: (U+1CDEF)",
+                "SfLCs: (U+1CDEE)",
+                "SfLCs: (U+1CC8C)",
+                "SfLCs: (U+1CC8D)",
+                "SfLCs: (U+1CC8B)",
+                "SfLCs: (U+1CC8A)",
+                "SfLCs: (U+1CC89)",
+                "SfLCs: (U+1CC69)",
+                "SfLCs: (U+1CC6A)",
+                "SfLCs: (U+1CC7A)",
+                "SfLC: (U+1FBB0)",
+                "SfLC: (U+1FBC0)",
+                "SfLC: (U+1FBC4)",
+                "SfLC: (U+1FBB1)",
+                "SfLC: (U+1FBC5)", // him
+                "SfLC: (U+1FBC6)",
+                "SfLC: (U+1FBC7)",
+                "SfLC: (U+1FBC8)",
+                "SfLC: (U+1FBC9)", // me
+                "SfLC: (U+1FBBB)",
+                "SfLC: (U+1FBCB)",
+                "SfLC: (U+1FB81)",
+                "SfLC: (U+1FB94)",
+                "SfLC: (U+1FBF0)",
+                "SfLC: (U+1FBF1)",
+                "SfLC: (U+1FBF2)",
+                "SfLC: (U+1FBF3)",
+                "SfLC: (U+1FBF4)",
+                "SfLC: (U+1FBF5)",
+                "SfLC: (U+1FBF6)",
+                "SfLC: (U+1FBF7)",
+                "SfLC: (U+1FBF8)",
+                "SfLC: (U+1FBF9)",
+                "SfLC: (U+1FBBF)",
+                "CDMfS: (U+20F0)",
+                "CDMfS: (U+20E0)",
+                "CDMfS: (U+20E2)",
+                "CDMfS: (U+20E3)",
+                "CDMfS: (U+20D4)",
+                "CDMfS: (U+20D5)",
+                "CDMfS: (U+20E4)",
+                "CDMfS: (U+20EB)",
+                "CDMfS: (U+20DE)",
+                "CDMfS: (U+20DD)"
+            ];
+
+            let remainingStatuses = [...statuses];
+
+            function cycleStatus() {
+
+                if (remainingStatuses.length === 0) {
+                    remainingStatuses = [...statuses];
+                }
+
+                statusText.style.opacity = 0;
+
+                setTimeout(() => {
+
+
+                    const index = Math.floor(Math.random() * remainingStatuses.length);
+
+                    const nextStatus = remainingStatuses.splice(index, 1)[0];
+
+                    statusText.textContent = nextStatus;
+
+                    statusText.style.opacity = 0.55;
+
+                }, 180);
+            }
+
+            cycleStatus();
+
+            setInterval(cycleStatus, 2000);
+        </script>
+
+</body>
+
+</html>

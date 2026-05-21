@@ -106,10 +106,10 @@ AT BOTTOM OF PAGE!!
             setTimeout(() => {
                 loader.remove();
 
-                // 🔥 NOW allow animations
+                // allow animations
                 document.body.classList.remove("loading");
 
-                // Re-trigger header animation if needed
+                // Re-trigger header animation this for index
                 window.dispatchEvent(new Event("scroll"));
 
             }, 600);

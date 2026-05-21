@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>d1_trainstation_01</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/censor.gif" type="image/gif">
+  <link rel="stylesheet" href="csd.css">
+
+  <style>
+    
+@font-face {
+  font-family: "HL2MP";
+  src: url("Fonts/HL2MP.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "DIN";
+  src: url("Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "csd";
+  src: url("Fonts/csd.ttf") format("truetype");
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;        /* use viewport height instead */
+  margin: 0;
+
+  font-family: Bahnschrift Light, sans-serif;
+  color: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.445);
+  line-height: 22px;
+
+}
+
+.center {
+  max-width: 900px;
+  margin: 0px;
+  text-align: left;
+
+  background-blend-mode: difference;
+    background: rgba(0, 0, 0, 0.342);
+  border-radius: 0px;
+  padding: 20px;
+  padding-right: 30px;
+  padding-left: 40px;
+}
+
+.center {
+  position: relative;
+}
+
+.corner {
+  position: absolute;
+  font-size: 26px;
+  pointer-events: none;
+}
+
+.tl { top: 14px; left: 18px; }
+.tr { top: 14px; right: 18px; }
+.bl { bottom: 14px; left: 18px; }
+.br { bottom: 14px; right: 18px; }
+
+#kill-feed {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.title {
+  font-family: DIN;
+  font-size: 63px;
+  letter-spacing: 2px;
+
+  align-items: center;
+}
+
+.doubleclick {
+  font-family: DIN;
+  font-size: 30px;
+  letter-spacing: 2px;
+  align-items: right;
+  text-align: right;
+}
+
+.mobileclick {
+  font-family: DIN;
+  font-size: 20px;
+  letter-spacing: 1px;
+  transform: translateY(-15px);
+  align-items: right;
+  text-align: right;
+  z-index: 999999;
+}
+
+.vertical-line{
+  line-height: -3px;
+  font-family: Bahnschrift Thin;
+  font-size: 62px;
+  opacity: 1;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: -2px;
+  z-index: 1;
+  transform: translateY(30px);
+}
+
+.kill {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+  margin: 0;
+
+  font-size: 21px;
+  white-space: nowrap;
+  text-align: right;
+
+  opacity: 0.9;
+  transition: opacity 0.45s ease, transform 0.35s ease;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.kill.fade {
+  opacity: 0;
+  transform: translateX(14px);
+}
+
+.killer,
+.victim {
+  font-family: Bahnschrift, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+}
+
+.weapon {
+  font-family: "HL2MP";
+  font-size: 30px;
+
+  margin: 0px;
+  transform: translateY(5px);
+  line-height: 1.5;
+}
+
+.headshot {
+  font-family: "csd";
+  font-size: 30px;
+
+  margin-left: -0px;
+  margin: 0px;
+  transform: translateY(5px);
+  line-height: 1.5;
+}
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+
+  z-index: -2;
+}
+
+#corner-icon {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+
+  width: 60px;
+  height: auto;
+
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/*I do not understand Media queries, again, AI wrote this, I wanted more functionality for mobile devices.*/
+/*Extra Note! I will add another note to say I can understand media queries once I can: 5/17/2026*/
+@media (max-width: 768px) {
+
+  body {
+    background-attachment: scroll; /* fixed backgrounds break on mobile */
+    padding: 10px;
+  }
+
+  .center {
+    max-width: 100%;
+    padding: 15px;
+    padding-right: 0px; /*I don't think this does anything, honestly.*/
+  }
+
+  .title {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .doubleclick {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .vertical-line {
+    display: none; /* vertical text wrecks small screens */
+  }
+
+  .kill {
+    font-size: 14px;
+  }
+
+  .weapon,
+  .headshot {
+    font-size: 18px;
+  }
+
+  #kill-feed {
+    top: 10px;
+    right: 10px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+  <video autoplay muted loop playsinline id="bg-video">
+  <source src="images/banner/blurredmeltytest.mp4" type="video/mp4">
+</video>
+  <div id="kill-feed"></div>
+  <div class="center">
+        <div class="corner tl">┏</div>
+        <div class="corner tr">▝</div>
+        <div class="corner bl">┕</div>
+        <div class="corner br">┛</div>
+      <p class="title">Don't tell me your on Mobile?</p>
+      <p>If you are, I hope you can even read this, but..
+    It won't work too good, I'm not putting the work in to make it work excellent.
+    If your on computer, it should all work very nicely!
+    (excluding 1440p) I believe - It's an awkward resolution! I am an amerature
+    coder, my code sucks, but is completely annotated. Read to your hearts content.</p>
+     <p>Don't be mistaken, there was work done to the index page to allow viewing on close
+     any screen, by the removal of images from the page, resorting to text links,
+     but it doesn't look great. I have yet to implement a fix for the other pages.
+     And, don't count on it coming soon.</p>
+
+    <style>
+    #text {
+    color: #000000;
+    animation: blinkingText 1.2s infinite;
+  }
+
+  /*I don't understand keyframes, This was pulled from scripted.neocities*/
+  @keyframes blinkingText {
+    0% {
+      color: #00000000;
+    }
+
+    49% {
+      color: #00000000;
+    }
+
+    60% {
+      color: white;
+    }
+
+    99% {
+      color: white;
+    }
+
+    100% {
+      color: #00000000;
+    }
+  }
+</style>
+
+<div class="doubleclick">
+<p id="text">Double Click the screen!</p>
+</div>
+<div class="mobileclick">
+<p id="text"><a href="indexmobile.html" target="_blank">
+  Alternatively, if your on mobile, click here.</a></p>
+</div>
+
+<img src="images/gifs-icos/loading.gif" id="corner-icon" alt="icon">
+<script src="assets/kill-feed.js"></script>
+<script src="assets/stationscreen.js"></script>
+
+</body>
+</html>

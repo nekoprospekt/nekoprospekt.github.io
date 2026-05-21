@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        @font-face {
+            font-family: DIN;
+            src: url("Fonts/DIN 1451 Mittelschrift Regular.ttf");
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            color: white;
+            font-family: DIN, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* giant background text */
+
+        .bg404 {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 40vw;
+            font-weight: bold;
+            letter-spacing: -2vw;
+
+            color: rgba(255, 255, 255, 0.158);
+
+            user-select: none;
+            pointer-events: none;
+
+            transition: filter 0.3s ease;
+        }
+
+        .content:hover~.bg404 {
+            filter: blur(15px);
+        }
+
+        /* foreground content */
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content h1 {
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 0.2rem;
+        }
+
+        .content p {
+            font-family: bahnschrift light;
+            margin-top: 10px;
+        }
+
+        .content a {
+            font-family: bahnschrift light;
+            display: inline-block;
+            margin-top: 25px;
+            color: white;
+            text-decoration: none;
+
+            border: 1px solid white;
+            padding: 12px 22px;
+            width: 140px;
+            transition: 0.3s;
+        }
+
+        .content a:hover {
+            background: white;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="content">
+        <h1>PAGE NOT FOUND.</h1>
+
+        <p>where were you headed?</p>
+
+        <a href="./">
+            RETURN
+        </a>
+
+        <a href="">
+            SITEMAP
+        </a>
+    </div>
+
+    <div class="bg404">
+        404*
+    </div>
+
+</body>
+
+</html>

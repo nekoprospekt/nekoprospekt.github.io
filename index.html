@@ -1,674 +1,996 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>d1_trainstation_02</title>
-<link rel="icon" href="images/censor.gif" type="image/gif">
-
-<style>
-
-@font-face {
-  font-family: DIN;
-  src: url(Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf);
-}
-
-body{
-    margin:0;
-    font-family: Bahnschrift, sans-serif;
-    background:#0a0a0a;
-    color:white;
-    isolation:isolate;
-}
-
-
-body.loading * {
-    animation: none !important;
-    transition: none !important;
-}
-
-#global-loader {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    transition: opacity 0.6s ease;
-}
-
-#global-loader.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-#global-loader img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-}
-
-@keyframes signalPulse {
-    0%, 100% { opacity: 1; }
-    96% { opacity: 1; }
-    97% { opacity: 0.85; }
-    90% { opacity: 1; }
-}
-
-.negative-text{
-    font-size:90px;
-    font-weight:bold;
-    letter-spacing: 8px;
-    color:white;
-    mix-blend-mode:difference;
-
-    animation: signalPulse 8s infinite;
-}
-
-.welcome-scroll{
-    font-family: Bahnschrift, sans-serif;
-    font-size:30px;
-    font-weight:bold;
-    letter-spacing: 8px;
-    color:white;
-    mix-blend-mode:difference;
-}
-
-.header{
-    height:100vh;
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    overflow:hidden;
-}
-
-.header-bg{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:120%;
-    background:url(images/banner/banner.png) center/cover;
-    z-index:-1;
-}
-
-.header-content{
-    font-size:3rem;
-    transition:opacity 0.2s, filter 0.2s;
-    mix-blend-mode:difference;
-}
-
-.header-blur {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 140px;
-
-    background: linear-gradient(
-        to bottom,
-        rgba(15, 15, 15, 0.055) 0%,
-        rgba(14, 14, 14, 0.644) 60%,
-        rgb(10, 10, 10) 100%
-    );
-
-    pointer-events: none;
-    z-index: 3;
-}
-
-.container{
-    width:100%;
-}
-
-.section{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    min-height:700px;
-    padding:50px 10%;
-    gap:100px;
-}
-
-.section + .section{
-    margin-top:-150px;
-}
-
-.section:nth-child(even){
-    flex-direction:row-reverse;
-}
-
-.content{
-    max-width:550px;
-    font-size:1.2rem;
-    padding:70px;
-    background:rgba(255, 255, 255, 0.034);
-    backdrop-filter:blur(15px);
-    border-radius:0px;
-
-    position:relative;
-    top:-20px;
-
-    transform: translateX(-40px) skewX(-2deg);
-    opacity:0.6;
-    filter: contrast(80%) grayscale(100%);
-
-    transition:
-        transform 0.8s cubic-bezier(.16,.84,.44,1),
-        filter 0.6s ease,
-        opacity 0.6s ease;
-}
-
-.content::before,
-.content::after{
-    position:absolute;
-    font-size:26px;
-    color:rgb(255, 255, 255);
-    pointer-events:none;
-}
-
-.content::before{
-    content:"┏";
-    top:14px;
-    left:18px;
-}
-
-.content::after{
-    content:"▝";
-    top:14px;
-    right:18px;
-}
-
-.content h2::before{
-    content:"┕";
-    position:absolute;
-    bottom:14px;
-    left:18px;
-    font-size:26px;
-    color:rgb(255, 255, 255);
-}
-
-.content h2::after{
-    content:"┛";
-    position:absolute;
-    bottom:14px;
-    right:18px;
-    font-size:26px;
-    color:rgb(255, 255, 255);
-}
-
-.image{
-    width: clamp(500px, 45vw, 900px); /*When I was looking for help with scaling, I found myself at this with AI, ORG 800px*/
-    perspective:1000px;
-    position:relative;
-    overflow:visible; 
-}
-
-.note{
-    position:absolute;
-    width:160px;
-    z-index:3;
-    pointer-events:none;
-
-    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5));
-}
-
-.note.top-left{
-    top:-50px;
-    left:-50px;
-    transform: rotate(-8deg);
-}
-
-.note.bottom-right{
-    bottom:-65px;
-    right:-56px;
-    transform: rotate(10deg);
-}
-
-.note.bottom-bottom-right{
-    bottom: -60px;
-    right:-50px;
-    transform: rotate(10deg);
-}
-
-.image{
-    position: relative;
-}
-
-.image-link{
-    display: block;
-    position: relative;
-}
-
-.image img{
-    width:100%;
-    border-radius:2px;
-
-    transform: translateX(60px) scale(0.96);
-    opacity:0.6;
-    filter: grayscale(100%) contrast(80%);
-
-    transition:
-        transform 0.8s cubic-bezier(.16,.84,.44,1),
-        filter 0.6s ease,
-        opacity 0.6s ease;
-}
-
-.section.visible .image img{
-    transform: translateX(0) scale(1);
-    opacity:1;
-    filter: grayscale(100%) contrast(100%);
-}
-
-a {
-  color: #ffffff;
-  transition: filter 0.3s ease;
-}
-
-.content a{
-    color: white;
-    text-decoration: underline;
-    transition: opacity 0.2s ease;
-}
-
-.content a:hover{
-    filter: blur(2px);
-}
-
-.section:nth-child(even) .image.visible img{
-    transform:rotateY(-5deg) translateY(0) rotateZ(0deg);
-}
-
-.section.visible .content{
-    transform: translateX(0) skewX(0deg);
-    opacity:1;
-    filter: contrast(100%) grayscale(100%);
-}
-
-.image-link:hover .base-img{
-    filter: blur(2px) grayscale(0%);
-}
-
-.unicode-bg{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:300vh;
-
-    z-index:0;
-
-    display:grid;
-    grid-template-columns:repeat(auto-fill, 95px);
-    grid-auto-rows:95px;
-
-    font-size:35px;
-    color:#5e5e5e;
-    pointer-events:none;
-    user-select:none;
-
-    animation:drift 180s linear infinite;
-}
-
-.unicode-bg span{
-    opacity:0.09;
-    transition:opacity 0.09s;
-}
-
-@keyframes drift{
-    from{ transform:translateY(0); }
-    to{ transform:translateY(-90px); }
-}
-
-.container,
-.header{
-    position:relative;
-    z-index:2;
-}
-
-/*I didnt write this, I used AI. I have no understanding of how media queries work!*/
-/*Extra Note! I will add another note to say I can understand media queries once I can: 5/17/2026*/
-@media (max-width: 1400px){
-
-    
-    .section .image{
-        display: none;
-    }
-
-    
-    .section{
-        flex-direction: column;
-        text-align: center;
-        padding: 80px 8%;
-        gap: 40px;
-    }
-
-    .content{
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-}
-
-@media (max-width: 1600px){
-
-    .section{
-        padding: 80px 6%;
-        gap: 60px;
-    }
-
-}
-
-/*This here is for 1440p as well, I BELIEVE!!*/
-
-</style>
+    <meta charset="UTF-8">
+    <title>d3_c17_10b</title>
+    <link rel="icon" href="images/censor.gif" type="image/gif">
+
+    <style>
+        @font-face {
+            font-family: DIN;
+            src: url(Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf);
+        }
+
+        body {
+            margin: 0;
+            font-family: Bahnschrift, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            isolation: isolate;
+        }
+
+
+        body.loading * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        #global-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            transition: opacity 0.6s ease;
+        }
+
+        #global-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #global-loader img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        @keyframes signalPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            96% {
+                opacity: 1;
+            }
+
+            97% {
+                opacity: 0.85;
+            }
+
+            90% {
+                opacity: 1;
+            }
+        }
+
+        .negative-text {
+            font-size: 90px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: white;
+            mix-blend-mode: difference;
+
+            animation: signalPulse 8s infinite;
+        }
+
+        .welcome-scroll {
+            font-family: Bahnschrift, sans-serif;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            color: white;
+            mix-blend-mode: difference;
+        }
+
+        .header {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background: url(images/banner/banner.png) center/cover;
+            z-index: -1;
+        }
+
+        .header-content {
+            font-size: 3rem;
+            transition: opacity 0.2s, filter 0.2s;
+            mix-blend-mode: difference;
+        }
+
+        .header-blur {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+
+            background: linear-gradient(to bottom,
+                    rgba(15, 15, 15, 0.055) 0%,
+                    rgba(14, 14, 14, 0.644) 60%,
+                    rgb(10, 10, 10) 100%);
+
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 700px;
+            padding: 50px 10%;
+            gap: 100px;
+        }
+
+        .section+.section {
+            margin-top: -150px;
+        }
+
+        .section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .content {
+            max-width: 550px;
+            font-size: 1.2rem;
+            padding: 70px;
+            background: rgba(255, 255, 255, 0.034);
+            backdrop-filter: blur(15px);
+            border-radius: 0px;
+
+            position: relative;
+            top: -20px;
+
+            transform: translateX(-40px) skewX(-2deg);
+            opacity: 0.6;
+            filter: contrast(80%) grayscale(100%);
+
+            transition:
+                transform 0.8s cubic-bezier(.16, .84, .44, 1),
+                filter 0.6s ease,
+                opacity 0.6s ease;
+        }
+
+        .content::before,
+        .content::after {
+            position: absolute;
+            font-size: 26px;
+            color: rgb(255, 255, 255);
+            pointer-events: none;
+        }
+
+        .content::before {
+            content: "┏";
+            top: 14px;
+            left: 18px;
+        }
+
+        .content::after {
+            content: "▝";
+            top: 14px;
+            right: 18px;
+        }
+
+        .content h2::before {
+            content: "┕";
+            position: absolute;
+            bottom: 14px;
+            left: 18px;
+            font-size: 26px;
+            color: rgb(255, 255, 255);
+        }
+
+        .content h2::after {
+            content: "┛";
+            position: absolute;
+            bottom: 14px;
+            right: 18px;
+            font-size: 26px;
+            color: rgb(255, 255, 255);
+        }
+
+        .image {
+            width: clamp(500px, 45vw, 900px);
+            /*When I was looking for help with scaling, I found myself at this with AI, ORG 800px*/
+            perspective: 1000px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .note {
+            position: absolute;
+            width: 160px;
+            z-index: 3;
+            pointer-events: none;
+
+            filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.5));
+        }
+
+        .note.top-left {
+            top: -50px;
+            left: -50px;
+            transform: rotate(-8deg);
+        }
+
+        .note.bottom-right {
+            bottom: -65px;
+            right: -56px;
+            transform: rotate(10deg);
+        }
+
+        .note.bottom-bottom-right {
+            bottom: -60px;
+            right: -50px;
+            transform: rotate(10deg);
+        }
+
+        .image {
+            position: relative;
+        }
+
+        .image-link {
+            display: block;
+            position: relative;
+        }
+
+        .image img {
+            width: 100%;
+            border-radius: 2px;
+
+            transform: translateX(60px) scale(0.96);
+            opacity: 0.6;
+            filter: grayscale(100%) contrast(80%);
+
+            transition:
+                transform 0.8s cubic-bezier(.16, .84, .44, 1),
+                filter 0.6s ease,
+                opacity 0.6s ease;
+        }
+
+        .section.visible .image img {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+            filter: grayscale(100%) contrast(100%);
+        }
+
+        a {
+            color: #ffffff;
+            transition: filter 0.3s ease;
+        }
+
+        .content a {
+            color: white;
+            text-decoration: underline;
+            transition: opacity 0.2s ease;
+        }
+
+        .content a:hover {
+            filter: blur(2px);
+        }
+
+        .section:nth-child(even) .image.visible img {
+            transform: rotateY(-5deg) translateY(0) rotateZ(0deg);
+        }
+
+        .section.visible .content {
+            transform: translateX(0) skewX(0deg);
+            opacity: 1;
+            filter: contrast(100%) grayscale(100%);
+        }
+
+        .image-link:hover .base-img {
+            filter: blur(2px) grayscale(0%);
+        }
+
+        /*Tooltip!! from here*/
+
+        .tooltip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+
+            transform: translateX(-50%) translateY(4px);
+
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+
+            color: white;
+
+            padding: 4px 8px;
+
+            font-family: DIN, sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+
+            z-index: 9999;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* <div class="tooltip" data-tooltip="YOUR TEXT HERE"> */
+        /*AS AN EXAMPLE*/
+        /*TO HERE!!*/
+
+
+        .unicode-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300vh;
+
+            z-index: 0;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 95px);
+            grid-auto-rows: 95px;
+
+            font-size: 35px;
+            color: #292929;
+            pointer-events: none;
+            user-select: none;
+
+            animation: drift 180s linear infinite;
+        }
+
+        .unicode-bg span {
+            opacity: 0.09;
+            transition: opacity 0.09s;
+        }
+
+        @keyframes drift {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-90px);
+            }
+        }
+
+        .container,
+        .header {
+            position: relative;
+            z-index: 2;
+        }
+
+        /*I didnt write this, I used AI. I have no understanding of how media queries work!*/
+        /*Extra Note! I will add another note to say I can understand media queries once I can: 5/17/2026*/
+        @media (max-width: 1400px) {
+
+
+            .section .image {
+                display: none;
+            }
+
+
+            .section {
+                flex-direction: column;
+                text-align: center;
+                padding: 80px 8%;
+                gap: 40px;
+            }
+
+            .content {
+                max-width: 700px;
+                margin: 0 auto;
+            }
+
+        }
+
+        @media (max-width: 1600px) {
+
+            .section {
+                padding: 80px 6%;
+                gap: 60px;
+            }
+
+        }
+
+        /*This here is for 1440p as well, I BELIEVE!!*/
+
+
+        /* FOOTER DOWN HERE! */
+
+        .site-footer {
+
+            position: relative;
+
+            margin-top: 120px;
+            padding: 28px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+            background:
+                linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0.015),
+                    rgba(255, 255, 255, 0.03));
+
+            backdrop-filter: blur(12px);
+
+            overflow: hidden;
+        }
+
+        /* unicode over top */
+
+        .site-footer::before {
+
+            content: "╳ ╱ ? ␦ ╲ ╳ ╱";
+
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+            letter-spacing: 40px;
+
+            color: rgba(255, 255, 255, 0.03);
+
+            pointer-events: none;
+        }
+
+        /* linkz */
+
+        .footer-left {
+
+            display: flex;
+            gap: 34px;
+
+            position: relative;
+            z-index: 2;
+
+            flex-wrap: wrap;
+        }
+
+        .footer-left a {
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+
+            opacity: 0.7;
+
+            transition:
+                opacity 0.25s ease,
+                filter 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .footer-left a:hover {
+
+            opacity: 1;
+
+            filter: blur(1px);
+
+            transform: translateY(-2px);
+        }
+
+        /* right icons */
+
+        .footer-right {
+
+            position: relative;
+            z-index: 2;
+
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+        /* icon buttons */
+
+        .footer-icon {
+            position: relative;
+
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* actual icon image */
+
+        .footer-icon img {
+            width: 48px;
+            height: 48px;
+
+            object-fit: contain;
+
+            filter: grayscale(100%) brightness(0.8);
+
+            opacity: 0.7;
+
+            border: 1px solid transparent;
+
+            padding: 5px;
+
+            box-sizing: border-box;
+
+            transition:
+                filter 0.25s ease,
+                opacity 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .footer-icon img:hover {
+
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+            border-color: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        /* tooltip */
+
+        .footer-icon::after {
+            content: attr(data-tooltip);
+
+            position: absolute;
+
+            bottom: -28px;
+            left: 50%;
+
+            transform:
+                translateX(-50%) translateY(4px);
+
+            background: rgba(0, 0, 0, 0.85);
+
+            backdrop-filter: blur(6px);
+
+            padding: 4px 8px;
+
+            font-size: 11px;
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .footer-icon:hover::after {
+            opacity: 1;
+
+            transform:
+                translateX(-50%) translateY(0);
+        }
+
+        .footer-text {
+            font-family: DIN, sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            opacity: 0.45;
+            white-space: nowrap;
+        }
+
+        /* mobile */
+
+        @media (max-width:800px) {
+
+            .site-footer {
+
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-right {
+
+                align-self: flex-end;
+            }
+
+        }
+
+        /*THIS FOOTER TOOK SO FUCKING LONG I BROKE IT TWICE, also, don't know why the background is 'red'd' out, but sure its finally fucking working after three hours!*/
+        /*AI didnt even help me this time, giving me fixes for the alignment, like that gonna be he issue? either way shes here and alive!*/
+    </style>
 </head>
 
 <body>
-<div id="global-loader">
-<img src="images/gifs-icos/loading.gif" alt="Loading...">
-</div>
-<div class="unicode-bg"></div>
-<header class="header">
-    <div class="header-bg"></div>
-    <div class="header-content">
-        <br>
-        <h1 class="negative-text" id="type"></h1>
-        <p class="welcome-scroll">Scroll down!</p>
-        <h2><b>⌵</b></h2>
+    <div id="global-loader">
+        <img src="images/gifs-icos/loading.gif" alt="Loading...">
     </div>
-    <div class="header-blur"></div>
-</header>
+    <div class="unicode-bg"></div>
+    <header class="header">
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <br>
+            <h1 class="negative-text" id="type"></h1>
+            <p class="welcome-scroll">Scroll down!</p>
+            <h2><b>⌵</b></h2>
+        </div>
+        <div class="header-blur"></div>
+    </header>
 
-<div class="container">
+    <div class="container">
 
-<div class="section">
-    <div class="content">
-        <h1>neko*prospekt</h1>
-        <p>Hello, I'm Lilly! Refer to me as Lilith or Lilly, I don't care.
-        I'm 16 and from Northern Ireland.
-        I more than anything, love Valve games! Half-lIfe 2
-        Being my personal favourite, I am a Combine Loyalist at heart. (tap-4)
-        </p>
+        <div class="section">
+            <div class="content">
+                <h2><a href="nekoprospekt.html" target="_blank">neko*prospekt</a></h2>
+                <p>Hello, I'm Lilly! Refer to me as Lilith or Lilly, I don't care.
+                    I'm 16 and from Northern Ireland.
+                    I more than anything, love Valve games! Half-lIfe 2
+                    Being my personal favourite, I am a Combine Loyalist at heart. (tap-4)
 
-        <p>I dont just play valve games, though! I love Kobaryo and t+pz, I listen to lots of speedcore!
-        I adore drawing and painting, spending time with friends, writing, researching on my interests,
-        attempting web design and making gmod renders.
-        </p>
+                </p>I, of course don't JUST play HL2 let alone games, I do lot's more too.
+                You can read more about myself over <a href="nekoprospekt.html" target="_blank">here!</a>
 
-        <p>More than anything (Excluding HL2, sorry guys.) I love my friends! 
-        <b><a href="https://rentry.co/jesuswalks" target="_blank">A</a>, A, N, N, G, <a href="https://candykingdomss.straw.page" target="_blank">V</a>, L, <a href="https://abtfai.straw.page" target="_blank">F</a>,
-        and <i>of course</i> <a href="https://djfarent.github.io" target="_blank">K</a></b> My amazing boyfriend! (¬////¬)</p>
+                <p>
+                </p>
+            </div>
+            <div class="image">
+                <img src="images/manor.gif" class="base-img">
+                <img src="images/note1.png" class="note bottom-right">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="content">
+                <h2><a href="projectindex.html" target="_blank">Projects</a></h2>
+                <p>I work on stuff sometimes, you can find some of it over here!</p>
+
+                <p>I'll keep art, coding, writing and other such things easily accesible here,
+                    right now though, this page isn't out, shouldn't be long though!
+                </p>
+
+                <p>I'd love to speak with like minded people, please reach out if you have
+                    something fun or you'd even like to collaborate.. like, gman.. haha.. get it?
+                </p>
+            </div>
+            <div class="image">
+                <a href="projects.html" class="image-link">
+                    <img src="images/computer.png" class="base-img">
+                    <img src="images/noteproject.png" class="note top-left">
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="content">
+                <h2><a href="links.html" target="_blank">Links</a></h2>
+                <p>Well, here's my links, pretty simple, right?</p>
+
+                <p>"Lilly, why would you need a separate page for
+                    your links? This isn't just an excuse to make another page, right? .."</p>
+
+                <p>Stop reading into me, Σ(°ロ°) im allowed as many pages as I want, thank you!
+                    Anyways, anything you'd ever need is right over here.
+                </p>
+            </div>
+            <div class="image">
+                <a href="links.html" class="image-link">
+                    <img src="images/molotov.gif" class="base-img">
+                    <img src="images/note2.png" class="note top-left">
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="content">
+                <h2><a href="https://nekoprospekt.github.io/cs_office" target="_blank">cs_office</a></h2>
+                <p> Theres lot's of people who have done much better jobs of archiving than me, none the less
+                    I have dedicated some patience to my favourite pieces of media and time.. all split up into their
+                    respective games. I hope you enjoy reading and viewing this as much as I did in the creation
+                    process.</p>
+
+                <p>I'm aware that Valve Archive exists, I'm aware that there are better places to go,
+                    but this was my own personal favourites amalgamated! ꉂ (≧ヮ≦)
+                </p>
+
+                <p>All this repository has been moved over to its own separate repo! This allowed
+                    for a more secure method of collaboration, as I only have myself and K allowed access
+                    to this repo.
+                </p>
+
+            </div>
+            <div class="image">
+                <a href="https://nekoprospekt.github.io/cs_office" class="image-link">
+                    <img src="images/bomb.png" class="base-img">
+                    <img src="images/noteoffice.png" class="note bottom-bottom-right">
+                </a>
+            </div>
+        </div> <!--should add footer, cant be assed, frankly.-->
+
     </div>
-    <div class="image">
-        <img src= "images/manor.gif" class="base-img">
-        <img src="images/note1.png" class="note bottom-right">
-    </div>
-</div>
 
-<div class="section">
-    <div class="content">
-        <h2><a href="projects.html" target="_blank">Projects</a></h2>
-        <p>I work on stuff sometimes, you can find some of it over here!</p>
+    <footer class="site-footer">
 
-        <p>I'll keep art, coding, writing and other such things easily accesible here,
-            right now though, this page isn't out, shouldn't be long though!
-        </p>
+        <div class="footer-left">
 
-        <p>I'd love to speak with like minded people, please reach out if you have
-            something fun or you'd even like to collaborate.. like, gman.. haha.. get it?
-        </p>
-    </div>
-    <div class="image">
-        <a href="projects.html" class="image-link">
-        <img src="images/computer.png" class="base-img">
-        <img src="images/noteproject.png" class="note top-left">
-        </a>
-    </div>
-</div>
+            <a href="sitemap.html">sitemap</a>
+            <a href="links.html">links</a>
+            <a href="nekoprospekt.html">about me</a>
+            <a href="projectindex.html">projects</a>
 
-<div class="section">
-    <div class="content">
-        <h2><a href="links.html" target="_blank">Links</a></h2>
-        <p>Well, here's my links, pretty simple, right?</p>
+        </div>
 
-        <p>"Lilly, why would you need a separate page for
-        your links? This isn't just an excuse to make another page, right? .."</p>
+        <div class="footer-text">
+            Made with ❤︎⁠ by neko*prospekt ⠀⠀⠀//⠀⠀⠀ 2026-20XX
+        </div>
 
-        <p>Stop reading into me, Σ(°ロ°) im allowed as many pages as I want, thank you!
-        Anyways, anything you'd ever need is right over here.
-        </p>
-    </div>
-    <div class="image">
-        <a href="links.html" class="image-link">
-        <img src="images/molotov.gif" class="base-img">
-        <img src="images/note2.png" class="note top-left">
-        </a>
-    </div>
-</div>
+        <div class="footer-right">
 
-<div class="section">
-    <div class="content">
-        <h2><a href="https://nekoprospekt.github.io/cs_office" target="_blank">cs_office</a></h2>
-        <p> Theres lot's of people who have done much better jobs of archiving than me, none the less
-        I have dedicated some patience to my favourite pieces of media and time.. all split up into their
-        respective games. I hope you enjoy reading and viewing this as much as I did in the creation process.</p>
+            <a href="https://github.com/nekoprospekt" class="footer-icon tooltip" data-tooltip="Github">
+                <img src="images/gifs-icos/whitebracket.png">
+            </a>
 
-        <p>I'm aware that Valve Archive exists, I'm aware that there are better places to go,
-        but this was my own personal favourites amalgamated! ꉂ (≧ヮ≦)
-        </p>
-    </div>
-    <div class="image">
-        <a href="https://nekoprospekt.github.io/cs_office" class="image-link">
-        <img src="images/bomb.png" class="base-img">
-        <img src="images/noteoffice.png" class="note bottom-bottom-right">
-        </a>
-    </div>
-</div>
+            <a href="https://djfarent.github.io" class="footer-icon tooltip" data-tooltip="Boyfriends Site">
+                <img src="images/gifs-icos/whiteat.png">
+            </a>
 
-</div>
+            <a href="lovemail.html" class="footer-icon tooltip" data-tooltip="Lovemail">
+                <img src="images/gifs-icos/whiteheart.png">
+            </a>
 
-<script>
-(function(){
+            <a href="https://css.straw.page" class="footer-icon tooltip" data-tooltip="Strawpage">
+                <img src="images/gifs-icos/whiteX.png">
+            </a>
 
-    const loader = document.getElementById("global-loader");
-    const MIN_VISIBLE_TIME = 2000;
-    const startTime = Date.now();
+        </div>
 
-    function finishLoading(){
+    </footer>
 
-        const elapsed = Date.now() - startTime;
-        const remaining = Math.max(0, MIN_VISIBLE_TIME - elapsed);
-         
-        
-        setTimeout(() => {
+    <script>
+        (function () {
 
-            loader.classList.add("hidden");
+            const loader = document.getElementById("global-loader");
+            const MIN_VISIBLE_TIME = 2000;
+            const startTime = Date.now();
 
-            setTimeout(() => {
-                loader.remove();
+            function finishLoading() {
 
-                // 🔥 NOW allow animations
-                document.body.classList.remove("loading");
-                pageReady = true;
+                const elapsed = Date.now() - startTime;
+                const remaining = Math.max(0, MIN_VISIBLE_TIME - elapsed);
 
-                // Re-trigger header animation if needed
-                window.dispatchEvent(new Event("scroll"));
 
-            }, 600);
+                setTimeout(() => {
 
-        }, remaining);
-    }
+                    loader.classList.add("hidden");
 
-    function waitForImages(){
+                    setTimeout(() => {
+                        loader.remove();
 
-        const images = document.images;
-        let loaded = 0;
-        const total = images.length;
+                        // allows animations (?)
+                        document.body.classList.remove("loading");
+                        pageReady = true;
 
-        if(total === 0){
-            finishLoading();
-            return;
-        }
+                        // Re-does header animation (?)
+                        window.dispatchEvent(new Event("scroll"));
 
-        function imageLoaded(){
-            loaded++;
-            if(loaded >= total){
-                finishLoading();
+                    }, 600);
+
+                }, remaining);
             }
-        }
 
-        for(let img of images){
-            if(img.complete){
-                imageLoaded();
+            function waitForImages() {
+
+                const images = document.images;
+                let loaded = 0;
+                const total = images.length;
+
+                if (total === 0) {
+                    finishLoading();
+                    return;
+                }
+
+                function imageLoaded() {
+                    loaded++;
+                    if (loaded >= total) {
+                        finishLoading();
+                    }
+                }
+
+                for (let img of images) {
+                    if (img.complete) {
+                        imageLoaded();
+                    } else {
+                        img.addEventListener("load", imageLoaded);
+                        img.addEventListener("error", imageLoaded);
+                    }
+                }
+            }
+
+            if (document.fonts) {
+                document.fonts.ready.then(waitForImages);
             } else {
-                img.addEventListener("load", imageLoaded);
-                img.addEventListener("error", imageLoaded);
+                waitForImages();
+            }
+
+        })();
+    </script>
+
+    <script>
+        let pageReady = false;
+
+        const header = document.querySelector(".header-content");
+        const bg = document.querySelector(".header-bg");
+
+        window.addEventListener("scroll", () => {
+
+            if (!pageReady) return; // block animation until ready
+            const scroll = window.scrollY;
+
+            // text moves slightly faster than scroll (parallax)
+            header.style.transform = "translateY(" + scroll * 0.7 + "px)";
+
+            // smooth fade out
+            let fade = 1 - scroll / 400;
+            if (fade < 0) fade = 0;
+            header.style.opacity = fade;
+
+            // KEEPs original background movement
+            bg.style.transform = "translateY(" + scroll * 0.4 + "px)";
+        });
+
+        const sections = document.querySelectorAll(".section")
+
+        const sectionObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible")
+                    sectionObserver.unobserve(entry.target)
+                }
+            })
+        }, { threshold: 0.35 })
+
+        sections.forEach((sec, i) => {
+            const tiltAngle = (i % 2 === 0 ? 4 : -4)
+            sec.style.setProperty("--initial-tilt", tiltAngle + "deg")
+            sectionObserver.observe(sec)
+        })
+
+    </script>
+    <script>
+
+        const chars = [
+            "╳", "╲", "╱", "␦", "?"
+        ];
+
+        const grid = document.querySelector(".unicode-bg");
+
+        function buildGrid() {
+
+            const size = 100;
+            const cols = Math.ceil(window.innerWidth / size);
+
+            const pageHeight = document.documentElement.scrollHeight;
+            const rows = Math.ceil(pageHeight / size);
+
+            grid.innerHTML = "";
+
+            for (let i = 0; i < cols * rows; i++) {
+
+                const span = document.createElement("span");
+
+                span.textContent =
+                    chars[Math.floor(Math.random() * chars.length)];
+
+                grid.appendChild(span);
             }
         }
-    }
 
-    if(document.fonts){
-        document.fonts.ready.then(waitForImages);
-    } else {
-        waitForImages();
-    }
+        const text = "welcome."
+        const el = document.getElementById("type")
+        let i = 0
 
-})();
-</script>
-
-<script>
-let pageReady = false;
-
-const header = document.querySelector(".header-content");
-const bg = document.querySelector(".header-bg");
-
-window.addEventListener("scroll", () => {
-
-    if(!pageReady) return; // block animation until ready
-    const scroll = window.scrollY;
-
-    // text moves slightly faster than scroll (parallax)
-    header.style.transform = "translateY(" + scroll * 0.7 + "px)";
-
-    // smooth fade out
-    let fade = 1 - scroll / 400;
-    if (fade < 0) fade = 0;
-    header.style.opacity = fade;
-
-    // KEEP your original background movement
-    bg.style.transform = "translateY(" + scroll * 0.4 + "px)";
-});
-
-const sections = document.querySelectorAll(".section")
-
-const sectionObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add("visible")
-            sectionObserver.unobserve(entry.target)
+        function type() {
+            if (i < text.length) {
+                el.textContent += text[i]
+                i++
+                setTimeout(type, 80)
+            }
         }
-    })
-},{threshold:0.35})
 
-sections.forEach((sec, i)=>{
-    const tiltAngle = (i % 2 === 0 ? 4 : -4)
-    sec.style.setProperty("--initial-tilt", tiltAngle + "deg")
-    sectionObserver.observe(sec)
-})
+        type()
 
-</script>
-<script>
+        buildGrid();
+        window.addEventListener("resize", buildGrid);
 
-const chars = [
-"╳","╲","╱","␦","?"
-];
+        setInterval(() => {
 
-const grid = document.querySelector(".unicode-bg");
+            const cells = grid.children;
 
-function buildGrid(){
+            for (let i = 0; i < 2; i++) {
 
-    const size = 100;
-    const cols = Math.ceil(window.innerWidth / size);
+                const c = cells[Math.floor(Math.random() * cells.length)];
+                if (!c) return;
 
-    const pageHeight = document.documentElement.scrollHeight;
-    const rows = Math.ceil(pageHeight / size);
+                c.style.opacity = 1;
 
-    grid.innerHTML = "";
+                setTimeout(() => {
+                    c.style.opacity = 0.25;
+                }, 120);
 
-    for(let i = 0; i < cols * rows; i++){
+            }
 
-        const span = document.createElement("span");
+        }, 20);
 
-        span.textContent =
-        chars[Math.floor(Math.random() * chars.length)];
+        function isMobile() {
+            return window.matchMedia("(max-width: 768px)").matches;
+        }
 
-        grid.appendChild(span);
-    }
-}
+        function removeImagesOnMobile() {
 
-const text = "welcome."
-const el = document.getElementById("type")
-let i = 0
+            if (!isMobile()) return;
 
-function type() {
-    if (i < text.length) {
-        el.textContent += text[i]
-        i++
-        setTimeout(type, 80)
-    }
-}
+            // remove all section images
+            const images = document.querySelectorAll(".section .image");
 
-type()
+            images.forEach(img => {
+                img.remove();
+            });
 
-buildGrid();
-window.addEventListener("resize", buildGrid);
+        }
 
-setInterval(()=>{
+        document.addEventListener("DOMContentLoaded", removeImagesOnMobile);
 
-    const cells = grid.children;
-
-    for(let i=0;i<2;i++){
-
-        const c = cells[Math.floor(Math.random()*cells.length)];
-        if(!c) return;
-
-        c.style.opacity = 1;
-
-        setTimeout(()=>{
-            c.style.opacity = 0.25;
-        },120);
-
-    }
-
-},20);
-
-function isMobile(){
-    return window.matchMedia("(max-width: 768px)").matches;
-}
-
-function removeImagesOnMobile(){
-
-    if(!isMobile()) return;
-
-    // remove all section images
-    const images = document.querySelectorAll(".section .image");
-
-    images.forEach(img => {
-        img.remove();
-    });
-
-}
-
-document.addEventListener("DOMContentLoaded", removeImagesOnMobile);
-
-</script>
+    </script>
 
 </body>
+
 </html>

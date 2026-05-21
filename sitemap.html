@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--THIS WASNT MY DOING, I DONT KNOW HOW THIS WORKS-->
-    <title>d1_trainstation_01</title>
+    <title>d3_citadel_05</title>
     <link rel="icon" href="images/gifs-icos/censor.gif" type="image/gif">
 
     <style>
@@ -71,12 +71,19 @@
             position: relative;
             z-index: 2;
 
-            width: min(900px, 92vw);
-            margin: 40px auto;
+            width: min(1000px, 92vw);
 
-            padding: 24px;
+            margin: auto;
+
+            padding: 20px;
 
             box-sizing: border-box;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            min-height: 100vh;
         }
 
         .header {
@@ -89,16 +96,24 @@
 
         .line {
             margin: 10px 0;
-            line-height: 1.6;
-            word-wrap: break-word;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            font-family: monospace;
         }
 
         .subline {
-            margin: 10px 0;
-            line-height: 1;
-            word-wrap: break-word;
-            transform: translateX(20px);
-            color: rgba(255, 255, 255, 0.411);
+            margin: 6px 0;
+            transform: translateX(28px);
+            white-space: pre;
+            font-family: monospace;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .sitemap {
+
+            width: fit-content;
+            margin: auto;
+            text-align: left;
         }
 
         /* cursor, no you already know I didnt code the js myself, who do you think I am.. smart!?*/
@@ -154,7 +169,7 @@
 <body>
 
     <div class="bg"> <!--no idea what to put here, I wrote that as my test and now I have no Idea.-->
-        meoooow!
+        site_map
     </div>
 
     <div class="terminal">
@@ -163,50 +178,47 @@
             [ d1_trainstation_01 v3.1 ]
         </div>
 
-        <div class="line">
-            > this site fucking sucks.
+        <div class="sitemap">
+
+            <div class="line">
+            DIRECTORY 
+            </div>
+
+            <div class="line">
+├── station.html (d1_trainstation_01)
+│   main landing page
+│
+├── station/
+│ ├── index.html (d3_c17_10b)                ├──index/
+│ ├── indexmobile.html (does not yet exist.)   ├── nekoprospekt.html (d3_C17_10b)
+│ ├── sitemap.html (d3_citadel_05)             ├── projectindex.html (does not exist yet.)
+                                               ├── links.html
+                                               ├── sitemap.html (d3_citadel_05)
+                                               └──cs_office.github.io (external.)
+                                             
+                                                    └── nekoprospekt/
+                                                     └── lovemail.html (lovemail)
+                                                    
+                                                    └──projectindex/
+
+                                                    └──links/
+                                                     ├──Discord (external.)
+                                                     ├──Lambda Generation (external.)
+                                                     ├──TikTok (external.)
+                                                     ├──Steam (external.)
+                                                     ├──4played.de (external.)
+                                                     └──Github (external.)
+
+                                                     └──cs_office/
+                                                       └── (external.)
+                
+            </div>
+<div class="header">
+            <a href="index.html" target="_blank">[ > return home? ]</a>
+        </div>
         </div>
 
-        <div class="line">
-            > it is completely grayscale, and dark mode.
-        </div>
-
-        <div class="line">
-            > there is little to no mobile support for most pages besides:
-        </div>
-
-        <div class="subline">
-            > index.html (it is still a WIP.)
-            <p>> indexmobile.html (It doesn't actually exist yet.)</p>
-        </div>
-
-        <div class="line">
-            > Do not expect much from the site, desktop neither mobile.
-        </div>
-
-        <div class="line">
-            > Im an amerature coder.
-        </div>
-
-        <div class="line">
-            > My code becomes more annotated as I push out updates.
-        </div>
-
-        <div class="line">
-            > If that interests you, read away. (my retired code does feature a little, too.)
-        </div>
-
-        <div class="footer">
-            click anywhere to interact
-        </div>
-
-        <div class="line">
-            <a href="index.html" target="_blank">> Index.html</a>
-        </div>
-
-        <div class="line">
-            <a href="indexmobile.html" target="_blank">> Indexmobile.html</a>
-        </div>
+    </div>
 
     </div>
 
