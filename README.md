@@ -3,7 +3,7 @@ heh, you could even say this is version 2.0!
 # ! ! Im looking for collaborators ! ! ♥ 
 
 
-### https://nekoprospekt.github.io⏴ ⏴ 
+### https://nekoprospekt.xyz/station⏴ ⏴ 
 I know, I know, it's kinda crap.. but isn't that the *fun in all of this!?*
 
 ---
