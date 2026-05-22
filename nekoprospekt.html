@@ -20,6 +20,9 @@
             overflow: hidden;
         }
 
+        html {
+        scroll-behavior: smooth;
+}
         .panel-container {
             position: relative;
             margin-right: -110px;
@@ -95,6 +98,28 @@
             to {
                 transform: translateY(-90px);
             }
+        }
+
+        .friend-card {
+            display: flex;
+            gap: 20px;
+            padding: 24px;
+            margin: 20px 0;
+
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-left: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .friend-info {
+            flex: 1;
+        }
+
+        .friend-info h3 {
+            margin: 0 0 10px 0;
+
+            font-family: DIN;
+            letter-spacing: 2px;
         }
 
         .wrapper {
@@ -371,6 +396,20 @@
             overflow: visible;
         }
 
+        #pst {
+            color: rgb(117, 117, 117);
+        }
+
+        #im-not-alone-but-sometimes-i-feel-so-fucking-alone-please-i-just-want-someone-who-will-listen-to-me-talk-find-it-sweet-not-annoying-thats-all-i-ask {
+            text-align: right;
+            font-family: DIN;
+            letter-spacing: 2px;
+        }   
+
+        a{
+            color: white;
+
+        }
         /*Alot more AI than usual on this page cause I, admittedly kept breaking it*/
     </style>
 </head>
@@ -423,25 +462,150 @@
                 </div>
 
                 <div class="panel" id="scrollPanel">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
-                    <p>Vestibulum in libero vel augue malesuada tincidunt.</p>
+                    <p>Hello! You can refer to me as Lilith, or Lilly, I don't mind.. I commonly have people refer to me
+                        by Neko, Prospekt is OK too!</p>
+
+                    <p>I am a 16 year old pro gamer, thats where the <span id="pst">neko</span><i>PRO</i><span id="pst">spekt</span> comes from in my username, hit
+                        me up if you want to 1v1 on
+                        Counter-Strike Source, cs_office, your determined to lose when I've got my 'HL2 bikini citizens
+                        hostages' mod installed. Message
+                        me on Steam, or at my Discord.
+                    </p>
+
+                    <p>I am a huge HL2 fan, I dedicate lot's of the time to it. Admittedly, I do not enjoy HL1 much at all, I played it once including it's extensions 
+                        and could not bring myself to play them again besides Sven Co-op. This seems to irk people because they just think im some tasteless larp.
+                        I do know the lore, but I focus on HL2s lore, and know it extensivelly. My first introduction to HL2 was on the Orange Box Collection, I was 7,
+                        couldnt bring myself very far into route canal because the cops scared me, haha! I came back to it a couple years ago though, and have been obsessed
+                        with it since!
+                    </p>
+
+                    <p>
+                        I have a large collection of physical half-life media, I won't list it here.. but it's getting big enough! I write da half-life 2, draw it, think it,
+                        play it, live it, breathe it, drink it, eat it, fap to it, Its my favourite thing ever. Theres not much I love more that Half-Life 2 but.. <a href="#exceptions">I have exceptions.</a>
+                    </p>
+
+                    <p>Besides HL2 I also play other source games, GMOD, Portal and CSS most notably! I don't play TF2 anymore, but used to really enjoy it! I really enjoyed sven-coop,
+                        synergy, Lambda Wars, Headcrab Frenzy and Genry's great escape from city 13 (its a disgusting mess, you need to play it now.) I also play 'non-source' games, too.
+                    </p>
+
+                    <p>I like listening to music, t+Pazolite and Kobaryo are my favourites, if you haven't already check out some speedcore! I enjoy coding, playing games, obviously, drawing and painting\
+                        and making art generally, my favourite program is mspaint. I love looking for cool fonts and messing around with them, I write from time-to-time about HL2, Project Zomboid
+                        and my own personal characters. I enjoyed HL2RP whilst it was still around, and dream of the day I can be Lilith Nèbes again.
+                    </p>
+
+                    <h4 id="exceptions">The people I love most!</h4>
+
+                    <div class="friend-card">
+
+                        <div class="friend-info">
+
+                            <h3>K</h3>
+
+                            <p>
+                              My amazing boyfriend! He plays some good games (not HL2, though.) and has a youtube channel, I'd call it cool
+                              but I'm not on it so it's not cool. (only kidding, check it out, here!) I looove you! 
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="friend-card">
+
+                        <div class="friend-info">
+
+                            <h3>Incode</h3>
+
+                            <p>
+                             Stupid family member that I hate who doesnt even deserve a place here but i'm doing it out of pity 
+                             only kidding love you..ig. check out Incodes multiple rentrys! here and here
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="friend-card">
+
+                        <div class="friend-info">
+
+                            <h3>Valerie</h3>
+
+                            <p>
+                             My fucking G!! Top frags ALWAYS on valorant on league too, has NEVER not escaped in a match of
+                             dbd. has went LAN for all these games btw. Totally possibe btw. Totally real btw. Love you, Valerie!
+                             her site is here!
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="friend-card">
+
+                        <div class="friend-info">
+
+                            <h3>Nuj (Nujington)</h3>
+
+                            <p>
+                             Showed me that when someone writes good HL2 content that I can always ruin it and make it worse 'A rather
+                             sizeable hitch in the road.' as an example. sorry, You do some good writing though! his steam is here!
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="friend-card">
+
+                        <div class="friend-info">
+
+                            <h3>Faith</h3>
+
+                            <p>
+                             My little angel thanks for letting me sit with you when valerie was never actually in haha. I hope right now your having
+                             fun.. on the phone.. to your girlfriend.. fuckin, sussy baka.. love you faith. my favourite k-pop stan. find her here!
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="friend-card">
+
+                        <div class="friend-info">
+
+                            <h3>N</h3>
+
+                            <p>
+                             No look, I'd say I love you but you always leave half way through the day! What's the fun in that.. no no im not serious, I Love
+                             you niamh! she has no site cause shes sus or whatever 
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="friend-card">
+
+                        <div class="friend-info">
+
+                            <h3>Genevieve</h3>
+
+                            <p>
+                             My favourite gooner and football fan, I'm always open to hearing about whatever crazy shit you indulged in the day before. love you loads gene! I don't so much
+                             like any of your men. (YOUR TASTE IS SO BAD.)
+
+                        </div>
+
+                    </div>
+
+  <p>I love you all lot's, even more than Half-Life 2! haha, yeah crazy I know. Anyways if you want to talk to me, have questions about whatever, or It's something else 
+                        shoot me a text on discord. I don't have anyone to essentially talk about HL2, too. It's one of my favourite things ever, It makes me very happy.
+                    </p>
+
+<p id="im-not-alone-but-sometimes-i-feel-so-fucking-alone-please-i-just-want-someone-who-will-listen-to-me-talk-find-it-sweet-not-annoying-thats-all-i-ask"><h3>Thanks. Neko*Prospekt</h3></p>
+
                 </div>
 
                 <div class="scroll-indicator" id="scrollIndicator">
