@@ -29,8 +29,6 @@
 
         a {
             color: #e4e4e4;
-
-
         }
 
         /* background scanlines, this was too hard for me haha, rest wasn't though! (lie)*/
@@ -69,15 +67,12 @@
         }
 
         .terminal {
-            position: relative;
+            position: relative; /*AI really clutched up when it came to broken fucing scaling duuude*/
             z-index: 2;
-
             width: min(1000px, 92vw);
-
             margin: auto;
 
             padding: 20px;
-
             box-sizing: border-box;
 
             display: flex;
@@ -97,7 +92,7 @@
 
         .line {
             margin: 10px 0;
-            line-height: 1.8;
+            line-height: 1.5;
             white-space: pre-wrap;
             font-family: monospace;
         }
@@ -121,14 +116,11 @@
 
         .cursor {
             position: absolute;
-
             width: 10px;
             height: 18px;
-
             background: white;
 
             pointer-events: none;
-
             animation: blink 1s infinite steps(1);
         }
 
@@ -137,8 +129,6 @@
                 opacity: 0;
             }
         }
-
-        /* footer */
 
         .footer {
             margin-top: 50px;
@@ -176,7 +166,7 @@
     <div class="terminal">
 
         <div class="header">
-            [ d1_trainstation_01 v3.1 ]
+            [ d1_trainstation_01 v3.2 ]
         </div>
 
         <div class="sitemap">
@@ -201,10 +191,13 @@
                                                      └── lovemail.html (lovemail)
                                                     
                                                     └──projectindex/
-
-                                                    └──links/
-                                                     ├──Discord (external.)
                                                      ├──Lambda Generation (external.)
+                                                     ├──TikTok (external.)
+                                                     └──Youtube (external.)
+
+├── extras/                                         └──links/
+│ ├── 404.html (404)                                 ├──Discord (external.)
+│ ├── ???.html (???)                                 ├──Lambda Generation (external.)
                                                      ├──TikTok (external.)
                                                      ├──Steam (external.)
                                                      ├──4played.de (external.)

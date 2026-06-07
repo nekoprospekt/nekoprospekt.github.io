@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>d1_trainstation_03</title>
+    <title>d2_prison_08</title>
     <link rel="icon" href="images/favicon.gif" type="image/gif">
 
     <style>
@@ -15,7 +15,7 @@
         body {
             margin: 0;
             font-family: DIN, sans-serif;
-            background: #111;
+            background: #0a0a0a;
             color: rgb(255, 255, 255);
             overflow: hidden;
 
@@ -23,14 +23,13 @@
             transition: opacity 0.8s ease;
         }
 
-
-        /*Phew, thats that over with!*/
+        /*Phew, that's that over with!*/
 
         a {
             position: relative;
             text-decoration: none;
             color: white;
-            transition: filter 0.25s ease;
+            transition: filter 0.45s ease;
         }
 
         a:hover {
@@ -100,19 +99,23 @@
         .vertical {
             writing-mode: vertical-rl;
             transform: rotate(180deg);
-            font-size: 120px;
-            line-height: 0.74;
+            font-size: 135px;
+            line-height: 0.70;
             letter-spacing: 7px;
             text-transform: capitalize;
+            opacity: 0.80;
+        }
+
+        .vertical:hover {
+            opacity: 1;
         }
 
         .subtext {
-            font-family: Bahnschrift Thin;
+            font-family: Bahnschrift Light;
             margin-top: 8px;
-            font-size: 16px;
+            font-size: 14px;
             letter-spacing: 2px;
-            opacity: 48%;
-            font-weight: 300;
+            opacity: 40%;
         }
 
         .img {
@@ -121,7 +124,7 @@
         }
 
         .bottom-line {
-            height: 8px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.178);
             opacity: 1;
         }
@@ -191,6 +194,7 @@
             transition: opacity 0.09s;
         }
 
+
         @keyframes drift {
             from {
                 transform: translateY(0);
@@ -200,6 +204,34 @@
                 transform: translateY(-90px);
             }
         }
+
+        .head-home {
+            position: fixed;
+            /* stays in the corner while scrolling */
+            top: 0;
+            left: 0;
+            padding: 22px;
+            font-family: monospace;
+            font-size: 1rem;
+            /* default browser text size, isnt that cool! I only found this out LOOL */
+            pointer-events: all;
+            z-index: 99999;
+        }
+
+        .head-home a {
+            color: white;
+            animation: none;
+        }
+
+        .head-home a:hover {
+            color: white;
+            filter: none;
+            animation: none;
+        }
+
+        .head-home a::after {
+            content: none;
+        }
     </style>
 </head>
 
@@ -207,6 +239,10 @@
     </div>
     <div class="unicode-bg"></div>
     <div class="page">
+
+        <div class="head-home">
+            <a href="index.html">[ > return home? ]</a>
+        </div>
 
         <div class="left">
             <div class="vertical"><a href="https://discordid.netlify.app/?id=956267969741217813">Discord</a></div>

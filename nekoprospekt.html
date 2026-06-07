@@ -109,9 +109,16 @@
             margin: 20px 0;
 
             background: rgba(255, 255, 255, 0.03);
+            /*this shit confuses me, but I think im starting to memorise some of these.*/
             backdrop-filter: blur(10px);
             border-left: 2px solid rgba(255, 255, 255, 0.15);
         }
+
+        /* .friend-info p{
+            opacity: 7;
+
+        } */
+        /*was here for ages and didnt actually do anything because I wrote it quite a while after the fact LOL*/
 
         .friend-info {
             flex: 1;
@@ -119,6 +126,7 @@
 
         .friend-info h3 {
             margin: 0 0 10px 0;
+            /*This still confuses me, some how.*/
 
             font-family: DIN;
             letter-spacing: 2px;
@@ -171,6 +179,7 @@
             width: 4px;
         }
 
+        /*Im gonna take this as the backing to the scrollbar*/
         .panel::-webkit-scrollbar-track {
             background: transparent;
         }
@@ -279,7 +288,7 @@
             padding: 4px;
             box-sizing: border-box;
 
-            transition:
+            transition: /*ss*/
                 filter 0.25s ease,
                 opacity 0.25s ease,
                 border-color 0.25s ease,
@@ -343,15 +352,38 @@
             transition-duration: 0.2s;
         }
 
-        .bottom-image {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 1100px;
-            max-width: 46vw;
-            pointer-events: none;
-            z-index: 1;
-        }
+        .postcards {
+    position: fixed;
+    left: 80px;
+    bottom: 80px;
+
+    width: 350px;
+    height: 260px;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+.card {
+    position: absolute;
+
+    width: 620px;
+    height: auto;
+
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.card1 {
+    transform: rotate(-8deg);
+    left: 0;
+    top: -270px;
+}
+
+.card2 {
+    transform: rotate(6deg);
+    left: 110px;
+    top: -420px;
+}
 
         .tooltip {
             display: block;
@@ -371,7 +403,6 @@
 
             background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(8px);
-
             color: white;
 
             padding: 5px 10px;
@@ -379,7 +410,6 @@
             font-family: DIN;
             font-size: 11px;
             letter-spacing: 1px;
-
             white-space: nowrap;
 
             opacity: 0;
@@ -402,16 +432,50 @@
             color: rgb(117, 117, 117);
         }
 
-        #im-not-alone-but-sometimes-i-feel-so-fucking-alone-please-i-just-want-someone-who-will-listen-to-me-talk-find-it-sweet-not-annoying-thats-all-i-ask {
+        #im-not-alone-but-sometimes-i-feel-so-fucking-alone-please-i-just-want-someone-who-will-listen-to-me-talk-find-it-sweet-not-annoying-thats-all-i-ask-if-i-talked-about-my-favourite-things-and-someone-listened-thats-all-i-think-i-want {
             text-align: right;
             font-family: DIN;
             letter-spacing: 2px;
         }
 
+        /* -- P A S T E  M E ! -- I WANT TO BE ON ALL THE PAGES MWAHAHA!*/
         a {
             color: white;
-
+            transition: filter 0.45s ease;
         }
+
+        a:hover{
+            filter: blur(2px);
+        }
+        /*transition duration doesnt work here,where I originally thought it would apply. You use transiton: filter {insert number.} ease, (eases into, see twean.)*/
+        /* -- P A S T E  M E ! -- */
+
+        #burp {
+            color: rgba(255, 255, 255, 0.705);
+        }
+
+        .head-home {
+            position: fixed;
+            /* stays in the corner while scrolling */
+            top: 0;
+            left: 0;
+            padding: 22px;
+            font-family: monospace;
+            font-size: 1rem;
+            /* default browser text size, isnt that cool! I only found this out LOOL */
+            pointer-events: all;
+            z-index: 99999;
+        }
+
+        .head-home a{
+            color: white;
+        }
+
+        .head-home a:hover{
+            color: white;
+            filter: none;
+        }
+
 
         /*Alot more AI than usual on this page cause I, admittedly kept breaking it*/
     </style>
@@ -421,7 +485,14 @@
 
     <div class="unicode-bg"></div>
 
-    <img src="images/humantestbio.png" class="bottom-image">
+<div class="postcards">
+    <img src="images/backrooms.png" class="card card1">
+    <img src="images/css.gif" class="card card2">
+</div>
+
+    <div class="head-home">
+        <a href="index.html">[ > return home? ]</a>
+    </div>
 
     <div class="wrapper">
         <div class="wrapper">
@@ -451,7 +522,8 @@
                             <img src="images/gifs-icos/sheher.png">
                         </div>
 
-                        <div class="top-icon" data-tooltip="Despite that, I am still a cis woman!">
+                        <div class="top-icon"
+                            data-tooltip="Despite that, I am still a cis woman! (if it matters, im also straight.)">
                             <img src="images/gifs-icos/female.png">
                         </div>
                     </div>
@@ -465,10 +537,11 @@
                 </div>
 
                 <div class="panel" id="scrollPanel">
-                    <p>Hello! You can refer to me as Lilith, or Lilly, I don't mind.. I commonly have people refer to me
+                    <p id="burp">Hello! You can refer to me as Lilith, or Lilly, I don't mind.. I commonly have people
+                        refer to me
                         by Neko, Prospekt is OK too!</p>
 
-                    <p>I am a 16 year old pro gamer, thats where the <span id="pst">neko</span><i>PRO</i><span
+                    <p id="burp">I am a 16 year old pro gamer, thats where the <span id="pst">neko</span><i>PRO</i><span
                             id="pst">spekt</span> comes from in my username, hit
                         me up if you want to 1v1 on
                         Counter-Strike Source, cs_office, your determined to lose when I've got my 'HL2 bikini citizens
@@ -476,7 +549,8 @@
                         me on Steam, or at my Discord.
                     </p>
 
-                    <p>I am a huge HL2 fan, I dedicate lot's of the time to it. Admittedly, I do not enjoy HL1 much at
+                    <p id="burp">I am a huge HL2 fan, I dedicate lot's of the time to it. Admittedly, I do not enjoy HL1
+                        much at
                         all, I played it once including it's extensions
                         and could not bring myself to play them again besides Sven Co-op. This seems to irk people
                         because they just think im some tasteless larp.
@@ -487,20 +561,22 @@
                         with it since!
                     </p>
 
-                    <p>
+                    <p id="burp">
                         I have a large collection of physical half-life media, I won't list it here.. but it's getting
                         big enough! I write da half-life 2, draw it, think it,
                         play it, live it, breathe it, drink it, eat it, fap to it, Its my favourite thing ever. Theres
                         not much I love more that Half-Life 2 but.. <a href="#exceptions">I have exceptions.</a>
                     </p>
 
-                    <p>Besides HL2 I also play other source games, GMOD, Portal and CSS most notably! I don't play TF2
+                    <p id="burp">Besides HL2 I also play other source games, GMOD, Portal and CSS most notably! I don't
+                        play TF2
                         anymore, but used to really enjoy it! I really enjoyed sven-coop,
                         synergy, Lambda Wars, Headcrab Frenzy and Genry's great escape from city 13 (its a disgusting
                         mess, you need to play it now.) I also play 'non-source' games, too.
                     </p>
 
-                    <p>I like listening to music, t+Pazolite and Kobaryo are my favourites, if you haven't already check
+                    <p id="burp">I like listening to music, t+Pazolite and Kobaryo are my favourites, if you haven't
+                        already check
                         out some speedcore! I enjoy coding, playing games, obviously, drawing and painting\
                         and making art generally, my favourite program is mspaint. I love looking for cool fonts and
                         messing around with them, I write from time-to-time about HL2, Project Zomboid
@@ -516,10 +592,10 @@
 
                             <h3>K</h3>
 
-                            <p>
+                            <p id="burp">
                                 My amazing boyfriend! He plays some good games (not HL2, though.) and has a youtube
                                 channel, I'd call it cool
-                                but I'm not on it so it's not cool. (only kidding, check it out, here!) I looove you!
+                                but I'm not on it so it's not cool. (only kidding, check it out, <a href="https://www.youtube.com/@Farten1" target="_blank">here</a>!) I looove you!
                             </p>
 
                         </div>
@@ -532,10 +608,10 @@
 
                             <h3>Incode</h3>
 
-                            <p>
+                            <p id="burp">
                                 Stupid family member that I hate who doesnt even deserve a place here but i'm doing it
                                 out of pity
-                                only kidding love you..ig. check out Incodes multiple rentrys! here and here
+                                only kidding love you..ig. check out Incodes multiple rentrys! <a href="https://rentry.co/jesuswalks" target="_blank">here</a> and <a href="https://rentry.co/racist" target="_blank">here</a>
                             </p>
 
                         </div>
@@ -548,12 +624,12 @@
 
                             <h3>Valerie</h3>
 
-                            <p>
+                            <p id="burp">
                                 My fucking G!! Top frags ALWAYS on valorant on league too, has NEVER not escaped in a
                                 match of
                                 dbd. has went LAN for all these games btw. Totally possibe btw. Totally real btw. Love
                                 you, Valerie!
-                                her site is here!
+                                her site is <a href="https://candykingdomss.straw.page" target="_blank">here</a>!
                             </p>
 
                         </div>
@@ -566,11 +642,11 @@
 
                             <h3>Nuj (Nujington)</h3>
 
-                            <p>
+                            <p id="burp">
                                 Showed me that when someone writes good HL2 content that I can always ruin it and make
                                 it worse 'A rather
                                 sizeable hitch in the road.' as an example. sorry, You do some good writing though! his
-                                steam is here!
+                                steam is <a href="https://steamcommunity.com/id/shadowking024" target="_blank">here</a>!
                             </p>
 
                         </div>
@@ -583,11 +659,11 @@
 
                             <h3>Faith</h3>
 
-                            <p>
+                            <p id="burp">
                                 My little angel thanks for letting me sit with you when valerie was never actually in
                                 haha. I hope right now your having
                                 fun.. on the phone.. to your girlfriend.. fuckin, sussy baka.. love you faith. my
-                                favourite k-pop stan. find her here!
+                                favourite k-pop stan. find her <a href="https://abtfai.straw.page" target="_blank">here</a>!
                             </p>
 
                         </div>
@@ -600,7 +676,7 @@
 
                             <h3>N</h3>
 
-                            <p>
+                            <p id="burp">
                                 No look, I'd say I love you but you always leave half way through the day! What's the
                                 fun in that.. no no im not serious, I Love
                                 you niamh! she has no site cause shes sus or whatever
@@ -616,7 +692,7 @@
 
                             <h3>Genevieve</h3>
 
-                            <p>
+                            <p id="burp">
                                 My favourite gooner and football fan, I'm always open to hearing about whatever crazy
                                 shit you indulged in the day before. love you loads gene! I don't so much
                                 like any of your men. (YOUR TASTE IS SO BAD.)
@@ -625,14 +701,15 @@
 
                     </div>
 
-                    <p>I love you all lot's, even more than Half-Life 2! haha, yeah crazy I know. Anyways if you want to
+                    <p id="burp">I love you all lot's, even more than Half-Life 2! haha, yeah crazy I know. Anyways if
+                        you want to
                         talk to me, have questions about whatever, or It's something else
                         shoot me a text on discord. I don't have anyone to essentially talk about HL2, too. It's one of
                         my favourite things ever, It makes me very happy.
                     </p>
 
                     <p
-                        id="im-not-alone-but-sometimes-i-feel-so-fucking-alone-please-i-just-want-someone-who-will-listen-to-me-talk-find-it-sweet-not-annoying-thats-all-i-ask">
+                        id="im-not-alone-but-sometimes-i-feel-so-fucking-alone-please-i-just-want-someone-who-will-listen-to-me-talk-find-it-sweet-not-annoying-thats-all-i-ask-if-i-talked-about-my-favourite-things-and-someone-listened-thats-all-i-think-i-want">
                     <h3>Thanks. Neko*Prospekt</h3>
                     </p>
 
@@ -642,6 +719,7 @@
                     scroll down
                     <p>⌵</p>
                 </div>
+
 
             </div>
         </div>

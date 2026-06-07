@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>d3_c17_01</title>
+<link rel="icon" href="images/favicon.gif" type="image/gif">
+
+<style>
+
+@font-face{
+    font-family:DIN;
+    src:url(Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf);
+}
+
+body{
+    margin:0;
+    background:#0a0a0a;
+    color:white;
+    font-family:Bahnschrift light,sans-serif;
+}
+
+/* unicode background */
+
+.unicode-bg{
+    position:fixed;
+    inset:0;
+
+    z-index:0;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fill,95px);
+    grid-auto-rows:95px;
+
+    font-size:35px;
+    color:#292929;
+
+    pointer-events:none;
+    user-select:none;
+
+    animation:drift 180s linear infinite;
+}
+
+.unicode-bg span{
+    opacity:.09;
+}
+
+@keyframes drift{
+    from{transform:translateY(0);}
+    to{transform:translateY(-90px);}
+}
+
+main, /*am i smart*/
+header,
+footer{
+    position:relative;
+    z-index:2;
+}
+
+.project-header{
+    position:sticky; /*The one thing I remember from school, sticky header.*/
+    top:0;
+
+    z-index:999;
+    padding:26px 5%;
+    display:flex;
+    justify-content:left;
+
+    background: rgba(255,255,255,.015);
+    backdrop-filter:blur(12px); /*Can you tell I love blur, oh my gosh.*/
+    border-bottom:
+    1px solid rgba(255,255,255,.08);
+}
+
+.header-links{
+    font-family: DIN;
+    display:flex;
+    gap:45px;
+}
+
+.header-links a{
+
+    color:white;
+    text-decoration:none;
+
+    font-size:13px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+
+
+/*Should push same transition time and px across ALL PAGES!*/
+    transition:.25s;
+}
+
+.header-links a:hover{
+    opacity:1;
+    filter:blur(2px);
+}
+
+.project-section{
+    display:flex;
+
+    justify-content:space-between;
+    gap:60px;
+
+    padding:120px 8%;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.05);
+}
+
+h3{
+    font-family: DIN;
+}
+
+.project-grid{
+    flex:1;
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(280px,1fr)); /*This was confusing, I did use AI. see, fr*/
+
+    gap:30px;
+}
+
+.project-card{
+
+    min-height:220px;
+
+    padding:30px;
+
+    text-decoration:none;
+    color:white;
+
+    background:
+    rgba(255,255,255,.03);
+
+    backdrop-filter:blur(12px);
+
+    border:1px solid transparent;
+
+    opacity:.75;
+
+    transition:
+        filter .25s ease,
+        opacity .25s ease,
+        border-color .25s ease,
+        background .25s ease,
+        transform .25s ease;
+
+    position:relative;
+}
+
+.project-card::before{
+    content:"┏";
+
+    position:absolute;
+    top:12px;
+    left:15px;
+
+    opacity:.7;
+}
+
+.project-card::after{
+    content:"┛";
+
+    position:absolute;
+    bottom:12px;
+    right:15px;
+
+    opacity:.7;
+}
+
+.project-card::after{ /*This was AIs doing, couldnt figure tooltip shit out, see nekoprospekt.html. I understand now what is going on.*/
+    content:attr(data-tooltip);
+
+    position:absolute;
+
+    bottom:-28px;
+    left:50%;
+
+    transform:
+        translateX(-50%)
+        translateY(4px);
+
+    background:rgba(0,0,0,.85);
+    backdrop-filter:blur(6px);
+
+    padding:4px 8px;
+    font-size:11px;
+    letter-spacing:1px;
+
+    white-space:nowrap;
+    opacity:0;
+    pointer-events:none;
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.project-card:hover::after{
+    opacity:1;
+}
+
+.project-card:hover{
+
+    filter:grayscale(0%) brightness(1);
+    opacity:1;
+    
+    border-color:rgba(255,255,255,.45);
+    background:rgba(255,255,255,.04);
+}
+
+.project-card h3{
+    font-family:DIN;
+    margin-top:1;
+    letter-spacing:2px;
+}
+
+.project-card p{
+    opacity:.7;
+    line-height:1.5;
+}
+
+/* section info */
+
+.section-info{
+    width:320px;
+
+    flex-shrink:0;
+    padding:40px;
+    background:
+    rgba(255,255,255,.03);
+
+    backdrop-filter:blur(12px);
+    position:relative;
+}
+
+.section-info h2{
+    margin-top:0;
+
+    font-family:DIN;
+    font-size:38px;
+    letter-spacing:5px;
+}
+
+.section-info p{
+
+    line-height:1.8;
+    opacity:.75;
+}
+
+.art-info::before{
+    content:"*";
+}
+
+.coding-info::before{
+    content:"?";
+}
+
+.writing-info::before{
+    content:"@";
+}
+
+.other-info::before{
+    content:"#";
+}
+
+.art-info::before,
+.coding-info::before, /*Uglyyy!*/
+.writing-info::before,
+.other-info::before{
+    font-family: DIN;
+    position:absolute;
+    top:-90px;
+    right:-10px;
+
+    font-size:300px;
+    opacity:.03;
+    pointer-events:none;
+}
+
+.site-footer{ /*I done better names, are you proud now, bastard.*/
+
+    padding:28px 5%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-top:
+    1px solid rgba(255,255,255,.08);
+
+    background: (255,255,255,.03);
+
+    backdrop-filter:blur(12px);
+}
+
+.footer-links{
+
+    display:flex;
+    gap:30px;
+}
+
+.footer-links a{
+
+    color:white;
+    text-decoration:none;
+
+    letter-spacing:3px;
+    font-size:13px;
+
+    opacity:.7;
+}
+
+.footer-links a:hover{
+
+    opacity:1;
+    filter:blur(1px);
+}
+
+.footer-text{
+
+    font-family:DIN;
+    letter-spacing:2px;
+
+    opacity:.5;
+}
+
+/* mobile support from AI, I am currentry not able to do this, im a beginner.*/
+/*Although, I believe media queries adapt to the insert width insert here 1200, then anything lower it changes it's properties? cool shit dude!*/
+
+@media(max-width:1200px){
+
+    .project-section{
+
+        flex-direction:column;
+    }
+
+    .section-info{
+
+        width:auto;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="unicode-bg"></div>
+
+<header class="project-header">
+
+    <div class="header-links">
+        <a href="#art">art</a>
+        <a href="#coding">coding</a>
+        <a href="#writing">writing</a>
+        <a href="#other">other</a>
+    </div>
+
+</header>
+
+<main>
+
+<section id="art" class="project-section">
+
+    <div class="project-grid">
+
+        <a href="https://www.youtube.com/@nekoprospekt" target="_blank" class="project-card">
+            <h3>Youtube</h3>
+            <p>Post videos here, just a load of random shit. There probably
+            isn't anything here yet, though. I'm trying to bring myself to
+            post, but I'm pretty nervous, I can't meet what my peers can.
+            </p>
+        </a>
+
+        <a href="https://www.tiktok.com/@nekoprospekt" target="_blank" class="project-card">
+            <h3>TikTok</h3>
+            <p>Post art over here.. and some shit videos with my face in them,
+            ahaha. Most of my mspaint stuff and valve things stay here!
+            </p>
+        </a>
+
+        <a href="https://community.lambdageneration.com/user/lilly" target="_blank" class="project-card">
+            <h3>Lambda Generation</h3>
+            <p>This is my dedicated 'Valve-Posting-Place-Area-Thing' Theres not 
+            much but I plan on adding more. </p> <p>I would TOTALLY reccomend checking
+            out the site if you love Valve, small but great welcoming community
+            with frequent gamenights! #notsponsered.
+            </p>
+        </a>
+
+    </div>
+
+    <div class="section-info art-info">
+
+        <h2>art.</h2>
+
+        <p>
+            Drawings, commissions, Half-Life Fanart, mspaint stuff, Videos
+            among everything else. most of it is pretty crap.
+        </p>
+
+        <p>Yes, I do NSFW commisons, please just ask if you want it.</p>
+
+    </div>
+
+</section>
+
+<section id="coding" class="project-section">
+
+    <div class="project-grid">
+
+        <a href="#" class="project-card">
+            <h3>To come..</h3>
+            <p>? ? ?</p>
+        </a>
+
+        <a href="#" class="project-card">
+            <h3>To come..</h3>
+            <p>? ? ?</p>
+        </a>
+
+    </div>
+
+    <div class="section-info coding-info">
+
+        <h2>coding.</h2>
+
+        <p>
+            Websites, Discord projects, experiments,
+            mods, utilities and things that somehow
+            compiled on the first try.
+        </p>
+
+    </div>
+
+</section>
+
+<section id="writing" class="project-section">
+
+    <div class="project-grid">
+
+        <a href="#" class="project-card">
+            <h3>To come..</h3>
+            <p>? ? ?</p>
+        </a>
+
+        <a href="#" class="project-card">
+            <h3>To come..</h3>
+            <p>? ? ?</p>
+        </a>
+
+    </div>
+
+    <div class="section-info writing-info">
+
+        <h2>writing.</h2>
+
+        <p>
+            Stories, lore, roleplay material,
+            personal writing and various documents
+            that became much longer than intended.
+        </p>
+
+    </div>
+
+</section>
+
+<section id="other" class="project-section">
+
+    <div class="project-grid">
+
+        <a href="#" class="project-card">
+            <h3>To come..</h3>
+            <p>? ? ?</p>
+        </a>
+
+        <a href="#" class="project-card">
+            <h3>To come..</h3>
+            <p>? ? ?</p>
+        </a>
+
+    </div>
+
+    <div class="section-info other-info">
+
+        <h2>other bullshit.</h2>
+
+        <p>
+            Miscellaneous nonsense, archives,
+            collections, experiments and things
+            that don't belong anywhere else.
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer class="site-footer">
+
+    <div class="footer-links">
+
+        <a href="index.html">home</a>
+        <a href="links.html">links</a>
+        <a href="nekoprospekt.html">about</a>
+        <a href="sitemap.html">sitemap</a>
+
+    </div>
+
+    <div class="footer-text">
+        projects archive // 2026
+    </div>
+
+</footer>
+
+<script>
+
+const chars = ["╳","╲","╱","␦","?"];
+const grid = document.querySelector(".unicode-bg");
+
+function buildGrid(){
+
+    const size = 100;
+    const cols = Math.ceil(window.innerWidth / size);
+    const rows = Math.ceil(window.innerHeight / size);
+
+    grid.innerHTML = "";
+
+    for(let i=0;i<cols*rows;i++){
+
+        const span = document.createElement("span");
+
+        span.textContent =
+        chars[Math.floor(Math.random()*chars.length)];
+
+        grid.appendChild(span);
+    }
+}
+
+buildGrid();
+
+window.addEventListener("resize",buildGrid);
+
+</script>
+
+</body>
+</html>
