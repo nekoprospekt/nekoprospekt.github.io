@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>nprskt</title>
+
+  <style>
+    /* =========================
+       SHARED VALUES
+       ========================= */
+
+    :root {
+      /* the arrow used after links.
+         change this one line if arrow.svg lives somewhere else */
+      --arrow: url("images/icos/arrow.svg");
+
+      /* the arrow is used as a mask, so this colour is what you see
+         (whatever colour the SVG file itself is doesn't matter) */
+      --arrow-color: #ff4fa3;
+
+      /* slow-in, slow-out: used by the arrow flip, the panel wipe and the header intro */
+      --ease: cubic-bezier(0.35, 0.1, 0.65, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #000 url("images/background 4k.png") center center / cover fixed no-repeat;
+
+      font-family: Arial, sans-serif;
+    }
+
+
+    /* =========================
+           WEBSITE
+           ========================= */
+
+    .page {
+      width: min(100vw, 133.333vh);
+
+      margin: 60px auto;
+
+      min-height: 100vh;
+
+      background: #161415;
+
+      overflow: hidden;
+    }
+
+    /* =========================
+   TOP LINE
+   ========================= */
+
+    .top-line {
+      width: min(100vw, 133.333vh);
+      height: 60px;
+
+      margin: 0 auto;
+
+      display: flex;
+      align-items: center;
+
+      color: #000;
+
+      font-size: 20px;
+      line-height: 1;
+
+      font-family: Bahnschrift, sans-serif;
+      letter-spacing: 2px;
+    }
+
+    #quote {
+      display: block;
+
+      color: #000;
+      font-family: Bahnschrift, sans-serif;
+
+      font-size: 15px;
+      line-height: 1.4;
+
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
+
+    /* =========================
+           HEADER
+           ========================= */
+
+    header {
+      position: relative;
+
+      height: 300px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 40px;
+
+      background: #000000;
+      color: rgb(253, 224, 240);
+
+      overflow: hidden;
+
+      border-bottom: 1px solid #2a2426;
+    }
+
+    /* large, low-opacity kaomoji sitting behind the title */
+    .header-kaomoji {
+      position: absolute;
+
+      left: 440px;
+      top: 50%;
+
+      transform: translateY(-70%);
+
+      font-family: Bahnschrift, sans-serif;
+      font-size: 100px;
+      line-height: 1;
+
+      color: rgb(255, 133, 200);
+      opacity: 0.15;
+
+      white-space: nowrap;
+
+      pointer-events: none;
+
+      z-index: 0;
+    }
+
+    /* =========================
+   HEADER ICON AREA
+   ========================= */
+
+    .header-icons {
+      flex-shrink: 0;
+
+      align-self: stretch;
+
+      display: flex;
+      flex-direction: row;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 22px;
+
+      padding-left: 20px;
+
+      position: relative;
+      z-index: 1;
+
+      border-left: 1px solid #2a2426;
+    }
+
+
+    /* Two vertical columns */
+
+    .icons-top,
+    .icons-bottom {
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 20px;
+    }
+
+
+    /* Actual icon images */
+
+    .icons-top img,
+    .icons-bottom img {
+      width: 40px;
+      height: 40px;
+
+      display: block;
+
+      object-fit: contain;
+
+      background: transparent;
+    }
+
+
+    /* Icon links */
+
+    .icons-top a,
+    .icons-bottom a {
+      width: 40px;
+      height: 40px;
+
+      display: block;
+
+      flex-shrink: 0;
+    }
+
+
+    /* Actual images */
+
+    .icons-top img,
+    .icons-bottom img {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      object-fit: contain;
+
+      background: rgba(255, 255, 255, 0.0);
+    }
+
+    /* =========================
+   LINKS
+   ========================= */
+
+    a {
+      color: #ff4fa3;
+
+      text-decoration: none;
+
+      transition: color 0.35s ease;
+    }
+
+    a:hover {
+      color: rgb(253, 224, 240);
+    }
+
+    /* Hover */
+    /* =========================
+   ARROWS
+   the arrow after every link in the main content.
+   It points bottom-right, and turns to point top-right on hover.
+   ========================= */
+
+    main a::after {
+      content: "";
+
+      display: inline-block;
+
+      width: 0.7em;
+      height: 0.7em;
+
+      margin-left: 0.3em;
+
+      vertical-align: -0.09em;
+
+      background-color: var(--arrow-color);
+      -webkit-mask: var(--arrow) center / contain no-repeat;
+      mask: var(--arrow) center / contain no-repeat;
+
+      
+    }
+
+    main a:hover::after {
+      transform: rotate(-90deg);
+    }
+
+    /* =========================
+           HEADER IMAGE
+           ========================= */
+
+    .header-image {
+      width: 210px;
+      height: 210px;
+      margin-left: 30px;
+      margin-top: 10px;
+      flex-shrink: 0;
+
+      object-fit: cover;
+
+      background: rgba(255, 255, 255, 0);
+
+      position: relative;
+      z-index: 1;
+
+      border: 1px solid #2a2426;
+    }
+
+
+    /* =========================
+           HEADER CONTENT
+           ========================= */
+
+    .header-content {
+      align-self: stretch;
+
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+
+      justify-content: center;
+
+      padding-left: 30px;
+
+      padding-right: 20px;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-content h1 {
+      margin: 0 0 20px 0;
+
+      font-size: 70px;
+      font-weight: 400;
+      letter-spacing: 10px;
+
+      line-height: 1;
+      font-family: Bahnschrift light;
+    }
+
+    .header-content p {
+      max-width: 700px;
+
+      margin: 0;
+      font-family: Bahnschrift;
+      font-size: 15px;
+      letter-spacing: 2px;
+      line-height: 1.55;
+    }
+
+
+    /* =========================
+           ICONS
+           ========================= */
+
+    .icons {
+      align-self: flex-start;
+
+      display: flex;
+
+      gap: 20px;
+
+      padding-top: 15px;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #ffffff00;
+      color: #181818;
+
+      border-radius: 0;
+
+      font-size: 20px;
+
+      cursor: pointer;
+    }
+
+    /* =========================
+   SECOND ICON ROW
+   ========================= */
+
+    .icon-row {
+      height: 75px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 20px;
+
+      padding: 0 38px;
+
+      background: #181818;
+    }
+
+
+    /* Individual icons */
+
+    .row-icon {
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #fff;
+      color: #181818;
+
+      text-decoration: none;
+
+      font-size: 20px;
+    }
+
+    /* =========================
+           MAIN CONTENT
+           ========================= */
+
+    main {
+      position: relative;
+
+      font-family: Bahnschrift;
+
+      padding: 35px 38px 80px 65px;
+      margin: 0 0 20px auto;
+
+      background-color: #000;
+    }
+
+
+    /* =========================
+           MAIN TEXT
+           ========================= */
+
+    .paragraph-image {
+      width: 200px;
+      height: 240px;
+
+      object-fit: cover;
+
+      margin-top: 5px;
+      margin-bottom: 15px;
+
+      display: block;
+    }
+
+    .paragraph-image.left {
+      float: left;
+
+      margin-left: 0;
+      margin-right: 25px;
+    }
+
+    .paragraph-image.right {
+      float: right;
+
+      margin-left: 25px;
+      margin-right: 0;
+      width: 220px;
+      height: 250px;
+    }
+
+    .bottom-paragraph-image.left {
+      float: left;
+      width: 240px;
+      height: 210px;
+      margin-left: 0;
+      margin-right: 25px;
+    }
+
+    .bottom-paragraph-image.right {
+      float: right;
+
+      margin-left: 25px;
+      margin-right: 0;
+      width: 350px;
+      height: 245px;
+    }
+
+    .text {
+      margin: 4;
+
+      font-size: 18px;
+      line-height: 1.55;
+      color: rgb(253, 224, 240);
+    }
+
+    main p {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+
+    /* =========================
+           SECTIONS
+           ========================= */
+
+    .section {
+      margin-top: 70px;
+      margin-left: 30px;
+      margin: 40px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      margin-bottom: 40px;
+      line-height: 1;
+      font-family: Bahnschrift light;
+      color: #ff91c6;
+    }
+
+    .section h2 {
+      margin: 0 0 20px 0;
+
+      font-size: 30px;
+      font-weight: 400;
+    }
+
+    /* =========================
+   TWO COLUMN LAYOUT (2/3 + 1/3)
+   ========================= */
+
+    .split {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      align-items: start;
+
+      gap: 40px;
+
+      margin: 40px;
+    }
+
+    /* flow-root so floated images stay inside their column */
+    .split-main,
+    .split-side {
+      display: flow-root;
+
+      min-width: 0;
+    }
+
+    .split-block+.split-block {
+      margin-top: 30px;
+    }
+
+    /* room for an image at the top of the right column */
+    .side-image {
+      display: block;
+
+      width: 360px;
+      height: 200px;
+
+      object-fit: cover;
+
+      margin: 0 0 20px 0;
+
+      background: #181818;
+      border: 1px solid #2a2426;
+    }
+
+    /* =========================
+   INLINE IMAGE EMOJIS
+   ========================= */
+
+    .emoji {
+      width: 1.2em;
+      height: 1.2em;
+
+      display: inline-block;
+
+      object-fit: contain;
+
+      vertical-align: -0.16em;
+
+      margin-left: 0.10em;
+      margin-right: 0.10em;
+    }
+
+    /*  <img class="emoji" src="images/emojis/INSERTHERE.png" alt="">  ______insert*/
+
+    /* =========================
+   LINKS GRID (below all paragraphs)
+   ========================= */
+
+    .links-section {
+      margin: 40px;
+      margin-top: 60px;
+      margin-bottom: 90px;
+    }
+
+    .links-wrap {
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 25px;
+
+      clear: both;
+    }
+
+    .links-grid {
+      flex-shrink: 0;
+
+      width: 195px;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+
+      gap: 7px;
+    }
+
+    .link-square {
+      position: relative;
+
+      width: 61px;
+      height: 61px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #080808;
+      border: 1px solid #161616;
+
+      cursor: pointer;
+    }
+
+    .link-square img {
+      width: 26px;
+      height: 26px;
+
+      object-fit: contain;
+    }
+
+    .link-square:hover {
+      background: #000000;
+      border-color: #000000;
+    }
+
+    .link-square.active {
+      background: #020202;
+      border-color: #ff4fa3;
+    }
+
+    /* =========================
+   PANEL: image by default, info box wipes over it
+   ========================= */
+
+    .links-display {
+      position: relative;
+
+      flex: 1;
+
+      min-height: 195px;
+    }
+
+    /* fills the exact space the info box takes up */
+    .links-image {
+      position: absolute;
+      inset: 0;
+
+      background: #080808;
+      border: 1px solid #161616;
+
+      overflow: hidden;
+    }
+
+    .links-image img {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    .links-info {
+      position: relative;
+
+      min-height: 195px;
+
+      padding: 20px;
+
+      background: #080808;
+      border: 1px solid #161616;
+
+      color: rgb(253, 224, 240);
+      font-size: 15px;
+      line-height: 1.55;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      /* hidden: collapsed to the left edge, uncovering the image */
+      clip-path: inset(0 100% 0 0);
+      visibility: hidden;
+    }
+
+    .links-info.visible {
+      clip-path: inset(0 0 0 0);
+      visibility: visible;
+
+    }
+
+    .links-info h3 {
+      margin: 0 0 10px 0;
+
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 2px;
+
+      color: #ff92c7;
+    }
+
+    .links-info p {
+      margin: 0 0 12px 0;
+    }
+
+    .links-info a,
+    .links-list a {
+      font-size: 14px;
+    }
+
+    /* a stack of plain links, one under the other:
+       used inside the panel and under the boyfriend paragraph */
+    .links-list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      gap: 8px;
+
+      line-height: 1.55;
+    }
+
+    .links-list a {
+      overflow-wrap: anywhere;
+    }
+
+    .split-side .links-list {
+      margin: 20px 0 10px 0;
+    }
+
+    .data-title {
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      font-family: Bahnschrift light;
+      color: #e2499b;
+    }
+
+    /* =========================
+           MOBILE
+           ========================= */
+
+    @media (max-width: 600px) {
+
+      .page {
+        width: 100vw;
+      }
+
+      header {
+        height: auto;
+
+        min-height: 220px;
+
+        padding: 25px;
+
+        align-items: flex-start;
+      }
+
+      .header-image {
+        width: 120px;
+        height: 120px;
+      }
+
+      .header-content {
+        padding-left: 20px;
+        padding-right: 0;
+      }
+
+      .header-content h1 {
+        font-size: 28px;
+      }
+
+      .header-content p {
+        font-size: 14px;
+      }
+
+      .header-kaomoji {
+        display: none;
+      }
+
+      .icons {
+        gap: 8px;
+        padding-top: 0;
+      }
+
+      .icon {
+        width: 30px;
+        height: 30px;
+
+        font-size: 14px;
+      }
+
+      main {
+        padding: 25px;
+      }
+
+      .text {
+        font-size: 16px;
+      }
+
+      .links-wrap {
+        flex-direction: column;
+      }
+
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .links-display {
+        flex: none;
+
+        width: 100%;
+      }
+    }
+
+    /* =========================
+           spans? whatever bro I dont give a fuck aint no one gonna read this anyway so why even bother writing it burp
+           AND ID--- IDS HERE TOO NOW!!
+           ========================= */
+
+    #love {
+      margin: 0%;
+      font-size: 5px;
+      height: -200px;
+    }
+
+    #slash {
+      color: #ff4fa3;
+    }
+
+    #kawaii {
+      color: #d163ac;
+    }
+
+    #yami {
+      color: #fdf0f0;
+    }
+
+    #guro {
+      color: #FFADDA;
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <div class="top-line">
+    <span id="quote"></span>
+  </div>
+
+  <div class="page">
+
+
+    <!-- =========================
+             HEADER
+             ========================= -->
+
+    <header>
+
+      <!-- large low-opacity kaomoji sitting behind the title -->
+      <span class="header-kaomoji" aria-hidden="true" <b>ヽ</b>(｀Д´#)<b>ﾉ ﾑｷｰ</b>!!</span>
+
+      <!-- BIG HEADER IMAGE -->
+      <img class="header-image" src="main-image.jpg" alt="">
+
+
+      <!-- HEADER TEXT -->
+      <div class="header-content">
+
+        <h1>NEKO<span id="guro">*</span>PROSPEKT</h1>
+
+        <p class="header-text">
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisis, dolor eget maximus bibendum, eros
+          ante euismod turpis, in fermentum sem enim ut velit. Aenean id nunc molestie, eleifend mauris eget,
+          hendrerit
+          massa. Morbi nulla nisi, elementum non lacinia a, viverra et sem.
+
+        </p>
+
+      </div>
+
+
+      <!-- RIGHT-SIDE ICON AREA -->
+      <div class="header-icons">
+
+        <!-- TOP ROW -->
+        <div class="icons-top">
+
+          <a href="">
+            <img src="images/cmb.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/aperature.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/lambda.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/overwatch.png" alt="">
+          </a>
+
+        </div>
+
+
+        <!-- SECOND ROW -->
+        <div class="icons-bottom">
+
+          <a href="">
+            <img src="images/icos/acespec.png" alt="Flag used by people who place themselves on the asexual spectrum.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/sheher.png"
+              alt="Flag used by people who use She/Her pronouns, it is blue to pink flag halved, with the right side a bright pink flag.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/female.png"
+              alt="Flag used by women who are cisgendered. It is a pink flag, which meets in the middle with white.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/irish.png" alt="Flag of The Republic of Ireland.">
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <main>
+      <section class="section">
+        <h1 class="section-title"><span id="slash">/ /</span> A little introduction</h1>
+        <img class="paragraph-image left" src="" alt="">
+        <p class="text">I am a 16 year old pro gamer, thats where the 'neko<span id="guro"><I>PRO</I></span>spekt' comes
+          from in my username, hit
+          me up if you want to 1v1 on
+          Counter-Strike Source, cs_office, your determined to lose when I've got my 'HL2 bikini citizens
+          hostages' mod installed. Message
+          me on <a href="#LINKS">Steam</a>, or at my <a href="#LINKS">Discord.</a>. <img class="emoji" src="images/emojis/pink heart 2.png"alt="">
+        </p>
+      </section>
+      <section class="section">
+        <p class="text">I am a <span id="guro">huge HL2 fan</span>, I dedicate lot's of my time to it, infact majority
+          of it. Admittedly, I do
+          not enjoy HL1
+          much at
+          all, I have played it once including it's extensions
+          and could not bring myself to play them again. This seems to irk people.<img class="emoji" src="images/emojis/weeping.png"alt="">
+          I focus on HL2s lore, and know it extensivelly. My first introduction to
+          HL2 was on the Orange Box Collection, I was 7,
+          then came back to the game only a couple years later!<img class="emoji" src="images/emojis/bunnygasp.png"
+            alt=""> <span id="guro">I write da half-life 2, draw it, think it,
+            play it, live it, breathe it, drink it, eat it, fap to it</span> (that's a joke, I have an <a
+            href="#boyfriend">amazing boyfriend</a>!), Its my favourite thing ever. Theres
+          not much I love more that Half-Life 2 but.. I do <a href="#exceptions">have exceptions.</a> <img class="emoji"
+            src="images/emojis/pink heart 2.png" alt=""><img class="emoji" src="images/emojis/bunnylove.png" alt="">
+        </p>
+
+        <img class="paragraph-image right" src="" alt="">
+        <p class="text">Besides HL2 I also play <span id="guro">other source games, GMOD, Portal and CSS</span> most
+          notably! I don't
+          play <span id="guro">TF2</span>
+          anymore, but used to really enjoy it! I really enjoyed sven-coop,
+          Synergy, Lambda Wars, Headcrab Frenzy and Genry's great escape from City 13.<img class="emoji" src="images/emojis/weeping.png"alt=""> I am the biggest Universal Union Loyalist, I am ready to <span id="guro">lick
+          the boots clean of a cop</span>, when the <span id="guro">Totalitarian alien Empire arrives!</span> Of course, I don't just play games I have a <span id="guro">ton</span> of interests..!
+        <p class="text">
+        <img class="emoji" src="images/emojis/pink heart 4.png"alt=""> I love <span id="guro">VALVe games</span>, <span id="guro">painting</span> and <span id="guro">writing</span> sometimes, I love to research <span id="guro">sexual health, and general infections</span>, as well as birth control methods!
+        I am <span id="guro">not affected by anything sexually</span>, it is purely for interest, Although, I do have the Nexplanon implant - a progestrone only device. <img class="emoji" src="images/emojis/plaster.png"alt=""> I loove Kawaii fashion
+        Writing letters, wearing thigh highs and doing my makeup. I love <span id="guro">design</span> and my favoutite Fonts are DIN 1451 and Bahnschrift (obviously.) I am a sucker for chinese
+        takeaway, despite my doctors orders! <img class="emoji" src="images/emojis/food.png"alt="">
+        </p>
+
+        <p id="love">i love you so much lilly you so cute baby</p>
+      </section>
+
+      <!-- =========================
+               LINKS GRID
+               ========================= -->
+      <section class="links-section" id="LINKS">
+        <h1 class="section-title"><span id="slash">/ /</span> Links</h1>
+
+        <div class="links-wrap">
+
+          <!-- HOW TO ADD LINKS TO A SQUARE:
+               one link:      data-href="https://..." on the square (like before)
+               several links: put a hidden .square-links box inside the square and add one <a> per link.
+                              The text between <a> and </a> is what shows in the panel
+                              (leave it empty to show the web address instead).
+               They appear in the panel one under the other, in the order you write them. -->
+          <div class="links-grid" id="linksGrid">
+            <!-- swap each src/data-title/data-desc/data-href for the real icon n link info -->
+            <div class="link-square" data-title="Steam"
+              data-desc="Add me and send a friend request, mention the site so I know where you found me."
+              data-href="https://steamcommunity.com/id/nekoprospekt/">
+              <img src="images/icos/steam.png" alt="">
+            </div>
+            <div class="link-square" data-title="Discord"
+              data-desc="Best way to actually talk to me, I'm on most days. Please don't refrain from texting me, I'm always open to chat!"
+              data-href="https://discordid.netlify.app/?id=956267969741217813/">
+              <img src="images/icos/discord.png" alt="">
+            </div>
+            <div class="link-square" data-title="Lambda Generation"
+              data-desc="I post some of my art on here, but most of it is on my TikTok. Some random 'unposted' CSS fanart is here! Although. It's an AMAZING site, I'd reccomend making an account if you want to interact with more Valve fans.">
+              <img src="images/icos/lambda.png" alt="">
+              <div class="square-links" hidden>
+                <a href="https://community.lambdageneration.com/user/lilly/"></a>
+                <a href="https://tiktok.com/@nekoprospekt/"></a>
+              </div>
+            </div>
+            <div class="link-square" data-title="4played.de"
+              data-desc="I used to fucking LOVE CS:S, so some of my stats from my favourite server are on here!"
+              data-href="https://4played.de/players/nekoprospekt/">
+              <img src="images/icos/4played.png" alt="">
+            </div>
+            <div class="link-square" data-title="YouTube" data-desc="I want to post, im lazy."
+              data-href="https://www.youtube.com/@nekoprospekt/">
+              <img src="images/icos/youtube.png" alt="">
+            </div>
+            <div class="link-square" data-title="Mobile Site"
+              data-desc="A simpler version of this page, optimized for mobile devices. Use this if you're having issues navigating the desktop version."
+              data-href="https://nekoprospekt.xyz/mobileindex.html/">
+              <img src="images/icos/mobile.png" alt="">
+            </div>
+            <div class="link-square" data-title="GitHub"
+              data-desc="If I do anymore coding (or font stuff, please check out my HL2 font recreation.), it is over here.">
+              <img src="images/icos/github.png" alt="">
+              <div class="square-links" hidden>
+                <a href="https://github.com/nekoprospekt/"></a>
+                <a href="https://github.com/nekoprospekt/Half-Life-2-Logo-Font/"></a>
+              </div>
+            </div>
+            <div class="link-square" data-title="Music"
+              data-desc="All my music stays on my Foobar2000, and theres also some other stuff on SoundCloud (like my boyfriends SICK ASS music!)."
+              data-href="#">
+              <img src="images/icos/music.png" alt="">
+            </div>
+            <div class="link-square" data-title="Actually have no idea what to put here."
+              data-desc="Place holder, someone give me suggestions." data-href="#">
+              <img src="images/icos/misc.png" alt="">
+            </div>
+          </div>
+
+          <!-- the image sits under the info box: pick a square and the box wipes over it,
+               pick it again and the box wipes away to show the image -->
+          <div class="links-display">
+            <div class="links-image">
+              <img src="images/links-image.png" alt="">
+            </div>
+            <div class="links-info" id="linksInfo" aria-live="polite"></div>
+          </div>
+
+
+        </div>
+      </section>
+
+      <!-- =========================
+               TWO COLUMNS: 2/3 left, 1/3 right
+               ========================= -->
+      <section class="split">
+
+        <!-- LEFT (2/3): paragraphs with images in between -->
+        <div class="split-main">
+          <h1 class="section-title" id="exceptions"><span id="slash">/ /</span> My amazing friends</h1>
+
+          <div class="split-block">
+            <img class="bottom-paragraph-image left" src="" alt="">
+            <p class="text">I have loads of amazing friends, who I <span id="guro">cherish dearly! <img class="emoji"
+                  src="images/emojis/pink heart 3.png" alt=""></span> I'll name loads, but obviously, It's
+              impossible to get you all in!
+              All these people mean so much to me, I want to show off all my <span id="guro">amazing friends</span> and
+              <span id="guro">loved ones</span>!
+            </p>
+          </div>
+
+          <div class="split-block">
+            <p class="text">
+              <span id="guro">First paragraph</span> is dedicated to my amazing (annoying) brother (family member I just
+              have to tolerate, fuck
+              him.) <img class="emoji" src="images/emojis/bunnyanonymous.png"alt=""> Truly my mirror, no one will have the same amount of inside jokes with me than I have with him. We
+              <span id="guro">hate</span> the same people in our daily lives,
+              and can constantly relate too each other. <img class="emoji" src="images/emojis/pink heart 2.png" alt=""> I
+              would pay BIG money just to get back to the days of playing
+              Fortnite Reload duos with him <span id="guro">(we we're so good, unstoppable, actually.<img class="emoji" src="images/emojis/weeping.png"alt="">)</span>
+            </p>
+          </div>
+
+          <div class="split-block">
+            <p class="text">I have an <span id="guro">amazing group of friends</span>, that of which I am very proud to
+              talk about. I will not
+              put them in any
+              particular order, but just <span id="guro">as they come</span>. one of my favourite faggots: <span
+                id="guro">Valerie</span>! <span id="guro">Joe and Maple</span>.. your all up
+              there!
+              props to all of you for being great (tolerable) these past few years and no props for making me play
+              shitty riot games. <span id="guro">Love to Auxin</span> for being my number one <span
+                id="guro">bro-they</span> for like.. my whole life? <img class="emoji" src="images/emojis/bunnylove.png"alt="">
+              SOME love to you <span id="guro">Genevieve..</span> but fuck your shitty boyfriend.. <span id="guro">Love
+                you loads though</span>, haha!
+              <span id="guro">Niamh and Faith</span>, I love you guys loads, Even if I don't see you all too often,
+              still love you all babes. <img class="emoji" src="images/emojis/bunny happy.png"alt=""><img class="emoji" src="images/emojis/pink heart 3.png"alt="">
+              same with you <span id="guro">Andzelika</span>, you are super cool, I hope you are enjoying tech, same
+              with the rest of you!
+            </p>
+            <p class="text"> I have some <span id="guro">cool online friends, Void</span>, you are very awesome and very
+              funny, same
+              with you <span id="guro">Pard</span>, and you too <span id="guro">Barney</span> (my favourtite gay half
+              life friend!)
+              I love playing zcity with you <span id="guro">Pard and Void</span>, same with <span id="guro">Eggy</span>,
+              you guys mean tons to me, same with your cool
+              ass <span id="guro">(cute ass)</span> girlfriend, <span id="guro">Kaska</span>! <img class="emoji" src="images/emojis/bunnygasp.png"alt="">
+              <span id="guro">Amber</span>, your super cool, and to all the other nice people in my class! <img class="emoji" src="images/emojis/night.png"alt="">
+            </p>
+          </div>
+          <div class="split-block">
+            <img class="bottom-paragraph-image right" src="" alt="">
+            <p class="text">
+              You are all <span id="guro">amazing people</span>, <img class="emoji" src="images/emojis/bunnyheart.png"alt=""><img class="emoji" src="images/emojis/pink heart 1.png"alt=""> online or not! This isn't a definitive list but I
+              wanted to have a little
+              thing for you all.
+              All of you mean the world to me, I hope you love me too. If anything is happening with you, I am <span
+                id="guro">always
+                here to talk, no matter
+                what I have going on.</span> I love you all so much, and I hope you all have a great day, and a great
+              life. I
+              hope you all are happy, and if not, I hope you can find happiness soon. <img class="emoji"
+                src="images/emojis/pink heart 5.png" alt="">
+          </div>
+        </div>
+
+        <!-- RIGHT (1/3): image at the top, then paragraphs -->
+        <aside class="split-side">
+          <h1 class="section-title" id="boyfriend"><span id="slash">/ /</span> My boyfriend</h1>
+
+          <img class="side-image" src="" alt="">
+
+          <p class="text">I have a <span id="guro">really super cool boyfriend</span>, who is <span id="guro">seriously
+              attractive..</span> I'd love to name him, but
+            I cannot put his name on here due to his online presence!
+            Either way, I could almost say it all makes me <span id="guro">admire</span> him even more, speaking of his
+            online presence, he
+            makes videos on Youtube and TikTok, I think he's planning to stream on Twitch soon, too!
+            He also makes some sick ass music, but I think it embarasses him when I bring it up so I won't say TOO much.
+            Most of the content he makes is centered around Source, every friday He host's Garry's Mod Z-CITY events on
+            his discord server, <span id="guro">Come join... </span>I'll have everything linked below.
+          </p>
+
+          <p class="text"><span id="guro">He is so handsome</span>, I'm suprised even I got my hands on him! We've been
+            together for not far
+            under a year,
+            I <span id="guro">love</span> him dearly, not an amount thats easily put into words. but if want to see even
+            more words about my
+            <span id="guro">unending</span> love, heres my <a href="lovemail.html">lovemail</a> too him, my baby. I love you <img class="emoji" src="images/emojis/loveletter.png" alt=""><img class="emoji" src="images/emojis/pink heart 5.png" alt="">
+          </p>
+
+          <!-- 6 links, one under the other, same look as the URLs in the links panel.
+               replace BOTH the href and the text between <a> and </a> with the address -->
+          <div class="links-list">
+            <a href="https://www.tiktok.com/@farten1_" target="_blank"
+              rel="noopener">https://www.tiktok.com/@farten1_</a>
+            <a href="https://www.youtube.com/@farten1" target="_blank"
+              rel="noopener">https://www.youtube.com/@farten1</a>
+            <a href="https:dj_farent.github.io" target="_blank" rel="noopener">https:dj_farent.github.io</a>
+            <a href="https://soundcloud.com/djfarten" target="_blank" rel="noopener">https://soundcloud.com/djfarten</a>
+            <a href="https://soundcloud.com/farten2" target="_blank" rel="noopener">https://soundcloud.com/farten2</a>
+            <a href="https://steamcommunity.com/id/FARTEN1" target="_blank"
+              rel="noopener">https://steamcommunity.com/id/FARTEN1</a>
+          </div>
+
+          <p>i love you so much, baby, you are so unimaginably gorgeous.</p>
+        </aside>
+
+      </section>
+
+    </main>
+
+
+  </div>
+
+  <script src="quotes.js"></script>
+
+  <script>
+    // toggles the info panel next to the links grid:
+    // selecting a square covers the image, selecting it again uncovers the image
+    (function () {
+      var squares = document.querySelectorAll('#linksGrid .link-square');
+      var info = document.getElementById('linksInfo');
+
+      squares.forEach(function (sq) {
+        sq.addEventListener('click', function () {
+          var isActive = sq.classList.contains('active');
+
+          squares.forEach(function (s) { s.classList.remove('active'); });
+
+          if (isActive) {
+            // panel wipes away, image shows again
+            // (content is left alone so it doesn't change while it slides out)
+            info.classList.remove('visible');
+            return;
+          }
+
+          sq.classList.add('active');
+
+          var title = sq.getAttribute('data-title');
+          var desc = sq.getAttribute('data-desc');
+
+          info.innerHTML =
+            '<h3>' + title + '</h3>' +
+            '<p>' + desc + '</p>';
+
+          // collect the links for this square:
+          // every <a> inside its .square-links box, or the old single data-href
+          var links = [];
+
+          sq.querySelectorAll('.square-links a').forEach(function (a) {
+            var href = a.getAttribute('href');
+            links.push({ href: href, label: a.textContent.trim() || href });
+          });
+
+          if (!links.length && sq.getAttribute('data-href')) {
+            var single = sq.getAttribute('data-href');
+            links.push({ href: single, label: single });
+          }
+
+          // stack them one under the other
+          if (links.length) {
+            var list = document.createElement('div');
+            list.className = 'links-list';
+
+            links.forEach(function (l) {
+              var a = document.createElement('a');
+              a.href = l.href;
+              a.target = '_blank';
+              a.rel = 'noopener';
+              a.textContent = l.label;
+              list.appendChild(a);
+            });
+
+            info.appendChild(list);
+          }
+
+          info.classList.add('visible');
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>

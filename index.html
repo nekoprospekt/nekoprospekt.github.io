@@ -2,1009 +2,457 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>d3_c17_10b</title>
-    <link rel="icon" href="images/favicon.gif" type="image/gif">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        @font-face {
-            font-family: DIN;
-            src: url(Fonts/DIN\ 1451\ Mittelschrift\ Regular.ttf);
-        }
+  <title>neko</title>
 
-        body {
-            margin: 0;
-            font-family: Bahnschrift light, sans-serif;
-            background: #0a0a0a;
-            color: rgb(182, 182, 182);
-            isolation: isolate;
-        }
-
-        h2{
-            font-family: Bahnschrift;
-
-        }
-
-        body.loading * {
-            animation: none !important;
-            transition: none !important;
-        }
-
-        #global-loader {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 30px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            transition: opacity 0.6s ease;
-        }
-
-        #global-loader p{
-            
-
-        }
-
-        #global-loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #global-loader img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-        }
-
-        @keyframes signalPulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            96% {
-                opacity: 1;
-            }
-
-            97% {
-                opacity: 0.85;
-            }
-
-            90% {
-                opacity: 1;
-            }
-        }
-
-        .negative-text {
-            font-size: 90px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            color: white;
-            mix-blend-mode: difference;
-
-            animation: signalPulse 8s infinite;
-        }
-
-        .welcome-scroll {
-            font-family: Bahnschrift, sans-serif;
-            font-size: 30px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            color: white;
-            mix-blend-mode: difference;
-        }
-
-        .header {
-            font-family: Bahnschrift;
-            height: 100vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120%;
-            background: url(images/banner/banner.png) center/cover;
-            z-index: -1;
-        }
-
-        .header-content {
-            font-size: 3rem;
-            transition: opacity 0.2s, filter 0.2s;
-            mix-blend-mode: difference;
-        }
-
-        .header-blur {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 140px;
-
-            background: linear-gradient(to bottom,
-                    rgba(15, 15, 15, 0.055) 0%,
-                    rgba(14, 14, 14, 0.644) 60%,
-                    rgb(10, 10, 10) 100%);
-
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        .container {
-            width: 100%;
-        }
-
-        .section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 700px;
-            padding: 50px 10%;
-            gap: 100px;
-        }
-
-        .section+.section {
-            margin-top: -150px;
-        }
-
-        .section:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .content {
-            max-width: 550px;
-            font-size: 1.2rem;
-            padding: 70px;
-            background: rgba(255, 255, 255, 0.034);
-            backdrop-filter: blur(15px);
-            border-radius: 0px;
-
-            position: relative;
-            top: -20px;
-
-            transform: translateX(-40px) skewX(-2deg);
-            opacity: 0.6;
-            filter: contrast(80%) grayscale(100%);
-
-            transition:
-                transform 0.8s cubic-bezier(.16, .84, .44, 1),
-                filter 0.6s ease,
-                opacity 0.6s ease;
-        }
-
-        .content::before,
-        .content::after {
-            position: absolute;
-            font-size: 26px;
-            color: rgb(255, 255, 255);
-            pointer-events: none;
-        }
-
-        .content::before {
-            content: "┏";
-            top: 14px;
-            left: 18px;
-        }
-
-        .content::after {
-            content: "▝";
-            top: 14px;
-            right: 18px;
-        }
-
-        .content h2::before {
-            content: "┕";
-            position: absolute;
-            bottom: 14px;
-            left: 18px;
-            font-size: 26px;
-            color: rgb(255, 255, 255);
-        }
-
-        .content h2::after {
-            content: "┛";
-            position: absolute;
-            bottom: 14px;
-            right: 18px;
-            font-size: 26px;
-            color: rgb(255, 255, 255);
-        }
-
-        .image {
-            width: clamp(500px, 45vw, 900px);
-            /*When I was looking for help with scaling, I found myself at this with AI, ORG 800px*/
-            perspective: 1000px;
-            position: relative;
-            overflow: visible;
-        }
-
-        .note {
-            position: absolute;
-            width: 160px;
-            z-index: 3;
-            pointer-events: none;
-
-            filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.5));
-        }
-
-        .note.top-left {
-            top: -50px;
-            left: -50px;
-            transform: rotate(-8deg);
-        }
-
-        .note.bottom-right {
-            bottom: -65px;
-            right: -56px;
-            transform: rotate(10deg);
-        }
-
-        .note.bottom-bottom-right {
-            bottom: -60px;
-            right: -50px;
-            transform: rotate(10deg);
-        }
-
-        .image {
-            position: relative;
-        }
-
-        .image-link {
-            display: block;
-            position: relative;
-        }
-
-        .image img {
-            width: 100%;
-            border-radius: 2px;
-
-            transform: translateX(60px) scale(0.96);
-            opacity: 0.6;
-            filter: grayscale(100%) contrast(80%);
-
-            transition:
-                transform 0.8s cubic-bezier(.16, .84, .44, 1),
-                filter 0.6s ease,
-                opacity 0.6s ease;
-        }
-
-        .section.visible .image img {
-            transform: translateX(0) scale(1);
-            opacity: 1;
-            filter: grayscale(100%) contrast(100%);
-        }
-
-        a {
-            color: #ffffff;
-            transition: filter 0.3s ease;
-        }
-
-        .content a {
-            color: white;
-            text-decoration: underline;
-            transition: opacity 0.2s ease;
-        }
-
-        .content a:hover {
-            filter: blur(2px);
-        }
-
-        .section:nth-child(even) .image.visible img {
-            transform: rotateY(-5deg) translateY(0) rotateZ(0deg);
-        }
-
-        .section.visible .content {
-            transform: translateX(0) skewX(0deg);
-            opacity: 1;
-            filter: contrast(100%) grayscale(100%);
-        }
-
-        .image-link:hover .base-img {
-            filter: blur(2px) grayscale(0%);
-        }
-
-        /*Tooltip!! from here*/
-
-        .tooltip {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tooltip::after {
-            content: attr(data-tooltip);
-
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-
-            transform: translateX(-50%) translateY(4px);
-
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(6px);
-
-            color: white;
-
-            padding: 4px 8px;
-
-            font-family: DIN, sans-serif;
-            font-size: 11px;
-            letter-spacing: 1px;
-
-            white-space: nowrap;
-
-            opacity: 0;
-            pointer-events: none;
-
-            transition:
-                opacity 0.2s ease,
-                transform 0.2s ease;
-
-            z-index: 9999;
-        }
-
-        .tooltip:hover::after {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* <div class="tooltip" data-tooltip="YOUR TEXT HERE"> */
-        /*AS AN EXAMPLE*/
-        /*TO HERE!!*/
-
-
-        .unicode-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 300vh;
-
-            z-index: 0;
-
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 95px);
-            grid-auto-rows: 95px;
-
-            font-size: 35px;
-            color: #292929;
-            pointer-events: none;
-            user-select: none;
-
-            animation: drift 180s linear infinite;
-        }
-
-        .unicode-bg span {
-            opacity: 0.09;
-            transition: opacity 0.09s;
-        }
-
-        @keyframes drift {
-            from {
-                transform: translateY(0);
-            }
-
-            to {
-                transform: translateY(-90px);
-            }
-        }
-
-        .container,
-        .header {
-            position: relative;
-            z-index: 2;
-        }
-
-        /*I didnt write this, I used AI. I have no understanding of how media queries work!*/
-        /*Extra Note! I will add another note to say I can understand media queries once I can: 5/17/2026*/
-        @media (max-width: 1400px) {
-
-
-            .section .image {
-                display: none;
-            }
-
-
-            .section {
-                flex-direction: column;
-                text-align: center;
-                padding: 80px 8%;
-                gap: 40px;
-            }
-
-            .content {
-                max-width: 700px;
-                margin: 0 auto;
-            }
-
-        }
-
-        @media (max-width: 1600px) {
-
-            .section {
-                padding: 80px 6%;
-                gap: 60px;
-            }
-
-        }
-
-        /*This here is for 1440p as well, I BELIEVE!!*/
-
-
-        /* FOOTER DOWN HERE! */
-
-        .site-footer {
-
-            position: relative;
-
-            margin-top: 120px;
-            padding: 28px 5%;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-            background:
-                linear-gradient(to bottom,
-                    rgba(255, 255, 255, 0.015),
-                    rgba(255, 255, 255, 0.03));
-
-            backdrop-filter: blur(12px);
-
-            overflow: hidden;
-        }
-
-        /* unicode over top */
-
-        .site-footer::before {
-
-            content: "╳ ╱ ? ␦ ╲ ╳ ╱";
-
-            position: absolute;
-            inset: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 20px;
-            letter-spacing: 40px;
-
-            color: rgba(255, 255, 255, 0.03);
-
-            pointer-events: none;
-        }
-
-        /* linkz */
-
-        .footer-left {
-
-            display: flex;
-            gap: 34px;
-
-            position: relative;
-            z-index: 2;
-
-            flex-wrap: wrap;
-        }
-
-        .footer-left a {
-
-            color: white;
-            text-decoration: none;
-
-            font-size: 13px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-
-            opacity: 0.7;
-
-            transition:
-                opacity 0.25s ease,
-                filter 0.25s ease,
-                transform 0.25s ease;
-        }
-
-        .footer-left a:hover {
-
-            opacity: 1;
-
-            filter: blur(1px);
-
-            transform: translateY(-2px);
-        }
-
-        /* right icons */
-
-        .footer-right {
-
-            position: relative;
-            z-index: 2;
-
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 10px;
-        }
-
-        /* icon buttons */
-
-        .footer-icon {
-            position: relative;
-
-            width: 58px;
-            height: 58px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* actual icon image */
-
-        .footer-icon img {
-            width: 48px;
-            height: 48px;
-
-            object-fit: contain;
-
-            filter: grayscale(100%) brightness(0.8);
-
-            opacity: 0.7;
-
-            border: 1px solid transparent;
-
-            padding: 5px;
-
-            box-sizing: border-box;
-
-            transition:
-                filter 0.25s ease,
-                opacity 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
-        }
-
-        .footer-icon img:hover {
-
-            filter: grayscale(0%) brightness(1);
-            opacity: 1;
-            border-color: rgba(255, 255, 255, 0.45);
-            background: rgba(255, 255, 255, 0.04);
-            transform: translateY(-2px);
-        }
-
-        /* tooltip */
-
-        .footer-icon::after {
-            content: attr(data-tooltip);
-
-            position: absolute;
-
-            bottom: -28px;
-            left: 50%;
-
-            transform:
-                translateX(-50%) translateY(4px);
-
-            background: rgba(0, 0, 0, 0.85);
-
-            backdrop-filter: blur(6px);
-
-            padding: 4px 8px;
-
-            font-size: 11px;
-            letter-spacing: 1px;
-
-            white-space: nowrap;
-
-            opacity: 0;
-            pointer-events: none;
-
-            transition:
-                opacity 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .footer-icon:hover::after {
-            opacity: 1;
-
-            transform:
-                translateX(-50%) translateY(0);
-        }
-
-        .footer-text {
-            font-family: DIN, sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            opacity: 0.45;
-            white-space: nowrap;
-        }
-
-        /* mobile */
-
-        @media (max-width:800px) {
-
-            .site-footer {
-
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .footer-right {
-
-                align-self: flex-end;
-            }
-
-        }
-
-        /*THIS FOOTER TOOK SO FUCKING LONG I BROKE IT TWICE, also, don't know why the background is 'red'd' out, but sure its finally fucking working after three hours!*/
-        /*AI didnt even help me this time, giving me fixes for the alignment, like that gonna be be issue? either way shes here and alive!*/
-    </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
-    <div id="global-loader">
-        <img src="images/gifs-icos/loading.gif" alt="Loading...">
-        <br>
-        <p>be patient while I load...</p>
-    </div>
-    <div class="unicode-bg"></div>
-    <header class="header">
-        <div class="header-bg"></div>
-        <div class="header-content">
-            <br>
-            <h1 class="negative-text" id="type"></h1>
-            <p class="welcome-scroll">Scroll down!</p>
-            <h2><b>⌵</b></h2>
+
+  <div class="top-line">
+    <span id="quote"></span>
+  </div>
+
+  <div class="page">
+
+
+    <header>
+
+      <!-- large low-opacity kaomoji sitting behind the title -->
+      <span class="header-kaomoji" aria-hidden="true" <b></b>( っˊᗜˋ)(ᵔ ᵕ ᵔ˶) ♡<b></b></span>
+
+      <!-- BIG HEADER IMAGE -->
+      <!-- <img class="header-image" src="main-image.jpg" alt=""> -->
+
+
+      <!-- HEADER TEXT -->
+      <div class="header-content">
+
+        <h1>I MADE ANOTHER <span id="guro">FUCKING</span> WEBSITE.</h1>
+
+        <!--<p class="header-text">I am a 16 year old pro gamer, thats where the 'neko<span id="guro"><I>PRO</I></span>spekt' comes
+          from in my username, hit
+          me up if you want to 1v1 on
+          Counter-Strike Source, cs_office, your determined to lose when I've got my 'HL2 bikini citizens
+          hostages' mod installed. Message
+          me on Steam, or at my Discord.. <img class="emoji" src="images/emojis/pink heart 2.png"alt="">
+        </p> -->
+
+        <p class="header-text"> Obligatory line to say It's neko*prospekts website. Me, that's me. <img class="emoji"
+            src="images/emojis/pink heart 2.png" alt="">
+        </p>
+
+        <!-- same on every page - just the active one differs -->
+        <nav class="header-nav" id="siteNav">
+          <a href="index.html" class="active">index</a>
+          <a href="nekoprospekt.html">herself</a>
+          <a href="characters.html">characters</a>
+          <a href="writing.html">writing</a>
+          <a href="downloads.html">downloads</a>
+        </nav>
+
+      </div>
+
+
+      <!-- RIGHT-SIDE ICON AREA -->
+      <div class="header-icons">
+
+        <!-- TOP ROW -->
+        <div class="icons-top">
+
+          <a href="">
+            <img src="images/cmb.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/aperature.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/lambda.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/overwatch.png" alt="">
+          </a>
+
         </div>
-        <div class="header-blur"></div>
+
+
+        <!--
+        <div class="icons-bottom">
+
+          <a href="">
+            <img src="images/icos/acespec.png" alt="Flag used by people who place themselves on the asexual spectrum.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/sheher.png"
+              alt="Flag used by people who use She/Her pronouns, it is blue to pink flag halved, with the right side a bright pink flag.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/female.png"
+              alt="Flag used by women who are cisgendered. It is a pink flag, which meets in the middle with white.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/irish.png" alt="Flag of The Republic of Ireland.">
+          </a>
+
+        </div> -->
+
+      </div>
+
     </header>
+    <br>
+    <br>
+    <br>
+    <main>
+      <section class="section intro">
 
-    <div class="container">
+        <div class="intro-text">
+          <h1 class="section-title"><span id="slash">/ /</span> A little introduction</h1>
+          <img class="paragraph-image left" src="" alt="">
+          <p class="text">
+            Wow, would you believe this is the <span id="guro">third version</span> of the website? I mean I would
+            believe it,
+            <span id="guro">I'm extremely Indescisive.</span>
+            I hated how cluttered my last one was, and it also.. <span id="guro">looked</span> like <span
+              id="guro">shit</span>, I wasn't bothered trying to fix all of the mess that I had made.
+            And I thought it might be a good idea to put some colour in, as I don't do that very often. It's not great
+            but I
+            still think it's more functional.
+          </p>
+          <p class="text">
+            I am a <span id="guro">pro gamer</span> (as stated above.) Don't <span id="guro">mess with me</span> or you
+            will find yourself in <span id="guro">big trouble</span> (???) with.. Hm, I don't know. ANYWAYS!!
+            I am <span id="guro">THE biggest HL2 fan</span>, I greatly <span id="guro">enjoy</span> playing <span
+              id="guro">Garry's Mod</span>.. (Play Z-CITY if you haven't before, It's so much fun.) And I like wearing
+            cute clothes and <span id="guro">attempting</span> web design! Please read on, there is not much more to be
+            said here on the index..
 
-        <div class="section">
-            <div class="content">
-                <h2><a href="nekoprospekt.html">neko*prospekt</a></h2>
-                <p>Hello, I'm Lilly! Refer to me as Lilith or Lilly, I don't care.
-                    I'm 16 and from Northern Ireland.
-                    I more than anything, love Valve games! Half-lIfe 2
-                    Being my personal favourite, I am a Combine Loyalist at heart. (tap-4)
-
-                </p>I, of course don't JUST play HL2 let alone games, I do lot's more too.
-                You can read more about myself over <a href="nekoprospekt.html">here!</a>
-
-                <p>
-                </p>
-            </div>
-            <div class="image">
-                <img src="images/manor.gif" class="base-img">
-                <img src="images/note1.png" class="note bottom-right">
-            </div>
+          </p>
         </div>
 
-        <div class="section">
-            <div class="content">
-                <h2><a href="projectindex.html">Projects</a></h2>
-                <p>I work on stuff sometimes, you can find some of it over here!</p>
+        <aside class="intro-side">
 
-                <p>I'll keep art, coding, writing and other such things easily accesible here,
-                    right now though, this page isn't out, shouldn't be long though!
-                </p>
+          <!-- STATUS BOX: change the avatar, name, time and text whenever you like -->
+          <div class="status-box">
+            <img class="status-avatar" src="images/avatar.png" alt="">
 
-                <p>I'd love to speak with like minded people, please reach out if you have
-                    something fun or you'd even like to collaborate.. like, gman.. haha.. get it?
-                </p>
+            <div class="status-body">
+              <div class="status-head">
+                <span class="status-name">neko</span>
+                <span class="status-time">10/11</span>
+              </div>
+              <p class="status-text">feeling like ass I want to kill myself</p>
             </div>
-            <div class="image">
-                <a href="projectindex.html" class="image-link">
-                    <img src="images/computer.png" class="base-img">
-                    <img src="images/noteproject.png" class="note top-left">
-                </a>
+
+            <!-- pencil icon (a span, not a link, so it doesn't get the arrow) -->
+            <span class="status-edit" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 20h4L19 9l-4-4L4 16v4z" />
+                <path d="M13 7l4 4" />
+              </svg>
+            </span>
+          </div>
+
+          <!-- fills the rest of the height under the status box -->
+          <img class="status-image" src="images/status-image.png" alt="">
+
+        </aside>
+        <p id="love">i love you so much lilly you so cute baby</p>
+      </section>
+
+
+      </section>
+
+
+
+      <!-- =========================
+               LINKS GRID
+               ========================= -->
+      <section class="links-section" id="LINKS">
+        <h1 class="section-title"><span id="slash">/ /</span> Links</h1>
+
+        <div class="links-wrap">
+
+          <!-- HOW TO ADD LINKS TO A SQUARE:
+               one link:      data-href="https://..." on the square (like before)
+               several links: put a hidden .square-links box inside the square and add one <a> per link.
+                              The text between <a> and </a> is what shows in the panel
+                              (leave it empty to show the web address instead).
+               They appear in the panel one under the other, in the order you write them. -->
+          <div class="links-grid" id="linksGrid">
+            <!-- swap each src/data-title/data-desc/data-href for the real icon n link info -->
+            <div class="link-square" data-title="Steam"
+              data-desc="Add me and send a friend request, mention the site so I know where you found me."
+              data-href="https://steamcommunity.com/id/nekoprospekt/">
+              <img src="images/icos/steam.png" alt="">
             </div>
+            <div class="link-square" data-title="Discord"
+              data-desc="Best way to actually talk to me, I'm on most days. Please don't refrain from texting me, I'm always open to chat!"
+              data-href="https://discordid.netlify.app/?id=956267969741217813/">
+              <img src="images/icos/discord.png" alt="">
+            </div>
+            <div class="link-square" data-title="Lambda Generation"
+              data-desc="I post some of my art on here, but most of it is on my TikTok. Some random 'unposted' CSS fanart is here! Although. It's an AMAZING site, I'd reccomend making an account if you want to interact with more Valve fans.">
+              <img src="images/icos/lambda.png" alt="">
+              <div class="square-links" hidden>
+                <a href="https://community.lambdageneration.com/user/lilly/"></a>
+                <a href="https://tiktok.com/@nekoprospekt/"></a>
+              </div>
+            </div>
+            <div class="link-square" data-title="4played.de"
+              data-desc="I used to fucking LOVE CS:S, so some of my stats from my favourite server are on here!"
+              data-href="https://4played.de/players/nekoprospekt/">
+              <img src="images/icos/4played.png" alt="">
+            </div>
+            <div class="link-square" data-title="YouTube" data-desc="I want to post, im lazy."
+              data-href="https://www.youtube.com/@nekoprospekt/">
+              <img src="images/icos/youtube.png" alt="">
+            </div>
+            <div class="link-square" data-title="Mobile Site"
+              data-desc="A simpler version of this page, optimized for mobile devices. Use this if you're having issues navigating the desktop version."
+              data-href="https://nekoprospekt.xyz/mobileindex.html/">
+              <img src="images/icos/mobile.png" alt="">
+            </div>
+            <div class="link-square" data-title="GitHub"
+              data-desc="If I do anymore coding (or font stuff, please check out my HL2 font recreation.), it is over here.">
+              <img src="images/icos/github.png" alt="">
+              <div class="square-links" hidden>
+                <a href="https://github.com/nekoprospekt/"></a>
+                <a href="https://github.com/nekoprospekt/Half-Life-2-Logo-Font/"></a>
+              </div>
+            </div>
+            <div class="link-square" data-title="Music"
+              data-desc="All my music stays on my Foobar2000, and theres also some other stuff on SoundCloud (like my boyfriends SICK ASS music!)."
+              data-href="#">
+              <img src="images/icos/music.png" alt="">
+            </div>
+            <div class="link-square" data-title="Actually have no idea what to put here."
+              data-desc="Place holder, someone give me suggestions." data-href="#">
+              <img src="images/icos/misc.png" alt="">
+            </div>
+          </div>
+
+          <!-- the image sits under the info box: pick a square and the box wipes over it,
+               pick it again and the box wipes away to show the image -->
+          <div class="links-display">
+            <div class="links-image">
+              <img src="images/links-image.png" alt="">
+            </div>
+            <div class="links-info" id="linksInfo" aria-live="polite"></div>
+          </div>
+
+
+        </div>
+      </section>
+
+      <!-- =========================
+               TWO COLUMNS: 2/3 left, 1/3 right
+               ========================= -->
+      <section class="split">
+
+        <!-- LEFT (2/3): paragraphs with images in between -->
+        <div class="split-main">
+          <h1 class="section-title" id="exceptions"><span id="slash">/ /</span> My amazing friends</h1>
+
+          <div class="split-block">
+            <img class="bottom-paragraph-image left" src="" alt="">
+            <p class="text">I have loads of amazing friends, who I <span id="guro">cherish dearly! <img class="emoji"
+                  src="images/emojis/pink heart 3.png" alt=""></span> I'll name loads, but obviously, It's
+              impossible to get you all in!
+              All these people mean so much to me, I want to show off all my <span id="guro">amazing friends</span> and
+              <span id="guro">loved ones</span>!
+            </p>
+          </div>
+
+          <div class="split-block">
+            <p class="text">
+              <span id="guro">First paragraph</span> is dedicated to my amazing (annoying) brother (family member I just
+              have to tolerate, fuck
+              him.) <img class="emoji" src="images/emojis/bunnyanonymous.png" alt=""> Truly my mirror, no one will have
+              the same amount of inside jokes with me than I have with him. We
+              <span id="guro">hate</span> the same people in our daily lives,
+              and can constantly relate too each other. <img class="emoji" src="images/emojis/pink heart 2.png" alt="">
+              I
+              would pay BIG money just to get back to the days of playing
+              Fortnite Reload duos with him <span id="guro">(we we're so good, unstoppable, actually.<img class="emoji"
+                  src="images/emojis/weeping.png" alt="">)</span>
+            </p>
+          </div>
+
+          <div class="split-block">
+            <p class="text">I have an <span id="guro">amazing group of friends</span>, that of which I am very proud to
+              talk about. I will not
+              put them in any
+              particular order, but just <span id="guro">as they come</span>. one of my favourite faggots: <span
+                id="guro">Valerie</span>! <span id="guro">Joe and Maple</span>.. your all up
+              there!
+              props to all of you for being great (tolerable) these past few years and no props for making me play
+              shitty riot games. <span id="guro">Love to Auxin</span> for being my number one <span
+                id="guro">bro-they</span> for like.. my whole life? <img class="emoji" src="images/emojis/bunnylove.png"
+                alt="">
+              SOME love to you <span id="guro">Genevieve..</span> but fuck your shitty boyfriend.. <span id="guro">Love
+                you loads though</span>, haha!
+              <span id="guro">Niamh and Faith</span>, I love you guys loads, Even if I don't see you all too often,
+              still love you all babes. <img class="emoji" src="images/emojis/bunny happy.png" alt=""><img class="emoji"
+                src="images/emojis/pink heart 3.png" alt="">
+              same with you <span id="guro">Andzelika</span>, you are super cool, I hope you are enjoying tech, same
+              with the rest of you!
+            </p>
+            <p class="text"> I have some <span id="guro">cool online friends, Void</span>, you are very awesome and very
+              funny, same
+              with you <span id="guro">Pard</span>, and you too <span id="guro">Barney</span> (my favourtite gay half
+              life friend!)
+              I love playing zcity with you <span id="guro">Pard and Void</span>, same with <span id="guro">Eggy</span>,
+              you guys mean tons to me, same with your cool
+              ass <span id="guro">(cute ass)</span> girlfriend, <span id="guro">Kaska</span>! <img class="emoji"
+                src="images/emojis/bunnygasp.png" alt="">
+              <span id="guro">Amber</span>, your super cool, and to all the other nice people in my class! <img
+                class="emoji" src="images/emojis/night.png" alt="">
+            </p>
+          </div>
+          <div class="split-block">
+            <img class="bottom-paragraph-image right" src="" alt="">
+            <p class="text">
+              You are all <span id="guro">amazing people</span>, <img class="emoji" src="images/emojis/bunnyheart.png"
+                alt=""><img class="emoji" src="images/emojis/pink heart 1.png" alt=""> online or not! This isn't a
+              definitive list but I
+              wanted to have a little
+              thing for you all.
+              All of you mean the world to me, I hope you love me too. If anything is happening with you, I am <span
+                id="guro">always
+                here to talk, no matter
+                what I have going on.</span> I love you all so much, and I hope you all have a great day, and a great
+              life. I
+              hope you all are happy, and if not, I hope you can find happiness soon. <img class="emoji"
+                src="images/emojis/pink heart 5.png" alt="">
+          </div>
         </div>
 
-        <div class="section">
-            <div class="content">
-                <h2><a href="links.html">Links</a></h2>
-                <p>Well, here's my links, pretty simple, right?</p>
-
-                <p>"Lilly, why would you need a separate page for
-                    your links? This isn't just an excuse to make another page, right? .."</p>
-
-                <p>Stop reading into me, Σ(°ロ°) im allowed as many pages as I want, thank you!
-                    Anyways, anything you'd ever need is right over here.
-                </p>
-            </div>
-            <div class="image">
-                <a href="links.html" class="image-link">
-                    <img src="images/molotov.gif" class="base-img">
-                    <img src="images/note2.png" class="note top-left">
-                </a>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="content">
-                <h2><a href="https://nekoprospekt.github.io/cs_office" target="_blank">cs_office</a></h2>
-                <p> Theres lot's of people who have done much better jobs of archiving than me, none the less
-                    I have dedicated some patience to my favourite pieces of media and time.. all split up into their
-                    respective games. I hope you enjoy reading and viewing this as much as I did in the creation
-                    process.</p>
-
-                <p>I'm aware that Valve Archive exists, I'm aware that there are better places to go,
-                    but this was my own personal favourites amalgamated! ꉂ (≧ヮ≦)
-                </p>
-
-                <p>All this repository has been moved over to its own separate repo! This allowed
-                    for a more secure method of collaboration, as I only have myself and K allowed access
-                    to this repo.
-                </p>
-
-            </div>
-            <div class="image">
-                <a href="https://nekoprospekt.github.io/cs_office" class="image-link">
-                    <img src="images/bomb.png" class="base-img">
-                    <img src="images/noteoffice.png" class="note bottom-bottom-right">
-                </a>
-            </div>
-        </div> <!--should add footer, cant be assed, frankly.-->
-
-    </div>
-
-    <footer class="site-footer">
-
-        <div class="footer-left">
-
-            <a href="sitemap.html">sitemap</a>
-            <a href="links.html">links</a>
-            <a href="nekoprospekt.html">about me</a>
-            <a href="projectindex.html">projects</a>
-            <a href="station.html">back to station.</a>
-
-        </div>
-
-        <div class="footer-text">
-            Made with ❤︎⁠ by neko*prospekt ⠀⠀⠀//⠀⠀⠀ 2026-20XX
-        </div>
-
-        <div class="footer-right">
-
-            <a href="https://github.com/nekoprospekt" class="footer-icon tooltip" data-tooltip="Github">
-                <img src="images/gifs-icos/whitebracket.png">
-            </a>
-
-            <a href="https://djfarent.github.io" class="footer-icon tooltip" data-tooltip="Boyfriends Site">
-                <img src="images/gifs-icos/whiteat.png">
-            </a>
-
-            <a href="lovemail.html" class="footer-icon tooltip" data-tooltip="Lovemail">
-                <img src="images/gifs-icos/whiteheart.png">
-            </a>
-
-            <a href="https://css.straw.page" class="footer-icon tooltip" data-tooltip="Strawpage">
-                <img src="images/gifs-icos/whiteX.png">
-            </a>
-
-        </div>
-
-    </footer>
-
-    <script>
-        (function () {
-
-            const loader = document.getElementById("global-loader");
-            const MIN_VISIBLE_TIME = 2000;
-            const startTime = Date.now();
-
-            function finishLoading() {
-
-                const elapsed = Date.now() - startTime;
-                const remaining = Math.max(0, MIN_VISIBLE_TIME - elapsed);
-
-
-                setTimeout(() => {
-
-                    loader.classList.add("hidden");
-
-                    setTimeout(() => {
-                        loader.remove();
-
-                        // allows animations (?)
-                        document.body.classList.remove("loading");
-                        pageReady = true;
-
-                        // Re-does header animation (?)
-                        window.dispatchEvent(new Event("scroll"));
-
-                    }, 600);
-
-                }, remaining);
-            }
-
-            function waitForImages() {
-
-                const images = document.images;
-                let loaded = 0;
-                const total = images.length;
-
-                if (total === 0) {
-                    finishLoading();
-                    return;
-                }
-
-                function imageLoaded() {
-                    loaded++;
-                    if (loaded >= total) {
-                        finishLoading();
-                    }
-                }
-
-                for (let img of images) {
-                    if (img.complete) {
-                        imageLoaded();
-                    } else {
-                        img.addEventListener("load", imageLoaded);
-                        img.addEventListener("error", imageLoaded);
-                    }
-                }
-            }
-
-            if (document.fonts) {
-                document.fonts.ready.then(waitForImages);
-            } else {
-                waitForImages();
-            }
-
-        })();
-    </script>
-
-    <script>
-        let pageReady = false;
-
-        const header = document.querySelector(".header-content");
-        const bg = document.querySelector(".header-bg");
-
-        window.addEventListener("scroll", () => {
-
-            if (!pageReady) return; // block animation until ready
-            const scroll = window.scrollY;
-
-            // text moves slightly faster than scroll (parallax)
-            header.style.transform = "translateY(" + scroll * 0.7 + "px)";
-
-            // smooth fade out
-            let fade = 1 - scroll / 400;
-            if (fade < 0) fade = 0;
-            header.style.opacity = fade;
-
-            // KEEPs original background movement
-            bg.style.transform = "translateY(" + scroll * 0.4 + "px)";
-        });
-
-        const sections = document.querySelectorAll(".section")
-
-        const sectionObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("visible")
-                    sectionObserver.unobserve(entry.target)
-                }
-            })
-        }, { threshold: 0.35 })
-
-        sections.forEach((sec, i) => {
-            const tiltAngle = (i % 2 === 0 ? 4 : -4)
-            sec.style.setProperty("--initial-tilt", tiltAngle + "deg")
-            sectionObserver.observe(sec)
-        })
-
-    </script>
-    <script>
-
-        const chars = [
-            "╳", "╲", "╱", "␦", "?"
-        ];
-
-        const grid = document.querySelector(".unicode-bg");
-
-        function buildGrid() {
-
-            const size = 100;
-            const cols = Math.ceil(window.innerWidth / size);
-
-            const pageHeight = document.documentElement.scrollHeight;
-            const rows = Math.ceil(pageHeight / size);
-
-            grid.innerHTML = "";
-
-            for (let i = 0; i < cols * rows; i++) {
-
-                const span = document.createElement("span");
-
-                span.textContent =
-                    chars[Math.floor(Math.random() * chars.length)];
-
-                grid.appendChild(span);
-            }
-        }
-
-        const text = "welcome."
-        const el = document.getElementById("type")
-        let i = 0
-
-        function type() {
-            if (i < text.length) {
-                el.textContent += text[i]
-                i++
-                setTimeout(type, 80)
-            }
-        }
-
-        type()
-
-        buildGrid();
-        window.addEventListener("resize", buildGrid);
-
-        setInterval(() => {
-
-            const cells = grid.children;
-
-            for (let i = 0; i < 2; i++) {
-
-                const c = cells[Math.floor(Math.random() * cells.length)];
-                if (!c) return;
-
-                c.style.opacity = 1;
-
-                setTimeout(() => {
-                    c.style.opacity = 0.25;
-                }, 120);
-
-            }
-
-        }, 20);
-
-        function isMobile() {
-            return window.matchMedia("(max-width: 768px)").matches;
-        }
-
-        function removeImagesOnMobile() {
-
-            if (!isMobile()) return;
-
-            // remove all section images
-            const images = document.querySelectorAll(".section .image");
-
-            images.forEach(img => {
-                img.remove();
+        <!-- RIGHT (1/3): image at the top, then paragraphs -->
+        <aside class="split-side">
+          <h1 class="section-title" id="boyfriend"><span id="slash">/ /</span> My boyfriend</h1>
+
+          <img class="side-image" src="" alt="">
+
+          <p class="text">I have a <span id="guro">really super cool boyfriend</span>, who is <span id="guro">seriously
+              attractive..</span> I'd love to name him, but
+            I cannot put his name on here due to his online presence!
+            Either way, I could almost say it all makes me <span id="guro">admire</span> him even more, speaking of his
+            online presence, he
+            makes videos on Youtube and TikTok, I think he's planning to stream on Twitch soon, too!
+            He also makes some sick ass music, but I think it embarasses him when I bring it up so I won't say TOO much.
+            Most of the content he makes is centered around Source, every friday He host's Garry's Mod Z-CITY events on
+            his discord server, <span id="guro">Come join... </span>I'll have everything linked below.
+          </p>
+
+          <p class="text"><span id="guro">He is so handsome</span>, I'm suprised even I got my hands on him! We've been
+            together for not far
+            under a year,
+            I <span id="guro">love</span> him dearly, not an amount thats easily put into words. but if want to see even
+            more words about my
+            <span id="guro">unending</span> love, heres my <a href="lovemail.html">lovemail</a> too him, my baby. I love
+            you <img class="emoji" src="images/emojis/loveletter.png" alt=""><img class="emoji"
+              src="images/emojis/pink heart 5.png" alt="">
+          </p>
+
+          <!-- 6 links, one under the other, same look as the URLs in the links panel.
+               replace BOTH the href and the text between <a> and </a> with the address -->
+          <div class="links-list">
+            <a href="https://www.tiktok.com/@farten1_" target="_blank"
+              rel="noopener">https://www.tiktok.com/@farten1_</a>
+            <a href="https://www.youtube.com/@farten1" target="_blank"
+              rel="noopener">https://www.youtube.com/@farten1</a>
+            <a href="https:dj_farent.github.io" target="_blank" rel="noopener">https:dj_farent.github.io</a>
+            <a href="https://soundcloud.com/djfarten" target="_blank" rel="noopener">https://soundcloud.com/djfarten</a>
+            <a href="https://soundcloud.com/farten2" target="_blank" rel="noopener">https://soundcloud.com/farten2</a>
+            <a href="https://steamcommunity.com/id/FARTEN1" target="_blank"
+              rel="noopener">https://steamcommunity.com/id/FARTEN1</a>
+          </div>
+
+          <p>i love you so much, baby, you are so unimaginably gorgeous.</p>
+        </aside>
+
+      </section>
+
+    </main>
+
+
+  </div>
+
+  <script src="quotes.js"></script>
+
+  <script>
+    // toggles the info panel next to the links grid:
+    // selecting a square covers the image, selecting it again uncovers the image
+    (function () {
+      var squares = document.querySelectorAll('#linksGrid .link-square');
+      var info = document.getElementById('linksInfo');
+
+      squares.forEach(function (sq) {
+        sq.addEventListener('click', function () {
+          var isActive = sq.classList.contains('active');
+
+          squares.forEach(function (s) { s.classList.remove('active'); });
+
+          if (isActive) {
+            // panel wipes away, image shows again
+            // (content is left alone so it doesn't change while it slides out)
+            info.classList.remove('visible');
+            return;
+          }
+
+          sq.classList.add('active');
+
+          var title = sq.getAttribute('data-title');
+          var desc = sq.getAttribute('data-desc');
+
+          info.innerHTML =
+            '<h3>' + title + '</h3>' +
+            '<p>' + desc + '</p>';
+
+          // collect the links for this square:
+          // every <a> inside its .square-links box, or the old single data-href
+          var links = [];
+
+          sq.querySelectorAll('.square-links a').forEach(function (a) {
+            var href = a.getAttribute('href');
+            links.push({ href: href, label: a.textContent.trim() || href });
+          });
+
+          if (!links.length && sq.getAttribute('data-href')) {
+            var single = sq.getAttribute('data-href');
+            links.push({ href: single, label: single });
+          }
+
+          // stack them one under the other
+          if (links.length) {
+            var list = document.createElement('div');
+            list.className = 'links-list';
+
+            links.forEach(function (l) {
+              var a = document.createElement('a');
+              a.href = l.href;
+              a.target = '_blank';
+              a.rel = 'noopener';
+              a.textContent = l.label;
+              list.appendChild(a);
             });
 
-        }
+            info.appendChild(list);
+          }
 
-        document.addEventListener("DOMContentLoaded", removeImagesOnMobile);
-
-    </script>
-
+          info.classList.add('visible');
+        });
+      });
+    })();
+  </script>
 </body>
-
-</html>

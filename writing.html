@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>neko - writing</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <div class="top-line">
+    <span id="quote"></span>
+  </div>
+
+  <div class="page">
+
+
+    <header>
+
+      <!-- large low-opacity kaomoji sitting behind the title -->
+      <span class="header-kaomoji" aria-hidden="true">( っˊᗜˋ)(ᵔ ᵕ ᵔ˶) ♡</span>
+
+      <!-- HEADER TEXT -->
+      <div class="header-content">
+
+        <h1>I MADE ANOTHER <span id="guro">FUCKING</span> WEBSITE.</h1>
+
+        <p class="header-text"> Obligatory line to say It's neko*prospekts website. Me, that's me. <img class="emoji" src="images/emojis/pink heart 2.png" alt="">
+        </p>
+
+        <!-- same on every page - just the active one differs -->
+        <nav class="header-nav" id="siteNav">
+          <a href="index.html">index</a>
+          <a href="nekoprospekt.html">herself</a>
+          <a href="characters.html">characters</a>
+          <a href="writing.html" class="active">writing</a>
+          <a href="downloads.html">downloads</a>
+        </nav>
+
+      </div>
+
+
+      <!-- RIGHT-SIDE ICON AREA -->
+      <div class="header-icons">
+        <div class="icons-top">
+          <a href=""><img src="images/cmb.png" alt=""></a>
+          <a href=""><img src="images/aperature.png" alt=""></a>
+          <a href=""><img src="images/lambda.png" alt=""></a>
+          <a href=""><img src="images/overwatch.png" alt=""></a>
+        </div>
+      </div>
+
+    </header>
+
+    <br>
+    <br>
+    <br>
+
+    <main>
+
+      <!-- =========================
+           VIEW 1: THE LIST
+           ========================= -->
+      <section class="section" id="listView">
+        <h1 class="section-title"><span id="slash">/ /</span> Writing</h1>
+
+        <p class="text" id="writingIntro">I know nobodys reading these, but if you want to, It's all here. </p>
+        <br>
+
+        <!-- the script fills this in from writing.xml -->
+        <div class="writing-list" id="writingList">
+          <p class="writing-message">Loading...</p>
+        </div>
+      </section>
+
+      <!-- =========================
+           VIEW 2: ONE OPEN ENTRY
+           ========================= -->
+      <section class="section writing-reader" id="readerView" hidden>
+        <div class="reader-bar">
+          <div>
+            <h1 class="reader-title" id="readerTitle"></h1>
+            <p class="reader-date" id="readerDate"></p>
+            <div class="entry-tags" id="readerTags"></div>
+          </div>
+          <button type="button" class="close-btn" id="closeTop">Close</button>
+        </div>
+
+        <div class="reader-body" id="readerBody"></div>
+
+        <button type="button" class="close-btn" id="closeBottom">Close</button>
+      </section>
+
+    </main>
+
+
+  </div>
+
+  <script src="quotes.js"></script>
+
+  <script>
+    (function () {
+      var listView = document.getElementById('listView');
+      var readerView = document.getElementById('readerView');
+      var list = document.getElementById('writingList');
+
+      var entries = [];
+      var currentId = null;   // which piece is open right now
+
+      // small helper: make an element with a class and plain text
+      function make(tag, cls, text) {
+        var el = document.createElement(tag);
+        if (cls) el.className = cls;
+        if (text) el.textContent = text;
+        return el;
+      }
+
+      function fillTags(container, tags) {
+        container.textContent = '';
+        tags.forEach(function (t) {
+          container.appendChild(make('span', 'tag', t));
+        });
+      }
+
+      // "2026-10-05" -> "05 Oct 2026"
+      function prettyDate(iso) {
+        var p = iso.split('-');
+        if (p.length !== 3) return iso;
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return p[2] + ' ' + (months[parseInt(p[1], 10) - 1] || p[1]) + ' ' + p[0];
+      }
+
+      function text(node, name) {
+        var el = node.getElementsByTagName(name)[0];
+        return el ? el.textContent.trim() : '';
+      }
+
+      // ---------- read writing.xml ----------
+      function parseXml(xmlText) {
+        var doc = new DOMParser().parseFromString(xmlText, 'application/xml');
+
+        if (doc.getElementsByTagName('parsererror').length) {
+          throw new Error('writing.xml has a typo in it');
+        }
+
+        var nodes = doc.getElementsByTagName('entry');
+
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i];
+          var tagNodes = n.getElementsByTagName('tag');
+          var tags = [];
+
+          for (var j = 0; j < tagNodes.length; j++) {
+            tags.push(tagNodes[j].textContent.trim());
+          }
+
+          entries.push({
+            id: n.getAttribute('id'),
+            title: text(n, 'title'),
+            date: text(n, 'date'),
+            blurb: text(n, 'blurb'),
+            tags: tags,
+            body: null   // filled in when the piece is opened
+          });
+        }
+
+        // newest first (YYYY-MM-DD sorts correctly as plain text)
+        entries.sort(function (a, b) {
+          return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; 
+        });
+      }
+
+      // ---------- build the list ----------
+      function buildList() {
+        list.textContent = '';
+
+        if (!entries.length) {
+          list.appendChild(make('p', 'writing-message', 'Nothing here yet.'));
+          return;
+        }
+
+        entries.forEach(function (entry) {
+          var box = make('button', 'writing-entry');
+          box.type = 'button';
+
+          var top = make('div', 'entry-top');
+          top.appendChild(make('span', 'entry-title', entry.title));
+          top.appendChild(make('span', 'entry-date', prettyDate(entry.date)));
+
+          var tags = make('div', 'entry-tags');
+          fillTags(tags, entry.tags);
+
+          box.appendChild(top);
+          box.appendChild(make('p', 'entry-blurb', entry.blurb));
+          box.appendChild(tags);
+
+          box.addEventListener('click', function () { openEntry(entry); });
+
+          list.appendChild(box);
+        });
+      }
+
+      // ---------- open / close ----------
+      function openEntry(entry) {
+        document.getElementById('readerTitle').textContent = entry.title;
+        document.getElementById('readerDate').textContent = prettyDate(entry.date);
+        fillTags(document.getElementById('readerTags'), entry.tags);
+
+        var body = document.getElementById('readerBody');
+        body.textContent = '';
+        body.appendChild(make('p', 'writing-message', 'Loading XML...'));
+
+        listView.hidden = true;
+        readerView.hidden = false;
+        window.scrollTo(0, 0);
+
+        currentId = entry.id;
+
+        // already loaded once? show it straight away
+        if (entry.body !== null) {
+          showBody(entry.body);
+          return;
+        }
+
+        // otherwise fetch writing/<id>.xml
+        fetch('writing/' + entry.id + '.xml')
+          .then(function (r) {
+            if (!r.ok) throw new Error('could not find writing/' + entry.id + '.xml');
+            return r.text();
+          })
+          .then(function (xmlText) {
+            var doc = new DOMParser().parseFromString(xmlText, 'application/xml');
+            if (doc.getElementsByTagName('parsererror').length) {
+              throw new Error('writing/' + entry.id + '.xml has a typo in it');
+            }
+            entry.body = text(doc, 'body');
+            if (currentId === entry.id) showBody(entry.body);   // ignore if they already closed it
+          })
+          .catch(function (err) {
+            if (currentId !== entry.id) return;
+            body.textContent = '';
+            body.appendChild(make('p', 'writing-message', 'Could not load this piece: ' + err.message));
+          });
+      }
+
+      // blank line in the XML = new paragraph
+      function showBody(raw) {
+        var body = document.getElementById('readerBody');
+        body.textContent = '';
+
+        raw.split(/\n\s*\n/).forEach(function (para) {
+          if (para.trim()) body.appendChild(make('p', '', para.trim()));
+        });
+      }
+
+      function closeEntry() {
+        currentId = null;
+        readerView.hidden = true;
+        listView.hidden = false;
+        window.scrollTo(0, 0);
+      }
+
+      document.getElementById('closeTop').addEventListener('click', closeEntry);
+      document.getElementById('closeBottom').addEventListener('click', closeEntry);
+
+      // ---------- go ----------
+      fetch('writing.xml')
+        .then(function (r) {
+          if (!r.ok) throw new Error('could not find writing.xml, ensure it is not stored within a folder, neko.');
+          return r.text();
+        })
+        .then(function (xmlText) {
+          parseXml(xmlText);
+          buildList();
+        })
+        .catch(function (err) {
+          list.textContent = '';
+          list.appendChild(make('p', 'writing-message', 'Could not load the writing: ' + err.message));
+        });
+    })();
+  </script>
+</body>
+
+</html>

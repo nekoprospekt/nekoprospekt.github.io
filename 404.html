@@ -8,6 +8,20 @@
     <link rel="icon" href="images/gifs-icos/favicon.gif" type="image/gif">
 
     <style>
+
+            :root {
+      /* the arrow used after links.
+         change this one line if arrow.svg lives somewhere else */
+      --arrow: url("images/icos/arrow.svg");
+
+      /* the arrow is used as a mask, so this colour is what you see
+         (whatever colour the SVG file itself is doesn't matter) */
+      --arrow-color: #ff4fa3;
+
+      /* slow-in, slow-out: used by the arrow flip, the panel wipe and the header intro */
+      --ease: cubic-bezier(0.35, 0.1, 0.65, 1);
+    }
+
         @font-face {
             font-family: DIN;
             src: url("Fonts/DIN 1451 Mittelschrift Regular.ttf");
@@ -15,9 +29,10 @@
 
         body {
             margin: 0;
+            z-index: 999;
             overflow: hidden;
             background: #000;
-            color: white;
+            color: rgb(253, 224, 240);
             font-family: DIN, sans-serif;
             height: 100vh;
             display: flex;
@@ -40,12 +55,12 @@
             font-weight: bold;
             letter-spacing: -2vw;
 
-            color: rgba(255, 255, 255, 0.158);
+            color: #e2499b65;
 
             user-select: none;
             pointer-events: none;
 
-            transition: filter 0.3s ease;
+            transition: filter 0.6s ease;
         }
 
         .content:hover~.bg404 {
@@ -69,34 +84,53 @@
         .content p {
             font-family: bahnschrift light;
             margin-top: 10px;
+            font-size: 2rem;
         }
 
         .content a {
+            transform: translateX(34.3%);
             font-family: bahnschrift light;
-            display: inline-block;
             margin-top: 25px;
-            color: white;
+            color: #ff4fa3;
             text-decoration: none;
-
-            border: 1px solid white;
-            padding: 12px 22px;
             width: 140px;
             transition: 0.3s;
+            align-items: center;
         }
 
-        .content a:hover {
-            background: white;
-            color: black;
-        }
+    .content a::after {
+      content: "";
+
+      display: inline-block;
+
+      width: 0.7em;
+      height: 0.7em;
+
+      margin-left: 0.3em;
+
+      vertical-align: -0.09em;
+
+      background-color: var(--arrow-color);
+      -webkit-mask: var(--arrow) center / contain no-repeat;
+      mask: var(--arrow) center / contain no-repeat;
+      color: #ff4fa3;
+      
+    }
+
+    main a:hover::after {
+      transform: rotate(-90deg);
+    }
+
     </style>
 </head>
 
 <body>
 
     <div class="content">
-        <h1>PAGE NOT FOUND.</h1>
+        <h1>THIS PAGE WASN'T FOUND.</h1>
+        <h1>WHERE WERE YOU HEADED??</h1>
 
-        <p>where were you headed?</p>
+     <!-- <p>where were you headed?</p>--> 
 
         <a href="./">
             RETURN

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>nprskt</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <div class="top-line">
+    <span id="quote"></span>
+  </div>
+
+  <div class="page">
+
+
+    <header>
+
+      <!-- large low-opacity kaomoji sitting behind the title -->
+      <span class="header-kaomoji" aria-hidden="true" <b>ヽ</b>(｀Д´#)<b>ﾉ ﾑｷｰ</b>!!</span>
+
+      <!-- BIG HEADER IMAGE -->
+      <img class="header-image" src="main-image.jpg" alt="">
+
+
+      <!-- HEADER TEXT -->
+      <div class="header-content">
+
+        <h1>NEKO<span id="guro">*</span>PROSPEKT</h1>
+
+        <p class="header-text">I am a 16 year old pro gamer, thats where the 'neko<span id="guro"><I>PRO</I></span>spekt' comes
+          from in my username, hit
+          me up if you want to 1v1 on
+          Counter-Strike Source, cs_office, your determined to lose when I've got my 'HL2 bikini citizens
+          hostages' mod installed. Message
+          me on Steam, or at my Discord.. <img class="emoji" src="images/emojis/pink heart 2.png"alt="">
+        </p>
+
+        <!-- same on every page - just the active one differs -->
+        <nav class="header-nav" id="siteNav">
+          <a href="index.html" class="active">index</a>
+          <a href="nekoprospekt.html">more</a>
+          <a href="misc.html">???</a>
+        </nav>
+
+      </div>
+
+
+      <!-- RIGHT-SIDE ICON AREA -->
+      <div class="header-icons">
+
+        <!-- TOP ROW -->
+        <div class="icons-top">
+
+          <a href="">
+            <img src="images/cmb.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/aperature.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/lambda.png" alt="">
+          </a>
+
+          <a href="">
+            <img src="images/overwatch.png" alt="">
+          </a>
+
+        </div>
+
+
+        <!-- SECOND ROW -->
+        <div class="icons-bottom">
+
+          <a href="">
+            <img src="images/icos/acespec.png" alt="Flag used by people who place themselves on the asexual spectrum.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/sheher.png"
+              alt="Flag used by people who use She/Her pronouns, it is blue to pink flag halved, with the right side a bright pink flag.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/female.png"
+              alt="Flag used by women who are cisgendered. It is a pink flag, which meets in the middle with white.">
+          </a>
+
+          <a href="">
+            <img src="images/icos/irish.png" alt="Flag of The Republic of Ireland.">
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <main>
+      <section class="links-section" id="LINKS">
+        <h1 class="section-title"><span id="slash">/ /</span> Links</h1>
+
+        <div class="links-wrap">
+
+          <!-- HOW TO ADD LINKS TO A SQUARE:
+               one link:      data-href="https://..." on the square (like before)
+               several links: put a hidden .square-links box inside the square and add one <a> per link.
+                              The text between <a> and </a> is what shows in the panel
+                              (leave it empty to show the web address instead).
+               They appear in the panel one under the other, in the order you write them. -->
+          <div class="links-grid" id="linksGrid">
+            <!-- swap each src/data-title/data-desc/data-href for the real icon n link info -->
+            <div class="link-square" data-title="Steam"
+              data-desc="Add me and send a friend request, mention the site so I know where you found me."
+              data-href="https://steamcommunity.com/id/nekoprospekt/">
+              <img src="images/icos/steam.png" alt="">
+            </div>
+            <div class="link-square" data-title="Discord"
+              data-desc="Best way to actually talk to me, I'm on most days. Please don't refrain from texting me, I'm always open to chat!"
+              data-href="https://discordid.netlify.app/?id=956267969741217813/">
+              <img src="images/icos/discord.png" alt="">
+            </div>
+            <div class="link-square" data-title="Lambda Generation"
+              data-desc="I post some of my art on here, but most of it is on my TikTok. Some random 'unposted' CSS fanart is here! Although. It's an AMAZING site, I'd reccomend making an account if you want to interact with more Valve fans.">
+              <img src="images/icos/lambda.png" alt="">
+              <div class="square-links" hidden>
+                <a href="https://community.lambdageneration.com/user/lilly/"></a>
+                <a href="https://tiktok.com/@nekoprospekt/"></a>
+              </div>
+            </div>
+            <div class="link-square" data-title="4played.de"
+              data-desc="I used to fucking LOVE CS:S, so some of my stats from my favourite server are on here!"
+              data-href="https://4played.de/players/nekoprospekt/">
+              <img src="images/icos/4played.png" alt="">
+            </div>
+            <div class="link-square" data-title="YouTube" data-desc="I want to post, im lazy."
+              data-href="https://www.youtube.com/@nekoprospekt/">
+              <img src="images/icos/youtube.png" alt="">
+            </div>
+            <div class="link-square" data-title="Mobile Site"
+              data-desc="A simpler version of this page, optimized for mobile devices. Use this if you're having issues navigating the desktop version."
+              data-href="https://nekoprospekt.xyz/mobileindex.html/">
+              <img src="images/icos/mobile.png" alt="">
+            </div>
+            <div class="link-square" data-title="GitHub"
+              data-desc="If I do anymore coding (or font stuff, please check out my HL2 font recreation.), it is over here.">
+              <img src="images/icos/github.png" alt="">
+              <div class="square-links" hidden>
+                <a href="https://github.com/nekoprospekt/"></a>
+                <a href="https://github.com/nekoprospekt/Half-Life-2-Logo-Font/"></a>
+              </div>
+            </div>
+            <div class="link-square" data-title="Music"
+              data-desc="All my music stays on my Foobar2000, and theres also some other stuff on SoundCloud (like my boyfriends SICK ASS music!)."
+              data-href="#">
+              <img src="images/icos/music.png" alt="">
+            </div>
+            <div class="link-square" data-title="Actually have no idea what to put here."
+              data-desc="Place holder, someone give me suggestions." data-href="#">
+              <img src="images/icos/misc.png" alt="">
+            </div>
+          </div>
+
+          <!-- the image sits under the info box: pick a square and the box wipes over it,
+               pick it again and the box wipes away to show the image -->
+          <div class="links-display">
+            <div class="links-image">
+              <img src="images/links-image.png" alt="">
+            </div>
+            <div class="links-info" id="linksInfo" aria-live="polite"></div>
+          </div>
+
+
+        </div>
+      </section>
+    </main>
+
+
+  </div>
+
+  <script src="quotes.js"></script>
+
+  <script>
+    // toggles the info panel next to the links grid:
+    // selecting a square covers the image, selecting it again uncovers the image
+    (function () {
+      var squares = document.querySelectorAll('#linksGrid .link-square');
+      var info = document.getElementById('linksInfo');
+
+      squares.forEach(function (sq) {
+        sq.addEventListener('click', function () {
+          var isActive = sq.classList.contains('active');
+
+          squares.forEach(function (s) { s.classList.remove('active'); });
+
+          if (isActive) {
+            // panel wipes away, image shows again
+            // (content is left alone so it doesn't change while it slides out)
+            info.classList.remove('visible');
+            return;
+          }
+
+          sq.classList.add('active');
+
+          var title = sq.getAttribute('data-title');
+          var desc = sq.getAttribute('data-desc');
+
+          info.innerHTML =
+            '<h3>' + title + '</h3>' +
+            '<p>' + desc + '</p>';
+
+          // collect the links for this square:
+          // every <a> inside its .square-links box, or the old single data-href
+          var links = [];
+
+          sq.querySelectorAll('.square-links a').forEach(function (a) {
+            var href = a.getAttribute('href');
+            links.push({ href: href, label: a.textContent.trim() || href });
+          });
+
+          if (!links.length && sq.getAttribute('data-href')) {
+            var single = sq.getAttribute('data-href');
+            links.push({ href: single, label: single });
+          }
+
+          // stack them one under the other
+          if (links.length) {
+            var list = document.createElement('div');
+            list.className = 'links-list';
+
+            links.forEach(function (l) {
+              var a = document.createElement('a');
+              a.href = l.href;
+              a.target = '_blank';
+              a.rel = 'noopener';
+              a.textContent = l.label;
+              list.appendChild(a);
+            });
+
+            info.appendChild(list);
+          }
+
+          info.classList.add('visible');
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>

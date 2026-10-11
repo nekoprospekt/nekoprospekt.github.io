@@ -6,9 +6,9 @@ const KILL_LIFETIME = 6000;
 // ---- PLAYERS (edit names + bias here) ----
 const players = [
   { name: "nekoprospekt", headshotBias: 0.14 },
-  { name: "FartenYT", headshotBias: 0.43 },
+  { name: "Farten_1", headshotBias: 0.43 },
   { name: "flwrlena", headshotBias: 0.0 },
-  { name: "[UNSC]incode7", headshotBias: 0.10 },
+  { name: "[UNSC]incode7", headshotBias: 0.29 },
   { name: "candyheartache", headshotBias: 0.37 },
   { name: "probablyahewker", headshotBias: 0.10 },
   { name: "EggyAverage", headshotBias: 0.10 },

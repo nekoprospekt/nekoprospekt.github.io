@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  THIS IS THE INDEX. It only holds the info shown on the list.
+  The actual writing lives in its own file: writing/<id>.xml
+
+  HOW TO ADD A NEW PIECE:
+  1. copy one <entry> block below, paste it at the top, and change the text.
+  2. make a new file in the writing folder named exactly after the id.
+     (id="my-story"  ->  writing/my-story.xml)
+
+  - id:    lowercase letters, numbers and dashes only. no spaces. must be unique.
+  - date:  always YYYY-MM-DD (the page sorts newest first using this)
+  - tags:  one <tag> per tag
+-->
+<writings>
+
+  <entry id="second-piece">
+    <title>bad news on top of bad news</title>
+    <date>2026-10-11</date>
+    <blurb>Dalriada Emergency Clinic smells like A&amp;E too.</blurb>
+    <tags>
+      <tag>Day</tag>
+    </tags>
+  </entry>
+
+  <entry id="first-piece">
+    <title>First Entry, and a little on XML.</title>
+    <date>2026-10-05</date>
+    <blurb>Look, my first entry! Let's see how this works. and talk about my day, too?</blurb>
+    <tags>
+      <tag>Tech</tag>
+      <tag>XML</tag>
+      <tag>Day</tag>
+    </tags>
+  </entry>
+
+</writings>

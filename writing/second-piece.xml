@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  one piece of writing. the file name must match the id in writing.xml.
+  keep the text inside <![CDATA[ ... ]]> so you can type &, <, > and quotes freely.
+  leave a BLANK LINE between paragraphs.
+-->
+<piece>
+  <body><![CDATA[
+Cefalexin is working, just waiting for long- life long course, to be exact.
+
+Cystocopy is scary sounding, I hope they give me lots of anesthetic.
+]]></body>
+</piece>
