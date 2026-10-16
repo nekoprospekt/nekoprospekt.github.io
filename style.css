@@ -1,1257 +1,990 @@
-    /* =========================
-       SHARED VALUES
-       ========================= */
-    @font-face {
-            font-family: DIN;
-            src: url("Fonts/DIN 1451 Mittelschrift Regular.ttf");
-        }
+/* =========================
+   SHARED VALUES
+   monochrome: every colour below is a pure grey (no hue).
+   change a value here and it updates everywhere.
+   ========================= */
+@font-face {
+  font-family: DIN;
+  src: url("Fonts/DIN 1451 Mittelschrift Regular.ttf");
+}
 
-    :root {
-      /* the arrow used after links.
-         change this one line if arrow.svg lives somewhere else */
-      --arrow: url("images/icos/arrow.svg");
+:root {
+  /* arrow after links: used as a mask, so --arrow-color is what you see */
+  --arrow: url("images/icos/arrow.svg");
+  --arrow-color: #bdbdbd;
 
-      /* the arrow is used as a mask, so this colour is what you see
-         (whatever colour the SVG file itself is doesn't matter) */
-      --arrow-color: #ff4fa3;
+  --ease: cubic-bezier(0.35, 0.1, 0.65, 1);
 
-      /* slow-in, slow-out: used by the arrow flip, the panel wipe and the header intro */
-      --ease: cubic-bezier(0.35, 0.1, 0.65, 1);
-    }
+  --pattern: repeating-linear-gradient(45deg,
+    rgba(255, 255, 255, 0.04) 0 2px,
+    transparent 1px 9px);
 
-    * {
-      box-sizing: border-box;
-    }
+  --accent: #e1e1e1;        /* links, tags, active borders, (was pink) */
+  --accent-soft: #a4a4a4;   /* headings, titles, (was pink-soft) REPLACE WITH --accent-section */
+  --accent-deep: #686868;   /* dates, small labels, (was pink-deep) */
+  --text: #6e6e6e;          /* body text, (was pale pink) */
+  --muted: #3c3c3c;         /* smaller whisper messages */
+  --panel: #080808;
+  --page: #0f0f0f;
+  --line: #2a2a2a;
+  --line-dark: #161616;
+  --accent-section: #d6d6d6;
+}
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      background: #000 url("images/background 4k.png") center center / cover fixed no-repeat;
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
-      font-family: Arial, sans-serif;
-    }
+body {
+  background: #000;
+  font-family: Arial, sans-serif;
+}
 
+/* background photo, forced to greyscale so no colour sneaks in */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
 
-    /* =========================
-           WEBSITE
-           ========================= */
+  background: url("images/paulapartment.jpg") center center / cover no-repeat;
+  filter: grayscale(1);
+}
 
-    .page {
-      width: min(100vw, 133.333vh);
+/* every image on the site is greyscale.
+   delete this rule if you ever want colour images back */
+img {
+  filter: grayscale(1);
+}
 
-      margin: 60px auto;
+/* =========================
+   WEBSITE
+   ========================= */
 
-      min-height: 100vh;
+.page {
+  width: min(100vw, 133.333vh);
+  margin: 60px auto;
+  min-height: 100vh;
+  background: var(--page);
+  overflow: hidden;
+}
 
-      background: #0f0f0f;
-
-      overflow: hidden;
-    }
-
-    /* =========================
+/* =========================
    TOP LINE
    ========================= */
 
-    .top-line {
-      width: min(100vw, 133.333vh);
-      height: 60px;
+.top-line {
+  width: min(100vw, 133.333vh);
+  height: 60px;
+  margin: 0 auto;
 
-      margin: 0 auto;
+  display: flex;
+  align-items: center;
 
-      display: flex;
-      align-items: center;
+  color: #000;
+  font-size: 20px;
+  line-height: 1;
+  font-family: Bahnschrift, sans-serif;
+  letter-spacing: 2px;
+}
 
-      color: #000;
+#quote {
+  display: block;
 
-      font-size: 20px;
-      line-height: 1;
+  color: #000;
+  font-family: Bahnschrift, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
 
-      font-family: Bahnschrift, sans-serif;
-      letter-spacing: 2px;
-    }
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
 
-    #quote {
-      display: block;
+/* =========================
+   HEADER
+   ========================= */
 
-      color: #000;
-      font-family: Bahnschrift, sans-serif;
+header {
+  position: relative;
+  height: 500px;
 
-      font-size: 15px;
-      line-height: 1.4;
+  display: flex;
+  align-items: center;
 
-      opacity: 1;
-      transition: opacity 0.4s ease;
-    }
+  padding: 60px;
 
-    /* =========================
-           HEADER
-           ========================= */
+  background: #000;
+  color: var(--text);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
 
-    header {
-      position: relative;
+/* large, low-opacity kaomoji behind the title */
+.header-kaomoji {
+  position: absolute;
+  left: 210px;
+  top: 50%;
 
-      height: 500px;
+  transform: translateY(5%);
+  font-family: Bahnschrift, sans-serif;
+  font-size: 150px;
+  line-height: 1;
 
-      display: flex;
-      align-items: center;
+  color: rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+}
 
-      padding: 60px;
-
-      background: #000000;
-      color: rgb(253, 224, 240);
-      overflow: hidden;
-      border-bottom: 1px solid #2a2426;
-    }
-
-    /* large, low-opacity kaomoji sitting behind the title */
-    .header-kaomoji {
-      position: absolute;
-
-      left: 210px;
-      top: 50%;
-
-      transform: translateY(5%);
-      font-family: Bahnschrift, sans-serif;
-      font-size: 150px;
-      line-height: 1;
-
-      color: #e2499b65;
-      white-space: nowrap;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* =========================
+/* =========================
    HEADER ICON AREA
    ========================= */
 
-    .header-icons {
-      flex-shrink: 0;
+.header-icons {
+  flex-shrink: 0;
+  align-self: stretch;
 
-      align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
-      display: flex;
-      flex-direction: row;
+  gap: 22px;
+  padding-left: 20px;
 
-      align-items: center;
-      justify-content: center;
+  position: relative;
+  z-index: 1;
 
-      gap: 22px;
+  border-left: 1px solid var(--line);
+}
 
-      padding-left: 20px;
+/* two vertical columns */
+.icons-top,
+.icons-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
 
-      position: relative;
-      z-index: 1;
+.icons-top a,
+.icons-bottom a {
+  width: 40px;
+  height: 40px;
+  display: block;
+  flex-shrink: 0;
+}
 
-      border-left: 1px solid #2a2426;
-    }
+.icons-top img,
+.icons-bottom img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: transparent;
+}
 
-
-    /* Two vertical columns */
-
-    .icons-top,
-    .icons-bottom {
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      gap: 20px;
-    }
-
-
-    /* Actual icon images */
-
-    .icons-top img,
-    .icons-bottom img {
-      width: 40px;
-      height: 40px;
-
-      display: block;
-
-      object-fit: contain;
-
-      background: transparent;
-    }
-
-
-    /* Icon links */
-
-    .icons-top a,
-    .icons-bottom a {
-      width: 40px;
-      height: 40px;
-
-      display: block;
-
-      flex-shrink: 0;
-    }
-
-
-    /* Actual images */
-
-    .icons-top img,
-    .icons-bottom img {
-      width: 100%;
-      height: 100%;
-
-      display: block;
-
-      object-fit: contain;
-
-      background: rgba(255, 255, 255, 0.0);
-    }
-
-    /* =========================
+/* =========================
    LINKS
    ========================= */
 
-    a {
-      color: #ff4fa3;
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.35s ease;
+}
 
-      text-decoration: none;
+a:hover {
+  color: var(--text);
+}
 
-      transition: color 0.35s ease;
-    }
-
-    a:hover {
-      color: rgb(253, 224, 240);
-    }
-
-    /* Hover */
-    /* =========================
+/* =========================
    ARROWS
-   the arrow after every link in the main content.
-   It points bottom-right, and turns to point top-right on hover.
+   after every link in the main content: points bottom-right,
+   turns to point top-right on hover.
    ========================= */
 
-    main a::after {
-      content: "";
+main a::after {
+  content: "";
+  display: inline-block;
 
-      display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.3em;
+  vertical-align: -0.09em;
 
-      width: 0.7em;
-      height: 0.7em;
+  background-color: var(--arrow-color);
+  -webkit-mask: var(--arrow) center / contain no-repeat;
+  mask: var(--arrow) center / contain no-repeat;
+}
 
-      margin-left: 0.3em;
+main a:hover::after {
+  transform: rotate(-90deg);
+}
 
-      vertical-align: -0.09em;
-
-      background-color: var(--arrow-color);
-      -webkit-mask: var(--arrow) center / contain no-repeat;
-      mask: var(--arrow) center / contain no-repeat;
-
-      
-    }
-
-    main a:hover::after {
-      transform: rotate(-90deg);
-    }
-
-    /* =========================
+/* =========================
    HEADER NAV
-   plain text links, same style as the rest of the page. Clicking one
-   swaps which part of <main> is shown, without touching the header
-   or background.
    ========================= */
 
-    .header-nav {
-      transform: translateY(65px);
-      display: flex;
-      flex-wrap: wrap;
+.header-nav {
+  transform: translateY(45px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: 18px;
+}
 
-      gap: 6px 22px;
+.header-nav a {
+  font-family: DIN;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-      margin-top: 18px;
-    }
+.header-nav a::after {
+  content: "";
+  display: inline-block;
 
-    .header-nav a {
-      font-family: DIN;
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.3em;
+  vertical-align: -0.09em;
 
-    .header-nav a::after {
-      content: "";
+  background-color: var(--arrow-color);
+  -webkit-mask: var(--arrow) center / contain no-repeat;
+  mask: var(--arrow) center / contain no-repeat;
+}
 
-      display: inline-block;
+.header-nav a:hover::after {
+  transform: rotate(-90deg);
+}
 
-      width: 0.7em;
-      height: 0.7em;
+/* the link for whatever's currently showing */
+.header-nav a.active {
+  color: var(--text);
+}
 
-      margin-left: 0.3em;
+/* =========================
+   HEADER IMAGE
+   ========================= */
 
-      vertical-align: -0.09em;
+.header-image {
+  width: 210px;
+  height: 210px;
+  margin-left: 30px;
+  margin-top: 10px;
+  flex-shrink: 0;
 
-      background-color: var(--arrow-color);
-      -webkit-mask: var(--arrow) center / contain no-repeat;
-      mask: var(--arrow) center / contain no-repeat;
-    }
+  object-fit: cover;
+  background: transparent;
 
-    .header-nav a:hover::after {
-      transform: rotate(-90deg);
-    }
+  position: relative;
+  z-index: 1;
 
-    /* the link for whatever's currently showing */
-    .header-nav a.active {
-      color: rgb(253, 224, 240);
-    }
+  border: 1px solid var(--line);
+}
 
-    /* =========================
-           HEADER IMAGE
-           ========================= */
+/* =========================
+   HEADER CONTENT
+   ========================= */
 
-    .header-image {
-      width: 210px;
-      height: 210px;
-      margin-left: 30px;
-      margin-top: 10px;
-      flex-shrink: 0;
+.header-content {
+  align-self: stretch;
+  flex: 1;
 
-      object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-      background: rgba(255, 255, 255, 0);
+  padding-left: 30px;
+  padding-right: 20px;
 
-      position: relative;
-      z-index: 1;
+  position: relative;
+  z-index: 1;
+}
 
-      border: 1px solid #2a2426;
-    }
+.header-content h1 {
+  margin: 0 0 -50px 0;
 
+  font-size: 120px;
+  font-weight: 500;
+  letter-spacing: 23px;
+  line-height: 1.2;
+  font-family: DIN;
+}
 
-    /* =========================
-           HEADER CONTENT
-           ========================= */
+.header-content p {
+  max-width: 700px;
+  margin: 0;
 
-    .header-content {
-      align-self: stretch;
+  font-family: Bahnschrift;
+  font-size: 70px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
 
-      flex: 1;
+.another {
+  font-size: 50px;
+  font-family: DIN;
+}
 
-      display: flex;
-      flex-direction: column;
+/* =========================
+   ICONS
+   ========================= */
 
-      justify-content: center;
+.icons {
+  align-self: flex-start;
+  display: flex;
+  gap: 20px;
+  padding-top: 15px;
+}
 
-      padding-left: 30px;
+.icon {
+  width: 40px;
+  height: 40px;
 
-      padding-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-      position: relative;
-      z-index: 1;
-    }
+  background: transparent;
+  color: #181818;
+  border-radius: 0;
+  font-size: 20px;
+  cursor: pointer;
+}
 
-    .header-content h1 {
-      margin: 0 0 20px 0;
-
-      font-size: 110px;
-      font-weight: 400;
-      letter-spacing: 3.1px;
-
-      line-height: 0.9;
-      font-family: DIN;
-    }
-
-    .header-content p {
-      max-width: 700px;
-
-      margin: 0;
-      font-family: Bahnschrift;
-      font-size: 30px;
-      letter-spacing: 1px;
-      line-height: 1;
-    }
-
-
-    /* =========================
-           ICONS
-           ========================= */
-
-    .icons {
-      align-self: flex-start;
-
-      display: flex;
-
-      gap: 20px;
-
-      padding-top: 15px;
-    }
-
-    .icon {
-      width: 40px;
-      height: 40px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: #ffffff00;
-      color: #181818;
-
-      border-radius: 0;
-
-      font-size: 20px;
-
-      cursor: pointer;
-    }
-
-    /* =========================
+/* =========================
    SECOND ICON ROW
    ========================= */
 
-    .icon-row {
-      height: 75px;
+.icon-row {
+  height: 75px;
 
-      display: flex;
-      align-items: center;
+  display: flex;
+  align-items: center;
 
-      gap: 20px;
+  gap: 20px;
+  padding: 0 38px;
 
-      padding: 0 38px;
+  background: #181818;
+}
 
-      background: #181818;
-    }
+.row-icon {
+  width: 42px;
+  height: 42px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    /* Individual icons */
+  background: #fff;
+  color: #181818;
+  text-decoration: none;
+  font-size: 20px;
+}
 
-    .row-icon {
-      width: 42px;
-      height: 42px;
+/* =========================
+   MAIN CONTENT
+   ========================= */
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+main {
+  position: relative;
 
-      background: #fff;
-      color: #181818;
+  font-family: Bahnschrift;
 
-      text-decoration: none;
+  padding: 35px 38px 80px 65px;
+  margin: 0 0 20px auto;
 
-      font-size: 20px;
-    }
+  background-color: rgba(0, 0, 0, 0.62);
+}
 
-    /* =========================
-           MAIN CONTENT
-           ========================= */
+/* =========================
+   MAIN TEXT
+   ========================= */
 
-    main {
-      position: relative;
+.paragraph-image {
+  width: 200px;
+  height: 240px;
 
-      font-family: Bahnschrift;
+  object-fit: cover;
 
-      padding: 35px 38px 80px 65px;
-      margin: 0 0 20px auto;
+  margin-top: 5px;
+  margin-bottom: 15px;
 
-      background-color: #0000009d;
-    }
+  display: block;
+}
 
+.paragraph-image.left {
+  float: left;
+  margin-left: 0;
+  margin-right: 25px;
+}
 
-    /* =========================
-           MAIN TEXT
-           ========================= */
-
-    .paragraph-image {
-      width: 200px;
-      height: 240px;
-
-      object-fit: cover;
-
-      margin-top: 5px;
-      margin-bottom: 15px;
-
-      display: block;
-    }
-
-    .paragraph-image.left {
-      float: left;
-
-      margin-left: 0;
-      margin-right: 25px;
-    }
-
-    /* =========================
+/* =========================
    INFOBOX
-   quick facts + a picture - just the page's normal text and image
-   styles, wrapped in a thin rule so it reads as its own bit
    ========================= */
 
-    .infobox {
-      width: 100%;
-      height: auto;
+.infobox {
+  width: 100%;
+  height: auto;
+  margin: 0 0 25px 0;
+  padding: 30px 0;
+  background: var(--pattern);
+  border: 1px solid var(--line);
+}
 
-      margin: 0 0 25px 0;
-      padding: 18px 0;
+.infobox .text {
+  margin-bottom: 0;
+  line-height: 2.1;
+  padding-left: 30px;
+}
 
-      border-top: 1px solid #2a2426;
-      border-bottom: 1px solid #2a2426;
-    }
+.infobox #guro {
+  display: inline-block;
+  width: 100px;
+}
 
-    .infobox .text {
-      margin-bottom: 0;
-      line-height: 2.1;
-    }
+.infobox-paragraph-image-right {
+  transform: translateY(-18px);
+  float: right;
+  border: 1px solid #f7f7f7;
+  margin-left: 25px;
+  margin-right: 40px;
+  width: 520px;
+  height: 262px;
+}
 
-    .infobox #guro {
-      display: inline-block;
-
-      width: 100px;
-    }
-
-    .infobox-paragraph-image-right {
-      float: right;
-      border: 1px solid #f7f7f7;
-
-      margin-left: 25px;
-      margin-right: 0;
-      width: 520px;
-      height: 262px;
-    }
-
-    /* =========================
+/* =========================
    INDEX PAGE IMAGES
-   each image on this page gets its own class below, instead of sharing
-   .paragraph-image - so resizing or repositioning any one of them never
-   touches another, or the .paragraph-image rules above (still used
-   as-is, untouched).
+   each has its own class so resizing one never touches another
    ========================= */
-    .photo-infobox {
-      float: right;
 
-      width: 200px;
-      height: 230px;
+.photo-infobox {
+  float: right;
+  width: 200px;
+  height: 230px;
+  object-fit: cover;
+  margin: 0 0 15px 25px;
+  display: block;
+}
 
-      object-fit: cover;
+.photo-hl2-left {
+  float: left;
+  width: 200px;
+  height: 280px;
+  object-fit: cover;
+  margin: 5px 25px 15px 0;
+  display: block;
+}
 
-      margin: 0 0 15px 25px;
+.photo-hl2-right {
+  float: right;
+  width: 250px;
+  height: 220px;
+  object-fit: cover;
+  margin: 5px 0 15px 25px;
+  display: block;
+}
 
-      display: block;
-    }
+.photo-interests {
+  float: left;
+  width: 400px;
+  height: 240px;
+  object-fit: cover;
+  margin: 5px 25px 15px 0;
+  display: block;
+}
 
-    /* used to sit between the two sections as a stray float - moved
-       inside the second section, right before its first paragraph,
-       which is what was causing the odd spacing */
-    .photo-hl2-left {
-      float: left;
+.photo-extra {
+  float: right;
+  width: 210px;
+  height: 220px;
+  object-fit: cover;
+  margin: 5px 0 15px 25px;
+  display: block;
+}
 
-      width: 200px;
-      height: 280px;
+.bottom-paragraph-image.left {
+  float: left;
+  width: 240px;
+  height: 210px;
+  margin-left: 0;
+  margin-right: 25px;
+}
 
-      object-fit: cover;
+.bottom-paragraph-image.right {
+  float: right;
+  margin-left: 25px;
+  margin-right: 0;
+  width: 350px;
+  height: 245px;
+}
 
-      margin: 5px 25px 15px 0;
-
-      display: block;
-    }
-
-    .photo-hl2-right {
-      float: right;
-
-      width: 250px;
-      height: 250px;
-
-      object-fit: cover;
-
-      margin: 5px 0 15px 25px;
-
-      display: block;
-    }
-
-    .photo-interests {
-      float: left;
-
-      width: 400px;
-      height: 240px;
-
-      object-fit: cover;
-
-      margin: 5px 25px 15px 0;
-
-      display: block;
-    }
-
-    .photo-extra {
-      float: right;
-
-      width: 210px;
-      height: 220px;
-
-      object-fit: cover;
-
-      margin: 5px 0 15px 25px;
-
-      display: block;
-    }
-
-    .bottom-paragraph-image.left {
-      float: left;
-      width: 240px;
-      height: 210px;
-      margin-left: 0;
-      margin-right: 25px;
-    }
-
-    .bottom-paragraph-image.right {
-      float: right;
-
-      margin-left: 25px;
-      margin-right: 0;
-      width: 350px;
-      height: 245px;
-    }
-
-    /* =========================
+/* =========================
    NEKOPROSPEKT PAGE IMAGES
-   its own classes, kept separate from .paragraph-image and
-   .bottom-paragraph-image above - resizing these never touches
-   the images on the index page
    ========================= */
 
-    .neko-image {
-      object-fit: cover;
+.neko-image {
+  object-fit: cover;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  display: block;
+}
 
-      margin-top: 5px;
-      margin-bottom: 15px;
+.neko-image.left {
+  float: left;
+  width: 230px;
+  height: 210px;
+  margin-left: 0;
+  margin-right: 25px;
+}
 
-      display: block;
-    }
+.neko-image.right {
+  float: right;
+  width: 230px;
+  height: 210px;
+  margin-left: 25px;
+  margin-right: 0;
+}
 
-    .neko-image.left {
-      float: left;
+.text {
+  margin: 4;
 
-      width: 230px;
-      height: 210px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+}
 
-      margin-left: 0;
-      margin-right: 25px;
-    }
+main p {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
 
-    .neko-image.right {
-      float: right;
+/* =========================
+   SECTIONS
+   ========================= */
 
-      width: 230px;
-      height: 210px;
+.section {
+  margin-top: 70px;
+  margin-left: 30px;
+  margin: 40px;
+}
 
-      margin-left: 25px;
-      margin-right: 0;
-    }
+.section-title {
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  margin-bottom: 40px;
+  line-height: 1;
+  font-family: Bahnschrift light;
+  color: var(--accent-section);
+}
 
-    .text {
-      margin: 4;
+.section h2 {
+  margin: 0 0 20px 0;
+  font-size: 30px;
+  font-weight: 400;
+}
 
-      font-size: 16px;
-      line-height: 1.55;
-      color: rgb(253, 224, 240);
-    }
-
-    main p {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
+.penis{
+  margin: 30px;
+  background: var(--pattern);
+  border: 1px solid var(--line);
 
 
-    /* =========================
-           SECTIONS
-           ========================= */
+}
 
-    .section {
-      margin-top: 70px;
-      margin-left: 30px;
-      margin: 40px;
-      }
-
-    .section-title {
-      font-size: 20px;
-      font-weight: 400;
-      letter-spacing: 5px;
-      margin-bottom: 40px;
-      line-height: 1;
-      font-family: Bahnschrift light;
-      color: #ff91c6;
-    }
-
-    .section h2 {
-      margin: 0 0 20px 0;
-
-      font-size: 30px;
-      font-weight: 400;
-    }
-
-    /* =========================
+/* =========================
    TWO COLUMN LAYOUT (2/3 + 1/3)
    ========================= */
 
-    .split {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      align-items: start;
+.split {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: start;
 
-      gap: 40px;
+  gap: 40px;
+  margin: 40px;
+  
+}
 
-      margin: 40px;
-    }
+/* flow-root so floated images stay inside their column */
+.split-main,
+.split-side {
+  display: flow-root;
+  min-width: 0;
+}
 
-    /* flow-root so floated images stay inside their column */
-    .split-main,
-    .split-side {
-      display: flow-root;
+.split-block + .split-block {
+  margin-top: 30px;
+}
 
-      min-width: 0;
-    }
+.side-image {
+  display: block;
 
-    .split-block+.split-block {
-      margin-top: 30px;
-    }
+  width: 360px;
+  height: 200px;
 
-    /* room for an image at the top of the right column */
-    .side-image {
-      display: block;
+  object-fit: cover;
+  margin: 0 0 20px 0;
 
-      width: 360px;
-      height: 200px;
+  background: #181818;
+  border: 1px solid var(--line);
+}
 
-      object-fit: cover;
-
-      margin: 0 0 20px 0;
-
-      background: #181818;
-      border: 1px solid #2a2426;
-    }
-
-    /* =========================
+/* =========================
    INLINE IMAGE EMOJIS
    ========================= */
 
-    .emoji {
-      width: 1.2em;
-      height: 1.2em;
+.emoji {
+  width: 1.2em;
+  height: 1.2em;
 
-      display: inline-block;
+  display: inline-block;
+  object-fit: contain;
+  vertical-align: -0.16em;
 
-      object-fit: contain;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+}
 
-      vertical-align: -0.16em;
-
-      margin-left: 0.10em;
-      margin-right: 0.10em;
-    }
-
-    /*  <img class="emoji" src="images/emojis/INSERTHERE.png" alt="">  ______insert*/
-
-    /* =========================
+/* =========================
    LINKS GRID (below all paragraphs)
    ========================= */
 
-    .links-section {
-      margin: 40px;
-      margin-top: 60px;
-      margin-bottom: 90px;
-    }
+.links-section {
+  margin: 40px;
+  margin-top: 60px;
+  margin-bottom: 90px;
+}
 
-    .links-wrap {
-      display: flex;
+.links-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  clear: both;
+}
 
-      align-items: flex-start;
+.links-grid {
+  flex-shrink: 0;
+  width: 195px;
 
-      gap: 25px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 7px;
+}
 
-      clear: both;
-    }
+.link-square {
+  position: relative;
+  width: 61px;
+  height: 61px;
 
-    .links-grid {
-      flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pattern);
+  border: 1px solid var(--line-dark);
+  cursor: pointer;
+}
 
-      width: 195px;
+.link-square img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
 
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3, 1fr);
+.link-square:hover {
+  background: #000;
+  border-color: #000;
+}
 
-      gap: 7px;
-    }
+.link-square.active {
+  background: #020202;
+  border-color: var(--accent);
+}
 
-    .link-square {
-      position: relative;
-
-      width: 61px;
-      height: 61px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: #080808;
-      border: 1px solid #161616;
-
-      cursor: pointer;
-    }
-
-    .link-square img {
-      width: 26px;
-      height: 26px;
-
-      object-fit: contain;
-    }
-
-    .link-square:hover {
-      background: #000000;
-      border-color: #000000;
-    }
-
-    .link-square.active {
-      background: #020202;
-      border-color: #ff4fa3;
-    }
-
-    /* =========================
+/* =========================
    PANEL: image by default, info box wipes over it
    ========================= */
 
-    .links-display {
-      position: relative;
-
-      flex: 1;
-
-      min-height: 195px;
-    }
-
-    /* fills the exact space the info box takes up */
-    .links-image {
-      position: absolute;
-      inset: 0;
-
-      background: #080808;
-      border: 1px solid #161616;
-
-      overflow: hidden;
-    }
-
-    .links-image img {
-      display: block;
-
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
-    }
-
-    .links-info {
-      position: relative;
-
-      min-height: 195px;
-
-      padding: 20px;
-
-      background: #080808;
-      border: 1px solid #161616;
-
-      color: rgb(253, 224, 240);
-      font-size: 15px;
-      line-height: 1.55;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      /* hidden: collapsed to the left edge, uncovering the image */
-      clip-path: inset(0 100% 0 0);
-      visibility: hidden;
-    }
-
-    .links-info.visible {
-      clip-path: inset(0 0 0 0);
-      visibility: visible;
-
-    }
-
-    .links-info h3 {
-      margin: 0 0 10px 0;
-
-      font-size: 18px;
-      font-weight: 400;
-      letter-spacing: 2px;
-
-      color: #ff92c7;
-    }
-
-    .links-info p {
-      margin: 0 0 12px 0;
-    }
-
-    .links-info a,
-    .links-list a {
-      font-size: 14px;
-    }
-
-    /* a stack of plain links, one under the other:
-       used inside the panel and under the boyfriend paragraph */
-    .links-list {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-
-      gap: 8px;
-
-      line-height: 1.55;
-    }
-
-    .links-list a {
-      overflow-wrap: anywhere;
-    }
-
-    .split-side .links-list {
-      margin: 20px 0 10px 0;
-    }
-
-    .data-title {
-      font-size: 18px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      font-family: Bahnschrift light;
-      color: #e2499b;
-    }
-
-    /* =========================
-           MOBILE
-           ========================= */
-
-    @media (max-width: 600px) {
-
-      .page {
-        width: 100vw;
-      }
-
-      header {
-        height: auto;
-
-        min-height: 220px;
-
-        padding: 25px;
-
-        align-items: flex-start;
-      }
-
-      .header-image {
-        width: 120px;
-        height: 120px;
-      }
-
-
-
-      .header-content {
-        padding-left: 20px;
-        padding-right: 0;
-      }
-
-      .header-content h1 {
-        font-size: 28px;
-      }
-
-      .header-content p {
-        font-size: 14px;
-      }
-
-      .header-kaomoji {
-        display: none;
-      }
-
-      .icons {
-        gap: 8px;
-        padding-top: 0;
-      }
-
-      .icon {
-        width: 30px;
-        height: 30px;
-
-        font-size: 14px;
-      }
-
-      main {
-        padding: 25px;
-      }
-
-      .text {
-        font-size: 16px;
-      }
-
-      .links-wrap {
-        flex-direction: column;
-      }
-
-      .split {
-        grid-template-columns: 1fr;
-      }
-
-      .links-display {
-        flex: none;
-
-        width: 100%;
-      }
-    }
-
-
-    /* =========================
-       WRITING PAGE       ! ! ! ! ! ! ! ! ! ! ! ! ! ! 
-       paste this at the bottom of style.css.
-       no transitions anywhere in here, on purpose.
-       ========================= */
-
-    /* the stack of entry boxes */
-    .writing-list {
-      display: flex;
-      flex-direction: column;
-
-      gap: 14px;
-    }
-
-    /* one entry = one full-width rectangle (it's a <button> so keyboard works) */
-    .writing-entry {
-      display: block;
-
-      width: 100%;
-
-      padding: 20px 24px;
-
-      text-align: left;
-
-      background: #080808;
-      border: 1px solid #161616;
-
-      color: rgb(253, 224, 240);
-      font-family: Bahnschrift;
-
-      cursor: pointer;
-
-      transition: none;
-    }
-
-    .writing-entry:hover,
-    .writing-entry:focus-visible {
-      background: #020202;
-      border-color: #ff4fa3;
-
-      outline: none;
-    }
-
-    /* title on the left, date on the right */
-    .entry-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-
-      gap: 20px;
-
-      margin-bottom: 10px;
-    }
-
-    .entry-title {
-      font-family: DIN;
-      font-size: 28px;
-      letter-spacing: 2px;
-      line-height: 1.1;
-
-      color: #ff91c6;
-    }
-
-    .entry-date {
-      flex-shrink: 0;
-
-      font-size: 14px;
-      letter-spacing: 2px;
-
-      color: #e2499b;
-    }
-
-    .entry-blurb {
-      margin: 0 0 14px 0;
-
-      font-size: 16px;
-      line-height: 1.55;
-
-      color: rgb(253, 224, 240);
-    }
-
-    /* tags (same look in the list and inside an open entry) */
-    .entry-tags {
-      display: flex;
-      flex-wrap: wrap;
-
-      gap: 8px;
-    }
-
-    .tag {
-      padding: 3px 10px;
-
-      border: 1px solid #2a2426;
-
-      font-size: 13px;
-      letter-spacing: 1px;
-
-      color: #ff4fa3;
-    }
-
-    /* the open entry */
-    .writing-reader[hidden] {
-      display: none;
-    }
-
-    .reader-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-
-      gap: 20px;
-
-      margin-bottom: 20px;
-    }
-
-    .reader-title {
-      margin: 0 0 8px 0;
-
-      font-family: DIN;
-      font-size: 56px;
-      font-weight: 400;
-      letter-spacing: 3px;
-      line-height: 1;
-
-      color: #ff91c6;
-    }
-
-    .reader-date {
-      margin: 0 0 12px 0;
-
-      font-size: 14px;
-      letter-spacing: 2px;
-
-      color: #e2499b;
-    }
-
-    .reader-body {
-      max-width: 720px;
-
-      padding: 25px 0;
-      margin: 25px 0;
-
-      border-top: 1px solid #2a2426;
-      border-bottom: 1px solid #2a2426;
-    }
-
-    /* single line breaks inside a paragraph are kept (handy for poems) */
-    .reader-body p {
-      margin: 0 0 18px 0;
-
-      font-size: 18px;
-      line-height: 1.7;
-
-      white-space: pre-line;
-
-      color: rgb(253, 224, 240);
-    }
-
-    .reader-body p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* close button, same pink-bordered look as an active link square */
-    .close-btn {
-      flex-shrink: 0;
-
-      padding: 8px 16px;
-
-      background: #080808;
-      border: 1px solid #161616;
-
-      font-family: DIN;
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-
-      color: #ff4fa3;
-
-      cursor: pointer;
-
-      transition: none;
-    }
-
-    .close-btn:hover,
-    .close-btn:focus-visible {
-      background: #020202;
-      border-color: #ff4fa3;
-
-      color: rgb(253, 224, 240);
-
-      outline: none;
-    }
-
-    .writing-message {
-      font-size: 16px;
-
-      color: #50464b;
-    }
-
-    @media (max-width: 600px) {
-
-      .writing-entry {
-        padding: 15px;
-      }
-
-      .entry-top {
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .entry-title {
-        font-size: 22px;
-      }
-
-      .reader-title {
-        font-size: 30px;
-      }
-
-      .reader-bar {
-        flex-direction: column;
-      }
-
-      .reader-body p {
-        font-size: 16px;
-      }
-    }
-
-    /* =========================
-   LINKS GRID (below all paragraphs)
+.links-display {
+  position: relative;
+  flex: 1;
+  min-height: 195px;
+}
+
+.links-image {
+  position: absolute;
+  inset: 0;
+
+  background: var(--panel);
+  border: 1px solid var(--line-dark);
+  overflow: hidden;
+}
+
+.links-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.links-info {
+  position: relative;
+  min-height: 195px;
+  padding: 20px;
+  background: var(--pattern);
+  border: 1px solid var(--line-dark);
+
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.55;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* hidden: collapsed to the left edge, uncovering the image */
+  clip-path: inset(0 100% 0 0);
+  visibility: hidden;
+}
+
+.links-info.visible {
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+}
+
+.links-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--accent-soft);
+}
+
+.links-info p {
+  margin: 0 0 12px 0;
+}
+
+.links-info a,
+.links-list a {
+  font-size: 14px;
+}
+
+/* a stack of plain links, one under the other */
+.links-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.55;
+}
+
+.links-list a {
+  overflow-wrap: anywhere;
+}
+
+.split-side .links-list {
+  margin: 20px 0 10px 0;
+}
+
+.data-title {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  font-family: Bahnschrift light;
+  color: var(--accent-deep);
+}
+
+#guro {
+  color: var(--accent-soft);
+}
+
+/* =========================
+   WRITING PAGE (no transitions, on purpose)
    ========================= */
 
-   
-        /* =========================
-       more IDs
-       ========================= */
+.writing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
-      #guro {
-       color: #ff9fd2;
+/* one entry = one full-width rectangle (a <button>, so keyboard works) */
+.writing-entry {
+  display: block;
+  width: 100%;
+  padding: 20px 24px;
 
-        
-      }
-    
-    /* =========================
+  text-align: left;
+
+  background: var(--panel);
+  border: 1px solid var(--line-dark);
+
+  color: var(--text);
+  font-family: Bahnschrift;
+
+  cursor: pointer;
+  transition: none;
+}
+
+.writing-entry:hover,
+.writing-entry:focus-visible {
+  background: #020202;
+  border-color: var(--accent);
+  outline: none;
+}
+
+.entry-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.entry-title {
+  font-family: DIN;
+  font-size: 28px;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  color: var(--accent-soft);
+}
+
+.entry-date {
+  flex-shrink: 0;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--accent-deep);
+}
+
+.entry-blurb {
+  margin: 0 0 14px 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* tags (same look in the list and inside an open entry) */
+.entry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+
+/* the open entry */
+.writing-reader[hidden] {
+  display: none;
+}
+
+.reader-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.reader-title {
+  margin: 0 0 8px 0;
+
+  font-family: DIN;
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  line-height: 1;
+
+  color: var(--accent-soft);
+}
+
+.reader-date {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--accent-deep);
+}
+
+.reader-body {
+  max-width: 720px;
+  padding: 25px 0;
+  margin: 25px 0;
+
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* single line breaks inside a paragraph are kept (handy for poems) */
+.reader-body p {
+  margin: 0 0 18px 0;
+  font-size: 18px;
+  line-height: 1.7;
+  white-space: pre-line;
+  color: var(--text);
+}
+
+.reader-body p:last-child {
+  margin-bottom: 0;
+}
+
+.close-btn {
+  flex-shrink: 0;
+  padding: 8px 16px;
+
+  background: var(--panel);
+  border: 1px solid var(--line-dark);
+
+  font-family: DIN;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  color: var(--accent);
+  cursor: pointer;
+  transition: none;
+}
+
+.close-btn:hover,
+.close-btn:focus-visible {
+  background: #020202;
+  border-color: var(--accent);
+  color: var(--text);
+  outline: none;
+}
+
+.writing-message {
+  font-size: 16px;
+  color: var(--muted);
+}
+
+/* =========================
    INTRO: text left, status box + image right
    ========================= */
 
 .intro {
   display: grid;
   grid-template-columns: 1fr 300px;
-  align-items: stretch;      /* right column matches the height of the text */
+  align-items: stretch;
   gap: 40px;
 }
 
 .intro-text {
-  display: flow-root;        /* keeps the floated image inside */
+  display: flow-root;
   min-width: 0;
 }
 
@@ -1262,7 +995,6 @@
   min-width: 0;
 }
 
-/* status box */
 .status-box {
   position: relative;
 
@@ -1271,9 +1003,8 @@
   gap: 14px;
 
   padding: 16px 38px 16px 16px;
-
-  background: #080808;
-  border: 1px solid #2a2426;
+  background: var(--panel);
+  border: 1px solid var(--line);
 }
 
 .status-avatar {
@@ -1284,7 +1015,7 @@
   object-fit: cover;
 
   background: #181818;
-  border: 1px solid #2a2426;
+  border: 1px solid var(--line);
 }
 
 .status-body {
@@ -1296,7 +1027,6 @@
   align-items: baseline;
   flex-wrap: wrap;
   gap: 4px 10px;
-
   margin-bottom: 4px;
 }
 
@@ -1304,30 +1034,28 @@
   font-family: DIN;
   font-size: 20px;
   letter-spacing: 2px;
-  color: #ff91c6;
+  color: var(--accent-soft);
 }
 
 .status-time {
   font-size: 12px;
   letter-spacing: 1px;
-  color: #e2499b;
+  color: var(--accent-deep);
 }
 
 main .status-text {
   margin: 0;
-
   font-size: 15px;
   line-height: 1.4;
-  color: rgb(253, 224, 240);
+  color: var(--text);
 }
 
 .status-edit {
   position: absolute;
   top: 10px;
   right: 10px;
-
   line-height: 0;
-  color: #ff4fa3;
+  color: var(--accent);
 }
 
 /* image under the status box, grows to fill the remaining height */
@@ -1340,6 +1068,241 @@ main .status-text {
 
   object-fit: cover;
 
-  background: #080808;
-  border: 1px solid #2a2426;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+/* =========================
+   LIKES / DISLIKES scroll boxes
+   ========================= */
+
+.scroll-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 55px;
+}
+
+.scroll-box {
+  min-width: 0;
+  background: var(--pattern);
+  border: 1px solid var(--line);
+}
+
+.scroll-title {
+  margin: 0;
+  padding: 16px 20px;
+
+  font-family: DIN;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  color: var(--accent-soft);
+}
+
+/* change the height here to make both boxes taller or shorter */
+.scroll-content {
+  height: 260px;
+  overflow-y: auto;
+  padding: 12px 15px;
+
+  /* thin grey scrollbar (Firefox) */
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-deep) var(--panel);
+}
+
+/* thin grey scrollbar (Chrome / Edge / Safari) */
+.scroll-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll-content::-webkit-scrollbar-track {
+  background: var(--panel);
+}
+
+.scroll-content::-webkit-scrollbar-thumb {
+  background: var(--accent-deep);
+}
+
+.scroll-content ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scroll-content li {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+/* little dash before each item */
+.scroll-content li::before {
+  content: "	▪	 &#20 ";
+  color: var(--accent);
+}
+
+/* =========================
+   PORTRAIT + QUOTE
+   columns: image | big empty gap | text
+   ========================= */
+
+.portrait-quote {
+  display: grid;
+  grid-template-columns: 340px 1fr 380px;
+  align-items: center;
+}
+
+.portrait-image {
+  display: block;
+
+  width: 340px;
+  height: 780px;
+
+  object-fit: cover;
+
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+main .quote-text {
+  grid-column: 3;
+  margin: 0;
+
+  font-family: DIN;
+  font-size: 38px;
+  letter-spacing: 2px;
+  line-height: 1.2;
+
+  color: var(--accent-soft);
+}
+
+.quote-by {
+  display: block;
+  margin-top: 16px;
+
+  font-size: 16px;
+  letter-spacing: 3px;
+
+  color: var(--accent-deep);
+}
+
+/* =========================
+   MOBILE
+   (kept at the bottom so it overrides the rules above)
+   ========================= */
+
+@media (max-width: 600px) {
+
+  .page {
+    width: 100vw;
+  }
+
+  .scroll-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .portrait-quote {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .portrait-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5 / 7;
+  }
+
+  main .quote-text {
+    grid-column: 1;
+    font-size: 26px;
+  }
+
+  header {
+    height: auto;
+    min-height: 220px;
+    padding: 25px;
+    align-items: flex-start;
+  }
+
+  .header-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .header-content {
+    padding-left: 20px;
+    padding-right: 0;
+  }
+
+  .header-content h1 {
+    font-size: 28px;
+  }
+
+  .header-content p {
+    font-size: 14px;
+  }
+
+  .header-kaomoji {
+    display: none;
+  }
+
+  .icons {
+    gap: 8px;
+    padding-top: 0;
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  main {
+    padding: 25px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .links-wrap {
+    flex-direction: column;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .links-display {
+    flex: none;
+    width: 100%;
+  }
+
+  .writing-entry {
+    padding: 15px;
+  }
+
+  .entry-top {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .entry-title {
+    font-size: 22px;
+  }
+
+  .reader-title {
+    font-size: 30px;
+  }
+
+  .reader-bar {
+    flex-direction: column;
+  }
+
+  .reader-body p {
+    font-size: 16px;
+  }
 }
