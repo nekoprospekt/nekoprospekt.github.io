@@ -597,7 +597,7 @@ main p {
   margin: 30px;
   background: var(--pattern);
   border: 1px solid var(--line);
-
+  padding: 30px;
 
 }
 
