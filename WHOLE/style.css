@@ -42,6 +42,8 @@ body {
 }
 
 body {
+  border-radius: 1px;
+  border-color: var(--line);
   background: #000;
   font-family: Arial, sans-serif;
 }
@@ -68,6 +70,8 @@ img {
    ========================= */
 
 .page {
+    border-radius: 1px;
+  border-color: var(--line);
   width: min(100vw, 133.333vh);
   margin: 60px auto;
   min-height: 100vh;
@@ -606,10 +610,13 @@ main p {
    ========================= */
 
 .split {
+  background: var(--pattern);
+  border: 1px solid var(--line);
+  padding: 30px;
+  padding-left: 30px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   align-items: start;
-
   gap: 40px;
   margin: 40px;
   
@@ -618,12 +625,14 @@ main p {
 /* flow-root so floated images stay inside their column */
 .split-main,
 .split-side {
+  padding-left: 30px;
   display: flow-root;
   min-width: 0;
 }
 
 .split-block + .split-block {
   margin-top: 30px;
+  padding-left: 30px;
 }
 
 .side-image {
@@ -631,10 +640,8 @@ main p {
 
   width: 360px;
   height: 200px;
-
   object-fit: cover;
   margin: 0 0 20px 0;
-
   background: #181818;
   border: 1px solid var(--line);
 }
